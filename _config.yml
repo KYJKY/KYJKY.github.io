@@ -1,11 +1,11 @@
 # Site
-title:              김 연 중
+title:              김연중 - Kim Yeon Jung
 bio:                'C#, .net Dev'
 description:        "깃허브 블로그 만들기 너무 빡세"
 reading_time:       true
 words_per_minute:   200
 logo:               'assets/img/logo.png'
-background:         'assets/img/placeholder-big.jpg'
+background:         'assets/img/bg-galaxy.jpg'
 tiled_bg:           false   # Set this true if you want to tile your background image, otherwise it will be covered
 locale:             ko
 url:                https://kyjky.github.io/
@@ -26,7 +26,7 @@ sass:
   style:            compressed
 
 # Comments
-disqus_shortname:   disqus_np1qbwBfvp
+disqus_shortname:   kyjky-gitbut-io-1
 
 # Social
 # if you don't have any of social below, comment the line.
@@ -50,7 +50,7 @@ github-url:         KYJKY
 #medium:            '@username'
 #pinterest:         username
 #foursquare:        username
-#steam:              username
+steam:              kyj_3052
 #dribbble:          username
 #youtube:           username
 #youtube-channel:   channel
