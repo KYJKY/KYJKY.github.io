@@ -1,37 +1,58 @@
 ---
 layout: page
-title: About the Theme
-tags: [about, Jekyll, theme, moon]
-date: 2016-03-21
-comments: false
+title: 안녕하세요 김연중입니다😃!
+tags: [about]
+date: 2022-04-12
+comments: true
 ---
     
-<center><a href="http://taylantatli.github.io/Moon"><b>Moon</b></a> is a minimal, one column jekyll theme.</center>
+#### <center>저에게 관심을 주시는 모든 여러분을 환영해요😊!!</center>
 
-## Features
-* Minimal, you can focus on your content
-* Responsive
-* Disqus integration
-* Syntax highlighting
-* Optional post image
-* Social icons
-* Page for sharing projects
-* Optional background image
-* Simple navigation menu
-* MathJax support
+## 누구세요🙄?
+이름: 김연중
+<br>
+생년월일: 1997-06-12
+<br>
+직업: .net기반 백엔드 개발자
 
-## Preview
 
-{% capture images %}
-    https://cloud.githubusercontent.com/assets/754514/14509720/61c61058-01d6-11e6-93ab-0918515ecd56.png
-    https://cloud.githubusercontent.com/assets/754514/14509716/61ac6c8e-01d6-11e6-879f-8308883de790.png
-{% endcapture %}
-{% include gallery images=images caption="Screenshots of Moon Theme" cols=2 %}
+<br>
+<br>
 
-See a [live version of Moon](http://taylantatli.github.io/Moon) hosted on GitHub.
 
-## Getting Started
+## 어떤 사람이에요😮?
+* 안 친하면 말 안검 / 친해지면 말 많음
+* 일반적인 것 보다 특별한 것을 선호함
+* MBTI: INTP, INFP 반반
+* P형이지만 부지런한 P형에 속할듯
+* 생각보다 혼자 생각을 많이 하는 편 (이걸 담으려고 블로그 시작)
+* 생각보다 필요없는 생각은 안하는 편
+* 무언가에 빠지면 바짝 관심갖다가 금새 사그라듬 (ex. 운동, 롱보드, 마술 등등 > 무언가 3개월 이상 X) 
+* 예술처럼 무언가 의미를 부여하는 것을 좋아함
+* 내가 바라고 상상하는 이상향은 정말 높은데 행동력은 그렇지 못함(그래도 열심히 사는 내 자신 칭찬해)
+* 추후 추가 예정 ㅋㅋ
 
-To learn how to install and use this theme check out the [Setup Guide](http://taylantatli.me/Moon/moon-theme/) for more information.
-      
-[Install Moon](https://github.com/TaylanTatli/Moon){: .btn}
+<br>
+<br>
+
+
+## 무엇을 이루고 싶나요🎈?
+1. 경제적 자유
+2. 유능한 프로그래머 되기
+3. 주위 사람들과 행복을 나누는 사람 되기
+
+
+<br>
+<br>
+
+## 블로그 개설은 왜😮?
+<br>
+> 나름 오픈된 공간에 내 자신을 들어내면서 누군가가 지켜본다는 마음가짐으로 하루하루를 기록하며 내 자신의 성장을 적어가는 뿌듯한 삶을 통해 하루하루 변하는 나의 모습을 담기 위해
+
+~와 이거 이텔릭체 왜이러냐~
+
+<br>
+<br>
+<br>
+
+

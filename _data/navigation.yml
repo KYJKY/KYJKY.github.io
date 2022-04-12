@@ -1,7 +1,16 @@
 # Site navigation links
 
-- title: Projects
-  url: /projects/
-
-- title: Dev Diary
+- title: 개발일기
   url: /diary/
+
+- title: 사색
+  url: /think/
+
+- title: C#
+  url: /csharp/
+
+- title: SQL
+  url: /sql/
+
+- title: CS지식
+  url: /cs/

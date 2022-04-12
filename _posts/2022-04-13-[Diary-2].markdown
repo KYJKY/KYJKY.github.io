@@ -1,0 +1,17 @@
+---
+layout: post
+title:  "[Diary 2] test"
+date:   2022-04-13 00:13:36 +0530
+excerpt: "test"
+diary: true
+categories: diary
+comments: true
+---
+## test
+
+test
+
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
