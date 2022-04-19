@@ -13,7 +13,7 @@ comments: true
 
 <br>
 
-<img data-action="zoom" src='{{ "/assets/img/sql/2022-04-16-[MSSQL-1]/calendar.jpg" | relative_url }}' alt='calendar'>
+<a href="/assets/img/sql/2022-04-16/calendar.jpg"><img src="/assets/img/sql/2022-04-16/calendar.jpg"></a>
 
 <br>
 
@@ -32,7 +32,11 @@ comments: true
 ---------------------
 업무에서 주어진 테이블 A는 아래와 같이 무작위의 날짜 테이블로 존재한다.  
 ### 테이블 A (2021년의 무작위 날짜가 저장된 테이블)
-<img data-action="zoom" src='{{ "/assets/img/sql/2022-04-16-[MSSQL-1]/date.jpg" | relative_url }}' alt='calendar' style="text-align:left;">
+
+<figure class="third">
+    <a href="/assets/img/sql/2022-04-16/date.jpg"><img src="/assets/img/sql/2022-04-16/date.jpg"></a>    
+    <figcaption>'SELECT * FROM A' 의 결과 테이블이다.</figcaption>
+</figure>
 
 <br>
 <br>
@@ -98,7 +102,10 @@ ORDER BY ABS(TICK_NO - @INPUT_TICK)   -- 5. TICK값의 차이가 적은 순서�
 ## ⭐ 결과
 --------------
 ### 사용자가 날짜 '2021-06-12'를 입력했을 때 결과
-<img data-action="zoom" src='{{ "/assets/img/sql/2022-04-16-[MSSQL-1]/result.jpg" | relative_url }}' alt='calendar' style="text-align:left;">
+
+<figure class="third">
+    <a href="/assets/img/sql/2022-04-16/result.jpg"><img src="/assets/img/sql/2022-04-16/result.jpg"></a>
+</figure>
 
 위 결과처럼, 날짜 '2021-06-12' 의 Tick값 '44357' 과 가장 가까운 순서대로 정렬된 모습을 볼 수 있다.  
   
