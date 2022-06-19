@@ -1,0 +1,338 @@
+---
+layout: post
+title: "[CS지식] C# .net Core에서 SOLID 원칙"
+date: 2022-07-19 17:00:01 +09:00
+excerpt: ".net Core에서 SOLID 원칙이 어떻게 적용되는지 알아보자!"
+cs: true
+categories: cs
+comments: true
+---
+# 📌 [CS지식] C# .net Core에서 SOLID 원칙
+---------------------------
+
+<figure>
+    <a href="/assets/img/cs/2022-06-19/Solid.png"><img src="/assets/img/cs/2022-06-19/Solid.png"></a>    
+    <figcaption style="text-align:center">Pro Code Guide - By Sanjay</figcaption>
+</figure>
+
+
+<br>
+<br>
+
+## 1️⃣ SOLID가 무엇인가?
+----------------
+- <span style ="color: red;"><b>S</b></span>ingle Responsibility Principle (단일 책임 원칙)
+- <span style ="color: red;"><b>O</b></span>pen/Closed Principle (개방/폐쇄 원칙)
+- <span style ="color: red;"><b>L</b></span>iskov Substitution Principle (리스코프 치환 원칙)
+- <span style ="color: red;"><b>I</b></span>nterface Segregation Principle (인터페이스 분리 원칙)
+- <span style ="color: red;"><b>D</b></span>ependency Inversion Principle (의존관계 역전 원칙)
+
+SOLID란 '로버트 마틴'이 명명한 객체 지향 프로그래밍 및 설계의 다섯 가지 기본 원칙.  
+이 다섯 가지 기본 원칙을 '마이클 페더스'가 앞 글자만 따서 소개한 것이 SOLID.  
+
+
+<br>
+<br>
+
+## 2️⃣ 이걸 왜 알아야 되는데요? 
+-----------------------
+소프트웨어 개발은 **훌륭한 솔루션**을 만드는 것 뿐만이 아닌 **지속가능한 유지보수** 또한 중요하기 때문이다.  
+유지보수는 **소프트웨어 개발 수명 주기**안에 포함된다.  
+때문에 시간이 지나면서 **새로운 요구사항**이나 **기존 솔루션에 대한 버그 수정 요청**은 필수적일 수 밖에 없다.  
+솔루션의 디자인 원칙은 유지보수를 위해 **코드를 확장하거나 수정하기 용이**해야 한다.  
+때문에 우리 개발자들의 입장으로서는 이러한 부분을 당연히 고려하고 솔루션을 만들어야 한다.
+
+그리고 이 SOLID는 유연성, 확장성, 가독성 및 유지보수를 고려하여 설계할 수 있게 도와준다.
+
+<br>
+
+> 하지만 SOLID 원칙이 절대적인 원칙은 아니다.  
+> 어떤 설계에서는 SOLID 원칙을 적용하여 오히려 불필요하게 복잡하고 무거워질 수 있다는 점을 유의할 것.
+
+<br>
+
+### 자 이제 서론은 여기서 마무리하고 SOLID 원칙에는 무엇이 있는지 알아보자!
+
+<br>
+<br>
+<br>
+<br>
+
+
+## 3️⃣ SOLID
+## 1. 단일 책임 원칙 - SRP (Single Responsibility Principle)
+---
+
+> 각 소프트웨어 모듈 또는 클래스에는 **하나의 책임**만 가진다.
+
+그렇다. **단일 책임 원칙**이라는 이름에 걸맞게 **하나의 책임**만 가진다고 되어있다.  
+근데 이게 정확히 무엇을 뜻하는 걸까?  
+
+우리가 애플리케이션을 만들 때, 어떤 요구사항에 대한 기능을 추가하기 위해 클래스를 추가한다.  
+여기서 단일 책임 원칙은 클래스를 빌드하는 동안 한 클래스가 하나의 단일 책임, 즉 **하나의 단일 작업**을 수행하도록 한다.  
+
+예를 들면, 쇼핑몰에 상품주문 기능이 정의된 클래스가 있을 때, 그 클래스에 상품주문과 관련된 기능이 아닌 상품결제나 이메일 관련 기능을 하는 로직이 있으면 안된다는 것을 의미한다. 이는 상품주문 기능에 대한 하나의 책임만 가지는 것이 아니라, 상품결제나 이메일 관련 기능의 책임까지 가지게 된다. 즉, 단일 책임 원칙에 위배된다.  
+
+아래는 코드 예시이다.  
+
+``` csharp
+// 주문 관련 기능을 하는 클래스
+public class OrderService
+{
+    // 주문 생성 메서드
+    public string CreateOrder(string OrderDetails) 
+    {
+        string OrderId = "";
+        //Code to Create Order
+        return OrderId; 
+    }
+        
+    // 주문 결제 메서드
+    public bool MakePayment(string OrderId) 
+    { 
+        //Code to Make Payment
+        return true; 
+    }
+    
+    // 송장청구 메서드
+    public bool GenerateInvoice(string OrderId) 
+    { 
+        //Code to Generate Invoice
+        return true; 
+    }
+        
+    // 주문 관련 이메일 생성 메서드
+    public bool EmailInvoice(string OrderId) 
+    { 
+        //Code to Email Invoice
+        return true; 
+    }
+}
+
+```
+
+위 코드는 SRP에 위배된 코드이다.  
+
+**근데 왜? 그럴 수 있는거 아님?**  
+그럴 수는 있다. 하지만, 애플리케이션의 규모가 거대해지고 추가 요구사항이나 관련 버그 수정 요청사항이 생기면 유지보수가 쉽지 않을 것이다.  
+
+상품주문 기능에 관련된 요청사항이 온다면 해당 요청사항을 해결하기 위해 같은 클래스에 있는 상품결제 관련 기능에 대해 추가적인 비용이 들 수 있다.  
+
+예를 들어 테스트를 진행할 경우에도 요구사항과 관련없는 상품결제나 이메일 관련 기능에 대해 테스트를 추가적으로 진행해야 된다.  
+
+아래 코드는 SRP를 만족하도록 리팩토링한 코드다.
+
+<br>
+
+``` csharp
+// 주문 관련 기능을 하는 클래스
+public class OrderService
+{
+    // 주문 생성 메서드
+    public string CreateOrder(string OrderDetails)
+    {
+        string OrderId = "";
+        //Code to Create Order
+        return OrderId;
+    }
+}
+
+// 결제 관련 기능 클래스
+public class PaymentService
+{
+    // 
+    public bool MakePayment(string PaymentDetails)
+    {
+        //Code to Make Payment
+        return true;
+    }
+}
+
+// 송장청구 관련 기능 클래스
+public class InvoiceService
+{
+    public bool GenerateInvoice(string InvoiceDetails)
+    {
+        //Code to Generate Invoice
+        return true;
+    }
+}
+
+// 이메일 관련 기능 클래스
+public class EmailService
+{
+    public bool EmailInvoice(string EmailDetails)
+    {
+        //Code to Email Invoice
+        return true;
+    }
+}
+
+```
+**단일 책임 원칙의 이점**
+- 단일 책임이 있는 클래스는 설계 및 구현이 더 쉽다. (?)
+- 단일 기능을 하나의 클래스로 관리하기 때문에 가독성이 향상되고 한 기능에만 집중할 수 있다.
+- 한 기능의 변경이 다른 기능에 영향을 미치지 않으므로 코드의 유지보수가 수월하다.
+- 클래스의 단일 기능으로 인해 클래스에 대한 단위 테스트 케이스를 작성하는 동안 복잡성이 감소하므로 테스트에 용이하다.
+- 오류를 디버그하는 것이 수월하다. 즉, 이메일 기능에 오류가 있는 경우 이메일 관련 클래스만 확인하면 됨.
+- 다른 부분에서 동일한 코드를 재사용할 수 있습니다. 예를 들어 이메일 기능 클래스를 빌드하면 사용자 등록, 이메일을 통한 OTP, 비밀번호 분실 등에 동일하게 사용할 수 있습니다.
+<br>
+<br>
+
+
+## 2. 개방/폐쇄 원리 - OCP (Open/Closed Principle)
+---
+> 소프트웨어 클래스 또는 모듈은 **확장에는 열려** 있으나 **변경에는 닫혀** 있어야 한다.
+
+의미를 풀자면 어떤 기능을 하는 클래스를 만들었다면, 새로운 기능을 확장할 수 있지만, 어떤 기능을 추가하거나 변경해야할 경우에, 잘 돌아가고 있는 것을 수정할 필요가 없어야 한다.  
+
+즉, 클래스의 기존 코드를 수정하지 않고도 클래스의 기능을 확장할 수 있어야 한다는 것.  
+
+우리 그런 경험 한 번씩 있을 것이다. 어떤 새로운 기능을 추가하려고 코딩을 진행했는데 기능을 추가하고 보니 다른 기존 기능이 동작하지 않아서 다른 코드를 고치고, 또 고쳤더니 또 다른 코드를 고치게 되는.. 지옥의 무한루프.  
+이를 방지하고자 하는 원칙이다.  
+
+기능을 확장할 때, 상속을 사용하여 애플리케이션에서 새로운 기능을 구현할 수 있는 방식으로 코드 구현을 설계해야 한다. 기존 클래스를 변경하는 대신 기본 클래스에서 파생된 새 클래스를 추가하고 이 파생 클래스에 새 코드를 추가하도록 설계해야 한다.  
+
+상속의 경우 클래스 상속 대신 인터페이스 상속을 고려해야 한다. 파생 클래스가 기본 클래스의 구현에 의존하는 경우 기본 클래스와 파생 클래스 간의 종속성을 생성하게 된다. 인터페이스를 사용하면 인터페이스와 기존의 다른 클래스를 변경하지 않고 이 인터페이스를 구현하는 새 클래스를 추가하여 새로운 기능을 제공할 수 있다. 인터페이스는 또한 인터페이스를 구현하는 클래스 간의 느슨한 결합을 가능하게 한다.  
+
+아래 예를 살펴보자.
+
+<br>
+
+``` csharp
+// HTML 형식의 보고서를 생성하는 클래스
+public class Report
+{
+    public bool GenerateReport()
+    {
+        //Code to generate report in HTML Format
+        return true;
+    }
+}
+```
+
+처음 요구사항은 HTML만 생성하는 것이였으나, 추가적으로 JSON형식까지 필요하다는 요구사항이 추가됐다.
+
+<br>
+<br>
+
+``` csharp
+// HTML과 JSON형식의 보고서를 생성하는 클래스
+public class Report
+{
+    public bool GenerateReport()
+    {
+        //Code to generate report in HTML Format
+        //Code to generate report in JSON Format
+        return true;
+    }
+}
+```
+
+요구사항은 만족시켰으나, 이는 OCP원칙에 어긋나게 코딩된 경우다.  
+아래는 OCP원칙에 맞게 수정된 코드다.
+
+<br>
+<br>
+
+``` csharp
+// Report 관련 인터페이스
+public interface IGenerateReport
+{
+    bool GenerateReport();
+}
+
+// HTML 형식의 보고서를 생성하는 클래스
+public class GenerateHTMLReport : IGenerateReport
+{
+    public bool GenerateReport()
+    {
+        //Code wot Generate HTML Report
+        return true;
+    }
+}
+```
+
+위 코드는 보고서 관련 인터페이스 상속을 통해 HTML 보고서 기능을 생성하기 위한 인터페이스를 추가했다.
+
+
+<br>
+<br>
+
+``` csharp
+// 보고서 생성 관련 인터페이스
+public interface IGenerateReport
+{
+    bool GenerateReport();
+}
+
+// HTML형식의 보고서를 생성하는 클래스
+public class GenerateHTMLReport : IGenerateReport
+{
+    public bool GenerateReport()
+    {
+        //Code wot Generate HTML Report
+        return true;
+    }
+}
+
+// JSON형식의 보고서를 생성하는 클래스
+public class GenerateJSONReport : IGenerateReport
+{
+    public bool GenerateReport()
+    {
+        //Code to Generate JSON Report
+        return true;
+    }
+}
+```
+
+나머지 JSON 관련 코드를 추가하면서 OCP를 만족시켰다.  
+
+**개방/폐쇄 원칙의 이점**
+- 인터페이스를 통한 상속은 해당 인터페이스를 구현하는 클래스 간의 결합도를 낮출 수 있다.
+- 새 기능을 추가하기 위해 기존 코드를 변경하지 않으므로 기존 코드를 수정하면서 생기는 이슈가 없다.
+
+
+<br>
+<br>
+
+## 3. 리스코프 치환 원칙 - LSP (Liskov Substitution Principle)
+---
+
+
+
+
+<br>
+<br>
+
+## 4. 인터페이스 분리 원칙 - ISP (Interface Segregation Principle)
+---
+
+
+
+
+<br>
+<br>
+
+## 5. 의존관계 역전 원칙 - DIP (Dependency Inversion Principle)
+---
+
+
+
+
+<br>
+<br>
+
+<br>
+<br>
+
+## Reforence
+---
+<a href="https://ko.wikipedia.org/wiki/SOLID_(%EA%B0%9D%EC%B2%B4_%EC%A7%80%ED%96%A5_%EC%84%A4%EA%B3%84)">위키백과 SOLID</a>  
+
+<a href="https://procodeguide.com/design/solid-principles-with-csharp-net-core/?utm_source=rss&utm_medium=rss&utm_campaign=solid-principles-with-csharp-net-core#What_are_Solid_Principles">Pro Code Guide - By Sanjay</a>
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
