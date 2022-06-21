@@ -75,7 +75,7 @@ comments: true
 
 
 
-
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7398984935700368" crossorigin="anonymous"></script>
 
 <br>
 <br>
@@ -99,6 +99,14 @@ comments: true
 인도 개발자가 만든 테마였을까..? 기본 날짜 설정이 국제표준보다 5시간 30분이 앞선 인도표준시로 지정되어 있었다.  
 때문에 1번과 2번의 오류가 콜라보 되면서 시간을 많이 잡아먹었다...
 
+<br>
+<br>
+<br>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7398984935700368" crossorigin="anonymous"></script>
+
+<br>
+<br>
 
 
 [jekyll-docs]: https://jekyllrb.com/docs/home
