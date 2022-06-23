@@ -299,7 +299,161 @@ public class GenerateJSONReport : IGenerateReport
 
 ## 3. 리스코프 치환 원칙 - LSP (Liskov Substitution Principle)
 ---
+기본 클래스 = 부모 클래스 = 상속해주는 클래스 = 슈퍼 클래스
+파생 클래스 = 자식 클래스 = 상속받는 클래스 = 서브 클래스
+> 기본 클래스에 대한 포인터 또는 참조를 사용하는 모든 함수 또는 코드는 수정 없이 해당 클래스의 파생된 모든 클래스를 사용할 수 있어야 한다.
 
+부모 객체와 부모 객체를 상속받은 자식 객체가 있을 때, 부모 객체를 호출하는 모든 경우에서  
+부모 객체 대신 자식 객체로 치환되어도 부모 객체처럼 완전히 대체될 수 있다는 말.
+
+즉, 자식 클래스를 만들 때, 이 자식 클래스는 부모 클래스와 치환되어도 완벽하게 대체될 수 있게 자식 클래스를 만들어야 한다.
+
+파생 클래스와 기본 클래스에 동일한 함수가 있는 경우, 파생 클래스가 동일한 동작으로 해당 함수를 구현해야 한다.
+
+주어진 input에 파생 클래스와 동일한 output을 제공해야 한다.
+
+만약 이 원칙을 잘 지킨다면, 기본 클래스 함수를 사용하는 클라이언트 코드는 수정없이 파생 클래스의 동일한 함수를 안전하게 쓸 수 있다.
+
+파생 클래스의 함수는 기본 클래스의 객체와 함께 호출될 경우, 문제를 일으킬 수 있으므로 더 엄격한 규칙을 구현해서 사용하면 안된다.
+
+다시 말해, 개방/폐쇄 원칙의 상속 확장판이다. 
+
+<br>
+
+이제 이론은 그만하고 예를 살펴보자.
+
+``` csharp
+public class ReadParameters
+{
+    public virtual string GetDbConnString()
+    {
+        string dbConn = "Connection String From JSON File";
+        //Read json setting file to get Connection String
+        dbConn = ParseServerDetails(dbConn);
+        return dbConn;
+    }
+    public string ParseServerDetails(string DbConn)
+    {
+        return DbConn + " - Parsed";
+    }
+}
+```
+위 코드는 JSON 파일에서 데이터베이스 연결 문자열을 읽고 반환하는 역할을 하는 클래스다.
+
+
+<br>
+<br>
+
+```csharp
+public class ReadParametersFromXML : ReadParameters
+{
+    public override string GetDbConnString()
+    {
+        string dbConn = "Connection String From XML File";
+        //Read XML file to get Connection String
+        dbConn = ParseServerDetails(dbConn);
+        return dbConn;
+    }
+}
+```
+
+추가 요구사항으로 JSON 뿐만 아니라 XML 파일 또한 읽고 반환할 수 있게 수정해야 한다.
+때문에 위와 같이 XML 파일을 읽는 코드를 추가했다. 
+
+이제 기본 클래스(ReadParameters)의 객체를 인스턴스화한 다음, 파생 클래스의 객체로 치환하여 개선한 코드를 살펴보자.
+
+<br>
+<br>
+
+```csharp
+class Program
+{
+    static void Main(string[] args)
+    {
+        ReadParameters readParameters = new ReadParameters();
+        Console.WriteLine(readParameters.GetDbConnString());
+
+        readParameters = new ReadParametersFromXML();
+        Console.WriteLine(readParameters.GetDbConnString());
+
+        Console.ReadKey();
+    }
+}
+
+// 결과 -----
+// Connection String From JSON File - Parsed
+// Connection String From XML File - Parsed
+```
+
+위의 결과에서 기본 클래스를 파생 클래스로 치환하면 JSON 파일 대신 XML 파일에서 반환하는 것을 볼 수 있다.
+읽어야 하는 파일의 형태에 따라 다른 객체를 인스턴스화 해야 한다.
+이것이 바로 리스코프 치환 원칙에 위배되는 것이다.
+
+자 이제 개선된 코드를 살펴보자.
+
+<br>
+<br>
+
+```csharp
+public abstract class ReadParameters
+{
+    public abstract string GetDbConnString();
+
+    public string ParseServerDetails(string DbConn)
+    {
+        return DbConn + " - Parsed";
+    }
+}
+
+public class ReadParametersFromXML : ReadParameters
+{
+    public override string GetDbConnString()
+    {
+        string dbConn = "Connection String From XML File";
+
+        //Read XML file to get Connection String
+
+        dbConn = ParseServerDetails(dbConn);
+
+        return dbConn;
+    }
+}
+
+public class ReadParametersFromJSON : ReadParameters
+{
+    public override string GetDbConnString()
+    {
+        string dbConn = "Connection String From JSON File";
+
+        //Read XML file to get Connection String
+
+        dbConn = ParseServerDetails(dbConn);
+
+        return dbConn;
+    }
+}
+
+// 메인
+static void Main(string[] args)
+{
+    ReadParameters readParameters = new ReadParametersFromXML();
+    Console.WriteLine(readParameters.GetDbConnString());
+
+    readParameters = new ReadParametersFromJSON();
+    Console.WriteLine(readParameters.GetDbConnString());
+
+    Console.ReadKey();
+}
+
+// 결과 ---------
+// Connection String From XML File - Parsed
+// Connection String From JSON File - Parsed
+```
+> 짧게 알아보는 `abstract`
+추상클래스란, 미완성된 클래스로 미완성된 메서드를 포함하고 있음을 뜻한다. 
+추상클래스를 사용하는 이유는 **자식 클래스에서 해당 메서드의 공통적인 정의를 제공하는 것.**
+
+기본 클래스를 추상화하고 파생 클래스가 해당 함수를 재정의할 수 있도록 GetDbConnString 함수를 추상 메서드로 정의하여 리스코프 치환 원칙에 따라 수정하였다.
 
 
 
