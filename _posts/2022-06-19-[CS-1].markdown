@@ -7,35 +7,39 @@ cs: true
 categories: cs
 comments: true
 ---
+
 # 📌 [CS지식] C# .net Core에서 SOLID 원칙
----------------------------
+
+---
 
 <figure>
     <a href="/assets/img/cs/2022-06-19/Solid.png"><img src="/assets/img/cs/2022-06-19/Solid.png"></a>    
     <figcaption style="text-align:center">Pro Code Guide - By Sanjay</figcaption>
 </figure>
 
-
 <br>
 <br>
 
 ## 1️⃣ SOLID가 무엇인가?
-----------------
-- <span style ="color: red;"><b>S</b></span>ingle Responsibility Principle (단일 책임 원칙)
-- <span style ="color: red;"><b>O</b></span>pen/Closed Principle (개방/폐쇄 원칙)
-- <span style ="color: red;"><b>L</b></span>iskov Substitution Principle (리스코프 치환 원칙)
-- <span style ="color: red;"><b>I</b></span>nterface Segregation Principle (인터페이스 분리 원칙)
-- <span style ="color: red;"><b>D</b></span>ependency Inversion Principle (의존관계 역전 원칙)
+
+---
+
+-   <span style ="color: red;"><b>S</b></span>ingle Responsibility Principle (단일 책임 원칙)
+-   <span style ="color: red;"><b>O</b></span>pen/Closed Principle (개방/폐쇄 원칙)
+-   <span style ="color: red;"><b>L</b></span>iskov Substitution Principle (리스코프 치환 원칙)
+-   <span style ="color: red;"><b>I</b></span>nterface Segregation Principle (인터페이스 분리 원칙)
+-   <span style ="color: red;"><b>D</b></span>ependency Inversion Principle (의존관계 역전 원칙)
 
 SOLID란 '로버트 마틴'이 명명한 객체 지향 프로그래밍 및 설계의 다섯 가지 기본 원칙.  
-이 다섯 가지 기본 원칙을 '마이클 페더스'가 앞 글자만 따서 소개한 것이 SOLID.  
-
+이 다섯 가지 기본 원칙을 '마이클 페더스'가 앞 글자만 따서 소개한 것이 SOLID.
 
 <br>
 <br>
 
-## 2️⃣ 이걸 왜 알아야 되는데요? 
------------------------
+## 2️⃣ 이걸 왜 알아야 되는데요?
+
+---
+
 소프트웨어 개발은 **훌륭한 솔루션**을 만드는 것 뿐만이 아닌 **지속가능한 유지보수** 또한 중요하기 때문이다.  
 유지보수는 **소프트웨어 개발 수명 주기**안에 포함된다.  
 때문에 시간이 지나면서 **새로운 요구사항**이나 **기존 솔루션에 대한 버그 수정 요청**은 필수적일 수 밖에 없다.  
@@ -58,73 +62,74 @@ SOLID란 '로버트 마틴'이 명명한 객체 지향 프로그래밍 및 설�
 <br>
 <br>
 
-
 ## 3️⃣ SOLID
+
 ## 1. 단일 책임 원칙 - SRP (Single Responsibility Principle)
+
 ---
 
 > 각 소프트웨어 모듈 또는 클래스에는 **하나의 책임**만 가진다.
 
 그렇다. **단일 책임 원칙**이라는 이름에 걸맞게 **하나의 책임**만 가진다고 되어있다.  
-근데 이게 정확히 무엇을 뜻하는 걸까?  
+근데 이게 정확히 무엇을 뜻하는 걸까?
 
 우리가 애플리케이션을 만들 때, 어떤 요구사항에 대한 기능을 추가하기 위해 클래스를 추가한다.  
-여기서 단일 책임 원칙은 클래스를 빌드하는 동안 한 클래스가 하나의 단일 책임, 즉 **하나의 단일 작업**을 수행하도록 한다.  
+여기서 단일 책임 원칙은 클래스를 빌드하는 동안 한 클래스가 하나의 단일 책임, 즉 **하나의 단일 작업**을 수행하도록 한다.
 
-예를 들면, 쇼핑몰에 상품주문 기능이 정의된 클래스가 있을 때, 그 클래스에 상품주문과 관련된 기능이 아닌 상품결제나 이메일 관련 기능을 하는 로직이 있으면 안된다는 것을 의미한다. 이는 상품주문 기능에 대한 하나의 책임만 가지는 것이 아니라, 상품결제나 이메일 관련 기능의 책임까지 가지게 된다. 즉, 단일 책임 원칙에 위배된다.  
+예를 들면, 쇼핑몰에 상품주문 기능이 정의된 클래스가 있을 때, 그 클래스에 상품주문과 관련된 기능이 아닌 상품결제나 이메일 관련 기능을 하는 로직이 있으면 안된다는 것을 의미한다. 이는 상품주문 기능에 대한 하나의 책임만 가지는 것이 아니라, 상품결제나 이메일 관련 기능의 책임까지 가지게 된다. 즉, 단일 책임 원칙에 위배된다.
 
-아래는 코드 예시이다.  
+아래는 코드 예시이다.
 
-``` csharp
+```csharp
 // 주문 관련 기능을 하는 클래스
 public class OrderService
 {
     // 주문 생성 메서드
-    public string CreateOrder(string OrderDetails) 
+    public string CreateOrder(string OrderDetails)
     {
         string OrderId = "";
         //Code to Create Order
-        return OrderId; 
+        return OrderId;
     }
-        
+
     // 주문 결제 메서드
-    public bool MakePayment(string OrderId) 
-    { 
+    public bool MakePayment(string OrderId)
+    {
         //Code to Make Payment
-        return true; 
+        return true;
     }
-    
+
     // 송장청구 메서드
-    public bool GenerateInvoice(string OrderId) 
-    { 
+    public bool GenerateInvoice(string OrderId)
+    {
         //Code to Generate Invoice
-        return true; 
+        return true;
     }
-        
+
     // 주문 관련 이메일 생성 메서드
-    public bool EmailInvoice(string OrderId) 
-    { 
+    public bool EmailInvoice(string OrderId)
+    {
         //Code to Email Invoice
-        return true; 
+        return true;
     }
 }
 
 ```
 
-위 코드는 SRP에 위배된 코드이다.  
+위 코드는 SRP에 위배된 코드이다.
 
 **근데 왜? 그럴 수 있는거 아님?**  
-그럴 수는 있다. 하지만, 애플리케이션의 규모가 거대해지고 추가 요구사항이나 관련 버그 수정 요청사항이 생기면 유지보수가 쉽지 않을 것이다.  
+그럴 수는 있다. 하지만, 애플리케이션의 규모가 거대해지고 추가 요구사항이나 관련 버그 수정 요청사항이 생기면 유지보수가 쉽지 않을 것이다.
 
-상품주문 기능에 관련된 요청사항이 온다면 해당 요청사항을 해결하기 위해 같은 클래스에 있는 상품결제 관련 기능에 대해 추가적인 비용이 들 수 있다.  
+상품주문 기능에 관련된 요청사항이 온다면 해당 요청사항을 해결하기 위해 같은 클래스에 있는 상품결제 관련 기능에 대해 추가적인 비용이 들 수 있다.
 
-예를 들어 테스트를 진행할 경우에도 요구사항과 관련없는 상품결제나 이메일 관련 기능에 대해 테스트를 추가적으로 진행해야 된다.  
+예를 들어 테스트를 진행할 경우에도 요구사항과 관련없는 상품결제나 이메일 관련 기능에 대해 테스트를 추가적으로 진행해야 된다.
 
 아래 코드는 SRP를 만족하도록 리팩토링한 코드다.
 
 <br>
 
-``` csharp
+```csharp
 // 주문 관련 기능을 하는 클래스
 public class OrderService
 {
@@ -140,7 +145,7 @@ public class OrderService
 // 결제 관련 기능 클래스
 public class PaymentService
 {
-    // 
+    //
     public bool MakePayment(string PaymentDetails)
     {
         //Code to Make Payment
@@ -169,37 +174,40 @@ public class EmailService
 }
 
 ```
-**단일 책임 원칙의 이점**
-- 단일 책임이 있는 클래스는 설계 및 구현이 더 쉽다. (?)
-- 단일 기능을 하나의 클래스로 관리하기 때문에 가독성이 향상되고 한 기능에만 집중할 수 있다.
-- 한 기능의 변경이 다른 기능에 영향을 미치지 않으므로 코드의 유지보수가 수월하다.
-- 클래스의 단일 기능으로 인해 클래스에 대한 단위 테스트 케이스를 작성하는 동안 복잡성이 감소하므로 테스트에 용이하다.
-- 오류를 디버그하는 것이 수월하다. 즉, 이메일 기능에 오류가 있는 경우 이메일 관련 클래스만 확인하면 됨.
-- 다른 부분에서 동일한 코드를 재사용할 수 있습니다. 예를 들어 이메일 기능 클래스를 빌드하면 사용자 등록, 이메일을 통한 OTP, 비밀번호 분실 등에 동일하게 사용할 수 있습니다.
-<br>
-<br>
 
+**단일 책임 원칙의 이점**
+
+-   단일 책임이 있는 클래스는 설계 및 구현이 더 쉽다.
+-   단일 기능을 하나의 클래스로 관리하기 때문에 가독성이 향상되고 한 기능에만 집중할 수 있다.
+-   한 기능의 변경이 다른 기능에 영향을 미치지 않으므로 코드의 유지보수가 수월하다.
+-   클래스의 단일 기능으로 인해 클래스에 대한 단위 테스트 케이스를 작성하는 동안 복잡성이 감소하므로 테스트에 용이하다.
+-   오류를 디버그하는 것이 수월하다. 즉, 이메일 기능에 오류가 있는 경우 이메일 관련 클래스만 확인하면 됨.
+-   다른 부분에서 동일한 코드를 재사용할 수 있다. 예를 들어 이메일 기능 클래스를 빌드하면 사용자 등록, 이메일을 통한 OTP, 비밀번호 분실 등에 동일하게 사용할 수 있습니다.
+    <br>
+    <br>
 
 ## 2. 개방/폐쇄 원리 - OCP (Open/Closed Principle)
+
 ---
+
 > 소프트웨어 클래스 또는 모듈은 **확장에는 열려** 있으나 **변경에는 닫혀** 있어야 한다.
 
-의미를 풀자면 어떤 기능을 하는 클래스를 만들었다면, 새로운 기능을 확장할 수 있지만, 어떤 기능을 추가하거나 변경해야할 경우에, 잘 돌아가고 있는 것을 수정할 필요가 없어야 한다.  
+의미를 풀자면 어떤 기능을 하는 클래스를 만들었다면, 새로운 기능을 확장할 수 있지만, 어떤 기능을 추가하거나 변경해야할 경우에, 잘 돌아가고 있는 것을 수정할 필요가 없어야 한다.
 
-즉, 클래스의 기존 코드를 수정하지 않고도 클래스의 기능을 확장할 수 있어야 한다는 것.  
+즉, 클래스의 기존 코드를 수정하지 않고도 클래스의 기능을 확장할 수 있어야 한다는 것.
 
 우리 그런 경험 한 번씩 있을 것이다. 어떤 새로운 기능을 추가하려고 코딩을 진행했는데 기능을 추가하고 보니 다른 기존 기능이 동작하지 않아서 다른 코드를 고치고, 또 고쳤더니 또 다른 코드를 고치게 되는.. 지옥의 무한루프.  
-이를 방지하고자 하는 원칙이다.  
+이를 방지하고자 하는 원칙이다.
 
-기능을 확장할 때, 상속을 사용하여 애플리케이션에서 새로운 기능을 구현할 수 있는 방식으로 코드 구현을 설계해야 한다. 기존 클래스를 변경하는 대신 기본 클래스에서 파생된 새 클래스를 추가하고 이 파생 클래스에 새 코드를 추가하도록 설계해야 한다.  
+기능을 확장할 때, 상속을 사용하여 애플리케이션에서 새로운 기능을 구현할 수 있는 방식으로 코드 구현을 설계해야 한다. 기존 클래스를 변경하는 대신 기본 클래스에서 파생된 새 클래스를 추가하고 이 파생 클래스에 새 코드를 추가하도록 설계해야 한다.
 
-상속의 경우 클래스 상속 대신 인터페이스 상속을 고려해야 한다. 파생 클래스가 기본 클래스의 구현에 의존하는 경우 기본 클래스와 파생 클래스 간의 종속성을 생성하게 된다. 인터페이스를 사용하면 인터페이스와 기존의 다른 클래스를 변경하지 않고 이 인터페이스를 구현하는 새 클래스를 추가하여 새로운 기능을 제공할 수 있다. 인터페이스는 또한 인터페이스를 구현하는 클래스 간의 느슨한 결합을 가능하게 한다.  
+상속의 경우 클래스 상속 대신 인터페이스 상속을 고려해야 한다. 파생 클래스가 기본 클래스의 구현에 의존하는 경우 기본 클래스와 파생 클래스 간의 종속성을 생성하게 된다. 인터페이스를 사용하면 인터페이스와 기존의 다른 클래스를 변경하지 않고 이 인터페이스를 구현하는 새 클래스를 추가하여 새로운 기능을 제공할 수 있다. 인터페이스는 또한 인터페이스를 구현하는 클래스 간의 느슨한 결합을 가능하게 한다.
 
 아래 예를 살펴보자.
 
 <br>
 
-``` csharp
+```csharp
 // HTML 형식의 보고서를 생성하는 클래스
 public class Report
 {
@@ -216,7 +224,7 @@ public class Report
 <br>
 <br>
 
-``` csharp
+```csharp
 // HTML과 JSON형식의 보고서를 생성하는 클래스
 public class Report
 {
@@ -235,7 +243,7 @@ public class Report
 <br>
 <br>
 
-``` csharp
+```csharp
 // Report 관련 인터페이스
 public interface IGenerateReport
 {
@@ -255,11 +263,10 @@ public class GenerateHTMLReport : IGenerateReport
 
 위 코드는 보고서 관련 인터페이스 상속을 통해 HTML 보고서 기능을 생성하기 위한 인터페이스를 추가했다.
 
-
 <br>
 <br>
 
-``` csharp
+```csharp
 // 보고서 생성 관련 인터페이스
 public interface IGenerateReport
 {
@@ -287,33 +294,37 @@ public class GenerateJSONReport : IGenerateReport
 }
 ```
 
-나머지 JSON 관련 코드를 추가하면서 OCP를 만족시켰다.  
+나머지 JSON 관련 코드를 추가하면서 OCP를 만족시켰다.
 
 **개방/폐쇄 원칙의 이점**
-- 인터페이스를 통한 상속은 해당 인터페이스를 구현하는 클래스 간의 결합도를 낮출 수 있다.
-- 새 기능을 추가하기 위해 기존 코드를 변경하지 않으므로 기존 코드를 수정하면서 생기는 이슈가 없다.
 
+-   인터페이스를 통한 상속은 해당 인터페이스를 구현하는 클래스 간의 결합도를 낮출 수 있다.
+-   새 기능을 추가하기 위해 기존 코드를 변경하지 않으므로 기존 코드를 수정하면서 생기는 이슈가 없다.
 
 <br>
 <br>
 
 ## 3. 리스코프 치환 원칙 - LSP (Liskov Substitution Principle)
+
 ---
+
 기본 클래스 = 부모 클래스 = 상속해주는 클래스 = 슈퍼 클래스
 파생 클래스 = 자식 클래스 = 상속받는 클래스 = 서브 클래스
+
 > 자료형 **S**가 자료형 **T**의 하위형이라면 필요한 프로그램의 속성(정확성, 수행하는 업무 등)의 변경 없이 자료형 **T**의 객체를 자료형 **S**의 객체로 교체(치환)할 수 있어야 한다.
 
 처음에는 한 문장으로 쉽게 와닿지 않을 수 있다. 아래는 같은 의미를 다른 문장으로 표현한 것이다.
 
-- 부모 객체와 부모 객체를 상속받은 자식 객체가 있을 때, 부모 객체를 호출하는 모든 경우에서 부모 객체 대신 자식 객체로 치환되어도 부모 객체처럼 완전히 대체될 수 있다.
-- 사용자의 관점에서 기능에 영향을 미치지 않고 서브 클래스를 부모 클래스로 대체 할 수 있어야 한다.
-- 자식 클래스를 만들 때, 자식 클래스는 부모 클래스와 치환되어도 완벽하게 대체될 수 있게 자식 클래스를 만들어야 한다.
-- 파생 클래스와 기본 클래스에 동일한 함수가 있는 경우, 파생 클래스가 동일한 동작으로 해당 함수를 구현해야 한다.
-- 주어진 동일한 유형의 input에 파생 클래스와 동일한 유형의 output을 제공해야 한다.
+-   부모 객체와 부모 객체를 상속받은 자식 객체가 있을 때, 부모 객체를 호출하는 모든 경우에서 부모 객체 대신 자식 객체로 치환되어도 부모 객체처럼 완전히 대체될 수 있다.
+-   사용자의 관점에서 기능에 영향을 미치지 않고 서브 클래스를 부모 클래스로 대체 할 수 있어야 한다.
+-   자식 클래스를 만들 때, 자식 클래스는 부모 클래스와 치환되어도 완벽하게 대체될 수 있게 자식 클래스를 만들어야 한다.
+-   파생 클래스와 기본 클래스에 동일한 함수가 있는 경우, 파생 클래스가 동일한 동작으로 해당 함수를 구현해야 한다.
+-   주어진 동일한 유형의 input에 파생 클래스와 동일한 유형의 output을 제공해야 한다.
 
 만약 이 원칙을 잘 지킨다면, 기본 클래스 함수를 사용하는 클라이언트 코드는 수정없이 파생 클래스의 동일한 함수를 안전하게 쓸 수 있다.
 
--------
+---
+
 그래. 무슨 의미인지는 알겠는데 왜? 이 원칙이 뜻하는게 무엇인지?
 
 사실 리스코프 치환 원칙은 인터페이스와 추상클래스의 적절한 상속, 다형성 등 객체지향의 두드러지는 특징을 적절하게 사용한다면 지켜질 수 밖에 없는 원칙이다.
@@ -325,19 +336,21 @@ public class GenerateJSONReport : IGenerateReport
 3. 상속을 통한 재사용은 기본 클래스와 파생 클래스 사이에 IS-A 관계가 있는 경우로만 제한 되어야 한다.
 4. 사전에 약속한 기획대로 구현하고 상속 시 부모에서 구현한 원칙을 따라야 한다.
 
-인터페이스와 추상 클래스를 사용하는 이유는 **코드 재사용성과 다형성을 통한 파생(확장)** 이다. 
+인터페이스와 추상 클래스를 사용하는 이유는 **코드 재사용성과 다형성을 통한 파생(확장)** 이다.
 
-다형성으로 인한 확장효과를 얻기 위해서는 서브 클래스가 기반 클래스와 클라이언트 간의 규약(인터페이스)를 어겨서는 안된다. 
+다형성으로 인한 확장효과를 얻기 위해서는 서브 클래스가 기반 클래스와 클라이언트 간의 규약(인터페이스)를 어겨서는 안된다.
 
----------
+---
 
 #### 깊은 이론
+
 리스코프 치환 원칙은 새로운 객체 지향 프로그래밍 언어에 채용된 시그니처에 관한 몇 가지 표준적인 요구사항을 강제한다.
 
 **표준적인 요구사항**
-- 하위형에서 메서드 인수의 반공변성
-- 하위형에서 반환형의 공변성
-- 하위형에서 메서드는 상위형 메서드에서 던져진 예외의 하위형을 제외하고 새로운 예외를 던지면 안된다.
+
+-   하위형에서 메서드 인수의 반공변성
+-   하위형에서 반환형의 공변성
+-   하위형에서 메서드는 상위형 메서드에서 던져진 예외의 하위형을 제외하고 새로운 예외를 던지면 안된다.
 
 공변성(Covariance)은 할당 호환성을 유지하고
 반공변성(Contravariance)은 할당 호환성을 유지하지 않는다.
@@ -347,9 +360,10 @@ public class GenerateJSONReport : IGenerateReport
 <br>
 
 **하위형(파생 클래스)이 만족해야하는 행동 조건**
-- 하위형에서 선행조건은 강화될 수 없다. (input 조건이 많아질 수 없다.)
-- 하위형에서 후행조건은 약화될 수 없다. (output 조건이 적어질 수 없다.)
-- 하위형에서 상위형의 불변조건은 반드시 유지되어야 한다.
+
+-   하위형에서 선행조건은 강화될 수 없다. (input 조건이 많아질 수 없다.)
+-   하위형에서 후행조건은 약화될 수 없다. (output 조건이 적어질 수 없다.)
+-   하위형에서 상위형의 불변조건은 반드시 유지되어야 한다.
 
 선행조건: 함수가 오류없이 실행되기 위한 input의 모든 조건
 후행조건: 함수가 실행된 후 output이 유효한 것인지에 대한 조건
@@ -357,27 +371,28 @@ public class GenerateJSONReport : IGenerateReport
 약화된 후행조건: 후행조건이 더 약해진 것 > 조건이 감소한 것
 불변조건의 의미: 부모 클래스의 데이터는 계속 유지되어야 한다.
 
-
 <br>
 <br>
 
 ## 4. 인터페이스 분리 원칙 - ISP (Interface Segregation Principle)
+
 ---
+
 > 한 클래스에서 그 클래스가 사용하지 않는 메서드를 의존하지 않아야 한다.
 
 어떤 클래스가 다른 클래스에 종속될 때에는 가능한 최소한의 인터페이스만을 사용해야 한다는 의미로, SRP은 클래스의 단일 책임을 강조한 원칙이라면, ISP는 인터페이스의 단일 책임을 강조한 원칙이다.
 
-인터페이스 분리 원칙을 통해 시스템의 내부 의존성을 약화시켜 리팩토링, 수정, 재배포를 쉽게 할 수 있다. 
+인터페이스 분리 원칙을 통해 시스템의 내부 의존성을 약화시켜 리팩토링, 수정, 재배포를 쉽게 할 수 있다.
 
 아래 예를 살펴보자.
 
 > 음식점 인터페이스 내부에 **한식요리하기()**, **중식요리하기()**, **일식요리하기()** 메서드가 있다고 가정하자.  
-> 그리고 이 음식점을 상속받은 한정식집, 중화요리집, 스시집이 있다.  
+> 그리고 이 음식점을 상속받은 한정식집, 중화요리집, 스시집이 있다.
 >
-> 한식을 파는 한정식집은 오직 한식요리하기()만 사용하고, 
-> 중식을 파는 중화요리 전문점은 중식요리하기()만 사용하고, 
-> 일식을 파는 스시집은 일식요리하기()만 사용할 것이다.  
-> 
+> 한식을 파는 한정식집은 오직 한식요리하기()만 사용하고,
+> 중식을 파는 중화요리 전문점은 중식요리하기()만 사용하고,
+> 일식을 파는 스시집은 일식요리하기()만 사용할 것이다.
+>
 > 이 세 가지 메서드는 같은 인터페이스 내부에 존재하고, 각 음식점들은 같은 인터페이스를 상속받았기 때문에 만약 한식요리하기()의 방식이 달라진다면 중화요리 전문점과 스시집은 한식 요리와 전혀 관계가 없더라도 중화요리 전문점과 스시집을 재컴파일 해야한다.
 
 위의 경우는 인터페이스 분리 원칙을 적용하지 못한 예다.
@@ -385,32 +400,352 @@ public class GenerateJSONReport : IGenerateReport
 
 이는 하나의 책임만을 가진다는 점에서 단일책임 원칙과 유사하다.
 
+아래 예를 살펴보자
+
+```csharp
+public interface IUtility
+{
+    bool LogData(string logdata);
+    string GetDbConnStringFromConfig();
+    bool SaveTransaction(object tranData);
+    object GetTransaction(string tranID);
+}
+
+public class ConfigParameters : IUtility
+{
+    public string GetDbConnStringFromConfig()
+    {
+        string dbConn = string.Empty;
+        //Read Connection String From Config
+        return dbConn;
+    }
+    public object GetTransaction(string tranID)
+    {
+        throw new NotImplementedException();    // 해당 메소드는 활용하지 않기에 예외처리
+    }
+    public bool LogData(string logdata)
+    {
+        throw new NotImplementedException();     // 해당 메소드는 활용하지 않기에 예외처리
+    }
+    public bool SaveTransaction(object tranData)
+    {
+        throw new NotImplementedException();    // 해당 메소드는 활용하지 않기에 예외처리
+    }
+}
+
+public class Logger : IUtility
+{
+    public bool LogData(string logdata)
+    {
+        //Log data to File
+        return true;
+    }
+    public string GetDbConnStringFromConfig()
+    {
+        throw new NotImplementedException();    // 해당 메소드는 활용하지 않기에 예외처리
+    }
+    public object GetTransaction(string tranID)
+    {
+        throw new NotImplementedException();    // 해당 메소드는 활용하지 않기에 예외처리
+    }
+    public bool SaveTransaction(object tranData)
+    {
+        throw new NotImplementedException();    // 해당 메소드는 활용하지 않기에 예외처리
+    }
+}
+
+public class TransactionOperations : IUtility
+{
+    public object GetTransaction(string tranID)
+    {
+        Object objTran = new object();
+        //Retrieve Transaction
+
+        return objTran;
+    }
+
+    public bool SaveTransaction(object tranData)
+    {// 해당 메소드는 활용하지 않기에 예외처리
+        //Save Transaction
+
+        return true;
+    }
+
+    public string GetDbConnStringFromConfig()
+    {
+        throw new NotImplementedException();    // 해당 메소드는 활용하지 않기에 예외처리
+    }
+    public bool LogData(string logdata)
+    {
+        throw new NotImplementedException();    // 해당 메소드는 활용하지 않기에 예외처리
+    }
+}
+```
+
+현재 위 코드 내에 정의된 인터페이스를 상속받는 경우, `LogData`, `GetDbConnStringFromConfig`, `SaveTransaction`, `GetTransaction` 메서드를 구현할 의무가 있다.
+
+그러나, 각각의 상속받는 클래스는 일부 메서드를 기능상 구현할 필요가 없기에 예외처리 코드를 집어넣었다.
+
+이는 잘못된 인터페이스 설계로 인해 발생했다.
+인터페이스와 상속받는 클래스들간의 IS-A 관계가 완벽하게 지켜지지 않았기 때문에 발생했다.
+
+결국 잘못된 상속관계는 인터페이스 분리 원칙을 위반하게 된다. (인터페이스 구조를 잘 설계하는 것이 매우 중요하다.)
+
+수정된 코드를 살펴보자 ⬇
+
+```csharp
+// 인터페이스
+public interface IConfigOperations
+{
+    string GetDbConnStringFromConfig();
+}
+public interface ILogging
+{
+    bool LogData(string logdata);
+}
+public interface ITransactionOperations
+{
+    bool SaveTransaction(object tranData);
+    object GetTransaction(string tranID);
+}
+
+// 서브 클래스
+public class ConfigParameters : IConfigOperations
+{
+    public string GetDbConnStringFromConfig()
+    {
+        string dbConn = string.Empty;
+        //Read Connection String From Config
+        return dbConn;
+    }
+}
+public class Logger : ILogging
+{
+    public bool LogData(string logdata)
+    {
+        //Log data to File
+        return true;
+    }
+}
+public class TransactionOperations : ITransactionOperations
+{
+    public object GetTransaction(string tranID)
+    {
+        Object objTran = new object();
+        //Retrieve Transaction
+        return objTran;
+    }
+    public bool SaveTransaction(object tranData)
+    {
+        //Save Transaction
+        return true;
+    }
+}
+```
+
+하나의 큰 인터페이스를 분리하여 책임을 분리하였고, 분리된 인터페이스 중 각각의 클래스는 필요한 인터페이스를 상속받았기 때문에 IS-A 관계는 물론, SOLID의 ISP 또한 지킬 수 있게 수정되었다.
+
+**인터페이스 분리 원칙의 이점**
+
+-   더 작은 인터페이스를 구현하여 책임을 분리할 수 있다. (유지보수에 강하다.)
+-   더 작은 인터페이스를 구현하여 배포할 수 있다.
+-   서브 클래스는 해당 클래스에 필요한 인터페이스를 상속받을 수 있으므로 클래스에 필요한 기능만 구현할 수 있다.
+    (필요없는 메서드에 대한 예외를 던질 필요가 없다.)
+
 <br>
 <br>
 
 ## 5. 의존관계 역전 원칙 - DIP (Dependency Inversion Principle)
+
 ---
-> 저수준 모듈이 고수준 모듈에 의존해야 한다
 
-저수준 모듈: 
-고수준 모듈: 인터페이스나 추상 클래스와 같은 추상적 개념
+> 상위 모듈은 하위 모듈에 의존하면 안되며, 상위 모듈과 하위 모듈 모두 추상화에 의존해야 한다.
+> 추상화는 세부 사항에 의존해서는 안된다. 세부사항이 추상화에 의존해야 한다.
 
-1. 상위 모듈은 하위 모듈에 의존해서는 안된다. 상위 모듈과 하위 모듈 모두 추상화에 의존해야 한다.
-2. 추상화는 세부 사항에 의존해서는 안된다. 세부사항이 추상화에 의존해야 한다.
+고수준 모듈: 프로그램 내의 비교적 큰 틀을 규범하는 것
+저수준 모듈: 프로그램 내의 비교적 작은 단위의 디테일적 요소
 
+저수준 모듈이 고수준 모듈에 의존하면 안된다는 것의 의미는 무엇일까?
+
+아래 예를 살펴보자.
+
+> **스마트폰** 판매점이 있다.
+> 이 판매점에서 스마트폰을 구매하면, 스마트폰과 **젤리케이스**를 주는 서비스가 있다.
+> (스마트폰 객체 내부에 젤리케이스 객체가 생성되는 구조)
+> 그러나, 젤리케이스의 인기가 떨어져 **유리케이스**가 지급되도록 정책이 바뀌었다.
+
+위의 예시를 프로그래밍 관점에서 설명하자면, **스마트폰**이라는 고수준 모듈이 **젤리케이스**라는 저수준 모듈에 의존되어 있었다. (처음에는 해당 구현이 문제가 없었다.)
+
+그러나, 유지보수 요청으로 **젤리케이스**가 아닌 **유리케이스**로 코드가 교체되어야 했다.
+물론 해당 코드는 **스마트폰** 인스턴스 내에서 생성되기 때문에 이를 수정하기 위해서는 **스마트폰** 클래스 내부를 수정해야 한다.
+
+이는 뜬금없는 **스마트폰** 클래스 내부를 수정하게 됐으므로 OCP 개방 폐쇄 원칙을 위배하는 케이스가 되었다.
+
+이런 상황이 야기된 이유는 고수준 모듈(스마트폰)의 생성이 저수준 모듈(케이스)에 의존되어 있었기 때문이다.
+
+그럼 이를 해결하는 방법은 무엇일까?
+저수준 클래스에 **케이스** 인터페이스 또는 추상 클래스를 상속받게 해야하며, 고수준 클래스는 이러한 부분을 사용하여 구체적인 저수준 클래스에 접근해야 한다.
+
+또 다른 코드 예시를 살펴보자
+
+```csharp
+public class OrderRepository
+{
+    public bool AddOrder(object orderDetails)
+    {
+        //Save Order to Database
+
+        return true;
+    }
+
+    public bool ModifyOrder(object orderDetails)
+    {
+        //Modify Order Details in Database
+
+        return true;
+    }
+
+    public object GetOrderDetails(string orderId)
+    {
+        object orderDetails = new object();
+
+        //Get Order Details from Database for given oderId
+
+        return orderDetails;
+    }
+}
+
+public class Order
+{
+    private OrderRepository _orderRepository = null;
+
+    public Order()
+    {
+        _orderRepository = new OrderRepository();
+        // OrderRepository 클래스를 Order 클래스 내부에서 생성한다.
+        // 즉, Order은 OrderRepository를 의존한다.
+    }
+
+    public bool AddOrder(object orderDetails)
+    {
+        return _orderRepository.AddOrder(orderDetails);
+    }
+
+    public bool ModifyOrder(object orderDetails)
+    {
+        return _orderRepository.ModifyOrder(orderDetails);
+    }
+
+    public object GetOrderDetails(string orderId)
+    {
+        return _orderRepository.GetOrderDetails(orderId);
+    }
+}
+
+```
+
+위 코드는 현재 Order 클래스가 OrderRepository 클래스를 의존한다.
+이는 두 클래스간의 결합도를 증가시킨다.
+따라서 추상화를 사용하여 클래스간의 느슨한 결합을 유도하는 의존관계 역전원칙을 위반한다.
+
+의존관계 역전원칙을 지키도록 수정해보자.
+
+```csharp
+public interface IOrderRespository
+{
+    bool AddOrder(object orderDetails);
+    bool ModifyOrder(object orderDetails);
+    object GetOrderDetails(string orderId);
+}
+
+public class OrderRepository : IOrderRespository
+{
+    public bool AddOrder(object orderDetails)
+    {
+        //Save Order to Database
+
+        return true;
+    }
+
+    public bool ModifyOrder(object orderDetails)
+    {
+        //Modify Order Details in Database
+
+        return true;
+    }
+
+    public object GetOrderDetails(string orderId)
+    {
+        object orderDetails = new object();
+
+        //Get Order Details from Database for given oderId
+
+        return orderDetails;
+    }
+}
+
+public class Order
+{
+    private IOrderRespository _orderRepository = null;
+
+    public Order(IOrderRespository orderRepository)
+    {
+        // Order 클래스 내부가 아닌 외부의 파라미터로 전달받는 식으로 수정되었다.
+        _orderRepository = orderRepository;
+    }
+
+    public bool AddOrder(object orderDetails)
+    {
+        return _orderRepository.AddOrder(orderDetails);
+    }
+
+    public bool ModifyOrder(object orderDetails)
+    {
+        return _orderRepository.ModifyOrder(orderDetails);
+    }
+
+    public object GetOrderDetails(string orderId)
+    {
+        return _orderRepository.GetOrderDetails(orderId);
+    }
+}
+
+
+```
+
+아래는 구현부다.
+
+```csharp
+// 실제로 활용한다면 해당 방식으로 객체를 생성하게 된다.
+Order order = new Order(new OrderRepository());
+```
+
+해당 코드는 외부에서 인스턴스를 전달받는 방식으로 수정되었다.
+그리고 IOrderRespository 인터페이스를 상속받는 모든 클래스의 인스턴스를 파라미터로 활용할 수 있게 되었다.
+만약, IOrderRespository를 상속받는 또 다른 기능의 클래스가 추가된다면, Order는 다른 클래스와의 결합도가 낮기 때문에 개방/폐쇄 원칙을 위반하지 않는다.
 
 <br>
 <br>
+
+## 마무리
+---
+
+지금까지 객체지향 프로그래밍에서 5가지의 SOLID 원칙을 알아보았다.
+5가지 원칙들은 객체지향적 개념과 함께 원칙끼리의 상호 연관성이 매우 높다.
+때문에 SOLID는 하나하나의 예시만 숙지하여 개별 원칙의 개념만 이해하는 것이 아니라 SOLID 원칙이 객체지향 프로그래밍 언어에서 프로그램을 설계할 때 영향을 미치는 유동적인 상황들을 고려할 수준을 목표로 해야한다고 생각이 들었다.
+쉽지 않군...💦
 
 <br>
 <br>
 
 ## Reforence
+
 ---
-<a href="https://ko.wikipedia.org/wiki/SOLID_(%EA%B0%9D%EC%B2%B4_%EC%A7%80%ED%96%A5_%EC%84%A4%EA%B3%84)">위키백과 SOLID</a>  
+
+<a href="https://ko.wikipedia.org/wiki/SOLID_(%EA%B0%9D%EC%B2%B4_%EC%A7%80%ED%96%A5_%EC%84%A4%EA%B3%84)">위키백과 SOLID</a>
 
 <a href="https://procodeguide.com/design/solid-principles-with-csharp-net-core/?utm_source=rss&utm_medium=rss&utm_campaign=solid-principles-with-csharp-net-core#What_are_Solid_Principles">Pro Code Guide - By Sanjay</a>
 
 [jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-gh]: https://github.com/jekyll/jekyll
 [jekyll-talk]: https://talk.jekyllrb.com/
