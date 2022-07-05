@@ -1,0 +1,42 @@
+---
+layout: post
+title: "[Day 1] lv1 움직이려는 자"
+date: 2022-07-04 23:00:00 +09:00
+excerpt: "조던 피터슨의 일기장 Day 1"
+growup: true
+categories: growup
+comments: true
+---
+## 📒 성장일기
+---------------------------
+
+<figure>
+    <a href="/assets/img/util_images/GrowDiray.jpg"><img src="/assets/img/util_images/GrowDiray.jpg"></a>    
+    <figcaption style="text-align:center">Day 1 움직이려는 자</figcaption>
+</figure>
+
+<br>
+<br>
+
+# Day 1 움직이려는 자
+---
+## 1. 개선하고 싶은 부분
+나는 남들보다 자기애가 충만한 사람이다.  
+그만큼 나 스스로의 성장을 항상 원하지만 노력을 하고 싶지 않은 도둑놈 마인드를 갖고 있다.  
+누구보다 자기계발을 열망하면서 그에 따른 노력을 하지 않는 나.  
+나를 바꾸겠다.
+
+## 2. 그에 대한 해결책과 필요한 노력 과정
+퇴근 후, 할 일을 최소한으로 하고 스터디 카페에 곧장 가자.  
+"해야겠다" 가 아닌 "한다" 라는 마인드 장착.  
+먼 목표를 바라보기 보다 코 앞에 닥친 목표에 몰두하자.  
+
+## 3. 본인이 약속을 지켰는지
+이제부터 시작
+
+<br>
+<br>
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
