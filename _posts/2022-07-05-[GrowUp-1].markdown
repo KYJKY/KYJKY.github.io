@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[Day 1] lv1 움직이려는 자"
+title: "[Day 1] lv1 움직이려는 자 22.07.05"
 date: 2022-07-04 23:00:00 +09:00
 excerpt: "조던 피터슨의 일기장 Day 1"
 growup: true
