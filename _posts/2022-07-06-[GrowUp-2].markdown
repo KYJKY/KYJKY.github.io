@@ -1,0 +1,49 @@
+---
+layout: post
+title: "[Day 2] lv1 움직이려는 자"
+date: 2022-07-04 23:15:09 +09:00
+excerpt: "조던 피터슨의 일기장 Day 2"
+growup: true
+categories: growup
+comments: true
+---
+## 📒 성장일기
+---------------------------
+
+<figure>
+    <a href="/assets/img/util_images/GrowDiray.jpg"><img src="/assets/img/util_images/GrowDiray.jpg"></a>    
+    <figcaption style="text-align:center">Day 2 움직이려는 자</figcaption>
+</figure>
+
+<br>
+<br>
+
+# Day 2 움직이려는 자
+---
+## 1. 개선하고 싶은 부분
+아침 시간을 활용하자.  
+아침에 밍기적 거리지 말자.  
+10분 더 자는 것 보다 10분 가볍게 스트레칭하는 것이 하루를 사는데 더욱 풍요롭게 한다.  
+목과 어깨, 다리 순으로 가볍게 근육을 깨우자.  
+3개월 안에 정상적인 몸이 되자. 매일 조금씩 개선하자.  
+책과 멀어지고 있다. 유튜브 쇼츠 대신 책을 읽자.
+
+## 2. 그에 대한 해결책과 필요한 노력 과정
+꾸준함 스택을 쌓자.  
+포기하면 내 노력이 한 줌의 재가 된다고 생각하자.  
+작은 스택에서 포기하지 말자.  
+일어나자마자 생각하자. 내가 오늘 무엇을 하면 안되는지.  
+내가 지금 이 시간에 나를 위해 어떤 것을 해야하는지.
+
+## 3. 본인이 약속을 지켰는지
+목이 아픈 핑계로 늦게 스터디 카페에 오게 되었다.  
+쉬는 시간에 유튜브 쇼츠를 보게 되었다.  
+도파민 절제의 강도를 높히자.  
+작은 발전을 위해 행동하는 나를 만들자.  
+
+<br>
+<br>
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
