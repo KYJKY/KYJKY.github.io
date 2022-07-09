@@ -1,0 +1,151 @@
+---
+layout: post
+title: "[CS지식] MAC, HMAC"
+date: 2022-07-09 13:10:59 +09:00
+excerpt: "API 쓰면서 마주친 HMAC.."
+cs: true
+categories: cs
+comments: true
+---
+# 📌 MAC과 HMAC에 대해 알아보자.
+---------------------------
+
+<figure>
+    <a href="/assets/img/cs/2022-07-09/key.gif"><img src="/assets/img/cs/2022-07-09/key.gif"></a>    
+    <figcaption style="text-align:center">짤은 본문의 내용과 관련없음</figcaption>
+</figure>
+
+
+<br>
+<br>
+
+## 1️⃣ 메시지 인증 코드(MAC, Message Authentication Code)
+----------------
+### MAC, 이게 뭐죠? 맥북?
+메시지의 인증에 쓰이는 작은 크기의 정보.  
+메시지가 올바른지, 보낸 출처가 유효한지를 확인하는 알고리즘.  
+MAC을 통해 메시지의 유효성과 무결성을 보장받을 수 있다.
+
+메시지: 네트워크 상의 요청.
+
+<br>
+
+### 그게 어떻게 작동하는데요?
+#### 작동 원리
+1. 발신자와 수신자, 그리고 Key와 Massege가 있다고 치자. 여기서 Key는 발신/수신측에게만 알려진 동일한 보안키다.  
+2. 발신측에서 MAC 알고리즘은 Key와 Massege를 통해 고정길이 인증 코드인 MAC을 생성한다.  
+3. 발신자는 Massege와 MAC을 수신자에게 전송한다.
+4. 수신측의 Key와 전송받은 Massege를 통해 MAC을 생성하여 전송받은 MAC과 비교한다.
+5. if(전송받은 MAC == 수신측이 만든 MAC)  
+인증성공 = true
+
+<br>
+
+#### 만약 MAC이 없다면? (자작 예시)
+1. 돈을 예약 송금해주는 은행 서비스 API서버에 A라는 사람이 요청을 보내려고 함.  
+2. A의 요청: B에게 A의 계좌에서 10만원을 다음날 5시에 보내줘요.  
+3. 해커 C가 개입함.  
+    3-1. C가 A의 메시지를 중간에 탈취하여 "C에게 A의 계좌에서 100만원을 보내줘요."라고 조작함 (메시지 조작)  
+    3-2. C가 "C에게 A의 계좌에서 100만원을 보내라"라는 요청을 서버에 보냄 (잘못된 출처)  
+4. API 서버는 받은 요청을 그대로 처리함.  
+5. 억장 와르르  
+
+<br>
+
+#### MAC을 사용했다면? (자작 예시의 다른 엔딩)
+1. 해커C가 개입함.  
+    1-1. 중간에 메시지를 조작했다. 그러나 MAC을 조작하기에는 MAC 생성에 필요한 보안키를 모르기 때문에 조작할 수 없었다.   
+    1-2. 조작된 메시지를 보냈다. 그러나 서버의 보안키를 모르기 때문에 동일한 MAC을 생성할 수 없었다.
+2. 해피 엔딩
+
+<br>
+
+### 그래서 어떤 방식으로 MAC을 생성하나요?
+여러 방법이 있다. MAC은 여러 종류가 존재한다.
+
+- One-key MAC
+- HMAC: 일방향 해쉬 함수 사용 (SHA1, SHA256, MD5)
+- CMAC: Block 함수 사용 (AES, DES)
+- UMAC
+- CBC-MAC
+
+등등 여러 종류가 있지만, 우리는 HMAC를 알아보겠다.
+(RESTful API에서 많이 쓰이는 방식)
+
+
+
+
+<br>
+<br>
+
+## 2️⃣ HMAC(Hash + MAC, Hash based Message Authentication Code)
+-----------------------
+### 이건 뭐임?
+일방향 해쉬 알고리즘 기반의 MAC 방식이다.  
+여러 해쉬 알고리즘을 사용할 수 있다. 보통 'HMAC-알고리즘명' 이런식으로 뒤에 알고리즘명이 붙는다.  
+ex) HMAC-sha256, HMAC-MD5 등등  
+
+AES와 같은 블록 방식 MAC은 
+
+생성된 MAC은 당연히 사용한 해쉬함수의 형태가 된다.
+
+<br>
+
+### API에서의 활용
+위 MAC의 예시와 같다.  
+API 서버는 유효한 Secret Key를 생성할 것이고 이를 사용하여 MAC을 생성하고 비교할 것이다.  
+
+<br>
+
+### HMAC의 취약점 및 문제점
+#### 재전송 공격
+HMAC은 재전송 공격에 취약하다.  
+재전송 공격이란, 발신자의 올바른 요청을 도청하여 모아두었다가 나중에 재전송하는 방법.  
+이를 막기 위해 API는 추가적으로 시간값을 메시지랑 같이 MAC코드화 할 것이다.  
+보통 시간값은 유닉스 시간(1970.01.01 00:00 부터 지금까지의 밀리초를 환산한 값)으로 받는다.  
+API 서버시간과 메시지의 시간이 차이가 난다면, 유효하지 않는 메시지로 판단한다.  
+이처럼 재전송 공격을 예방할 수 있다.  
+
+<br>
+
+#### 공격자가 비밀키 추측 가능
+결국은 비밀키를 통해 MAC을 생성하기 때문에, 비밀키에 대한 보안이 중요하다.  
+비밀키는 암호학적으로 안전한 난수를 사용하는 것이 좋다.
+
+<br>
+
+#### 제 3자에 의한 증명 불가능
+MAC 자체로는 제 3자에게 메시지가 유효하다는 증명을 할 수 있는 방법이 없다.
+
+<br>
+
+#### 부인 방지 불가능
+제 3자에게 증명이 불가능하기 때문에 아래와 같은 상황이 생길 수 있다.  
+A가 B에게 메시지를 보냈다고 가정하자.  
+B는 A가 메시지를 보냈다는 사실을 확신하지만, 다른 사람들에게는 증명할 수 없다.  
+만약 A는 다른 사람들에게 "저는 B에게 메시지 안보냈어요!"라고 하면 B는 아무 반박도 할 수 없는 것.  
+그러므로 이와 같은 문제점이 발생할 수 있는 부분은 전자서명, 전자결제 등 인증서를 발급하여 처리하는 로직을 사용하는 것이 옳다.
+
+<br>
+
+
+
+
+
+
+
+## 출처
+---
+<a href="https://ko.wikipedia.org/wiki/%EB%A9%94%EC%8B%9C%EC%A7%80_%EC%9D%B8%EC%A6%9D_%EC%BD%94%EB%93%9C">메시지 인증 코드 위키백과</a>  
+
+<a href="https://ko.wikipedia.org/wiki/HMAC">HMAC 위키백과</a>  
+
+<a href="https://www.fortinet.com/resources/cyberglossary/message-authentication-code">What Is a Message Authentication Code?</a>  
+
+<a href="https://www.joinc.co.kr/w/man/12/hmac">joinc HMAC</a>
+
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
+
