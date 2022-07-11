@@ -1,0 +1,177 @@
+---
+layout: post
+title: "[CS지식] 웹 브라우저 렌더링 과정"
+date: 2022-07-11 21:26:01 +09:00
+excerpt: "브라우저. 과연 어떻게 동작하는가!?"
+cs: true
+categories: cs
+comments: true
+---
+# 📌 웹 브라우저 렌더링 과정에 대해 알아보자
+---------------------------
+
+<figure>
+    <a href="/assets/img/cs/2022-07-11/paint.gif"><img src="/assets/img/cs/2022-07-11/paint.gif"></a>    
+    <figcaption style="text-align:center">브라우저는 엄청난 화가일거야</figcaption>
+</figure>
+
+
+<br>
+<br>
+
+# 주제: 웹 브라우저 렌더링 과정
+### 웹 브라우저(Web browser)
+- HTML 문서와 그림, 멀티미디어 파일등 월드 와이드 웹을 기반으로 한 인터넷의 컨텐츠를 검색 및 열람하기 위한 응용 프로그램의 총칭.  
+- 웹 서버에서 이동하며(navigate) 쌍방향으로 통신하고 HTML 문서나 파일을 출력하는 그래픽 사용자 인터페이스 기반의 응용 소프트웨어.  
+
+<br>
+<br>
+
+### 브라우저 기본 구조
+---------------------
+`사용자 인터페이스` - 브라우저를 켰을 때 보이는 모든 영역들, 앞으로/뒤로 가기, 주소창, 페이지 등  
+`브라우저 엔진` - 사용자 인터페이스와 렌더링 엔진 사이의 동작을 제어.  
+`렌더링 엔진` - 콘텐츠를 렌더링하는 엔진. HTML과 이미지를 CSS로 표현함. 브라우저마다 엔진이 다름.  
+`통신` - HTTP 요청과 응답을 보낼 때 사용됨.  
+`UI 백엔드` - 텍스트 입력창, 드롭다운 리스트 등 기본적인 위젯을 만들어줌.  
+`자바스크립트 해석기` - 자바스크립트 코드를 해석하고 실행. 브라우저마다 엔진이 다름.  
+`자료 저장소` - 브라우저 자체적으로 필요한 저장 공간. 사용자 로컬에 저장됨. (쿠키, 로컬 스토리지 등)  
+
+<br>
+<br>
+<br>
+<br>
+
+----------------------------------
+![요즘IT, https://yozm.wishket.com/magazine/detail/1338/](https://user-images.githubusercontent.com/93513959/170858054-44543ce3-c6b7-4a7e-85fd-0cd810cd1674.png "요즘IT, https://yozm.wishket.com/magazine/detail/1338/")
+
+
+### 본격적인 렌더링 엔진의 동작 과정
+1. 파싱(Parsing)
+2. 렌더 트리(Render Tree) 구축
+3. 레이아웃(Layout) 또는 리플로우(Reflow)
+4. 페인트(Paint)
+
+<br>
+<br>
+
+## 1. 파싱(Parsing)
+토큰화 되어있는 코드를 구조화하는 과정.  
+토큰화 되어있는 코드는 어디서 생성되는가? > 어휘분석기(Lexical scanner, Lexer)를 통해 토큰화 된 코드가 생성됨.  
+토큰화 되어있다는 것은? > 의미가 있는 것을 최소한의 단위로 끊어놓은 것  
+
+>  `<div></div>` 라는 코드를 토큰화하면 `['<','div','>','</','div','>']`  
+
+<br>
+
+### 1) HTML 파싱과정
+토큰화 된 HTML 코드를 분석하여 파스 트리(Parse Tree)를 생성한다.  
+생성된 파스트리를 이용하여 DOM(Document Object Model) 트리를 생성한다.  
+
+#### ⚠ 파스 트리와 DOM의 차이점은? 
+파스 트리는 토큰화 된 문자열을 단순하게 구조화한 트리지만, DOM은 JS로 접근이 가능한 상태의 트리다.  
+차이점 > JS 접근 가능 유무
+
+<br>
+
+#### ❗ HTML 파서의 특징
+- 오류에 민감하지 않다. 우리가 HTML 문법을 정확히 맞추지 않아도 중단되지 않고 파싱된다.  
+- 파싱과정이 중단될 수 있다. `<script>`, `<link>`와 같은 태그를 만나게 되면 중단 후, 스크립트 해석이나 외부 파일을 처리한 후에 진행된다. 이러한 특성 때문에 스크립트를 뒤에서 호출하는 것이 사용자 경험에 유리할 수 있다.  
+- 일부 브라우저는 예측 파싱(Speculative parsing) 기법을 이용해 별도의 스레드에서 외부 스크립트, 링크, 스타일 등을 불러오기도 한다.   
+- 재시작할 수도 있다. 파싱과정 중 DOM이 추가/변경/삭제된다면 HTML은 처음부터 다시 파싱된다.
+
+<br>
+
+### 2) CSS 파싱과정
+CSS파싱 명세: <a href="https://www.w3.org/TR/CSS2/grammar.html">https://www.w3.org/TR/CSS2/grammar.html</a>
+
+CSS 파일이 다운되면 명세에 따라 CSS를 파싱하고 CSS파싱이 완료되면 CSS 또한 트리를 구축하는데, 이 트리를 CSSOM(CSS Object Model)라고 한다. CSS을 링크하는 코드가 HTML 코드 내에 삽입되어 있기 때문에, HTML을 파싱하는 도중에 CSS 파싱이 시작됨.  
+
+<br>
+<br>
+<br>
+<br>
+
+
+## 2. 렌더 트리(Render Tree) 구축
+![요즘IT, https://yozm.wishket.com/magazine/detail/1338/](https://user-images.githubusercontent.com/93513959/170860781-03604594-db13-480f-a0df-fd74131ff081.png "요즘IT, https://yozm.wishket.com/magazine/detail/1338/")
+DOM + CSSOM을 합친 트리를 만듬. 이를 렌더 트리라고 함.  
+렌더 트리는 화면에 나타나는 요소들을 결정하는 트리이며, 어떤 요소들이 어떤 스타일, 순서로 나타낼 것인지 담겨있다.  
+화면에 보여지지 않는 부분은 렌더링 되지 않는다.  
+EX) `<head>`, `<script>` 같은 태그나 `display: none` 스타일이 적용된 엘리먼트  
+
+
+그렇기 때문에 무조건 DOM과 렌더 트리는 1:1로 대응하지 않는다. 안보이는건 렌더 트리에 없으니까.
+
+<br>
+<br>
+<br>
+
+## 3. 레이아웃 / 리플로우
+
+걍 보면 이해되는 영상: <a href="https://youtu.be/ZTnIxIA5KGw">https://youtu.be/ZTnIxIA5KGw</a>
+
+렌더트리는 어떤 요소가 어떤 스타일, 순서로 나타낼지에 대한 정보는 있지만, 이를 어디에 표현하는지에 대한 정보는 없다.  
+이를 계산해주는 것이 레이아웃(리플로우)으로 불리는 과정.  
+렌더 트리에서 계산되지 않았던 노드들의 크기와 위치, 레이어 간 순서와 같은 정보를 계산하여 좌표에 나타냄.  
+
+### 전역적 레이아웃
+화면 전체의 레이아웃을 계산하는 것.  
+모든 트리노드에 기하학적 계산을 때리기 때문에 노드가 많을수록 레이아웃 속도가 느려짐.  
+이러한 현상을 해결하기 위해 `더티 비트 시스템`이라는 자체적 로직이 탑재되어 있음.  
+
+더티 비트 시스템(Dirty bit System): 특정 엘리먼트의 레이아웃이 변경이 되었을 때, 렌더 트리를 처음부터 탐색하면서 레이아웃을 계산하지 않고 특정한 부분만 다시 계산하여 리소스의 낭비를 줄이는 최적화 방법
+
+
+
+
+### 증분적 레이아웃
+레이아웃 과정에서 렌더 트리를 재귀적으로 탐색을 하다가 더티한 엘리먼트(레이아웃의 변경이 발생해야 하는 엘리먼트)들을 만날 경우, 그 계산을 즉시 수행하는 것이 아니라 스케쥴러를 통해 비동기로 일괄 작업(batch)을 진행하는 레이아웃.  
+
+<br>
+<br>
+
+레이아웃 과정에서 최적화가 필요하기 때문에 DOM을 접근하는 코드는 묶어주는 것이 좋음.
+``` javascript
+// 최적화가 안된 코드
+const divWidth = div1.clientWidth;
+div2.style.width = `${diwWidth}px`;
+const divHeight = div1.clientHeight;
+div2.style.height = `${divHeight}px`;
+
+// 최적화가 된 코드
+const divWidth = div1.clientWidth;
+const divHeight = div1.clientHeight;
+div2.style.width = `${diwWidth}px`;
+div2.style.height = `${divHeight}px`;
+```
+
+
+<br>
+<br>
+<br>
+
+## 4. 페인트
+레이아웃 단계를 통해 화면에 배치된 엘리먼트들에게 색을 입히고 레이어의 위치를 결정하는 단계.  
+이 또한 전역적/증분적 페인팅으로 나뉨.
+문서가 클수록 브라우저가 수행해야 하는 작업도 더 많아지고, 스타일이 복잡할수록 페인팅에 걸리는 시간도 늘어남.  
+
+### 페인팅의 순서
+- `z-index`값이 낮은 순서부터 페인팅된다.
+- 속성간의 페인팅 순서는 다음과 같다 > `background-color`, `background-image`, `border`, `children`, `outline`
+
+
+
+<br>
+<br>
+
+### 출처
+https://yozm.wishket.com/magazine/detail/1338/  
+https://d2.naver.com/helloworld/59361  
+https://namu.wiki/w/%EC%9B%B9%20%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80  
+https://ko.wikipedia.org/wiki/%EC%9B%B9_%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80  
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
+
