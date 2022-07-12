@@ -1,0 +1,49 @@
+---
+layout: post
+title: "[Day 5] lv1 움직이려는 자 22.07.12"
+date: 2022-07-12 21:37:11 +09:00
+excerpt: "성장 일기 Day 5"
+growup: true
+categories: growup
+comments: true
+---
+## 📒 성장일기
+---------------------------
+
+<figure>
+    <a href="/assets/img/grow/2022-07-12/lazy.gif"><img src="/assets/img/grow/2022-07-12/lazy.gif"></a>    
+    <figcaption style="text-align:center">귀찮음은 나의 적</figcaption>
+</figure>
+
+<br>
+<br>
+
+# Day 5 움직이려는 자
+---
+## 1. 개선하고 싶은 부분
+안다. 다 안다. 알면서도 안한다.  
+완벽한 하루를 위해 귀찮음이 침범할 틈을 보이면 안된다.  
+
+<br>
+
+## 2. 그에 대한 해결책과 필요한 노력 과정
+자기 전에 내일을 준비하자. 완벽한 아침은 완벽한 하루의 시작점이다.  
+시작이 반이다. 아침을 완벽하게 시작한다면 그 다음은 쉽다.  
+
+
+<br>
+
+## 3. 본인이 약속을 지켰는지
+루틴을 이틀도 유지하지 못했다.  
+원인은 전 날 의도치 않은 늦은 잠.  
+아무리 하루를 열정적으로 살아도 오버한다면 다음날에 지장이 생긴다.  
+
+
+
+<br>
+<br>
+<br>
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
