@@ -1,0 +1,102 @@
+---
+layout: post
+title: "[CS지식] 웹 스토리지(Web Storage)란?"
+date: 2022-07-18 21:08:30 +09:00
+excerpt: "쿠키, 로컬 스토리지, 세션 스토리지에 대해 알아보자! <br>22.07.18"
+cs: true
+categories: cs
+comments: true
+---
+# 📌 웹 스토리지(Web Storage)
+---------------------------
+
+<figure>
+    <a href="/assets/img/cs/2022-07-18/storage.jpg"><img src="/assets/img/cs/2022-07-18/storage.jpg"></a>    
+    <figcaption style="text-align:center">이 화면을 본적이 있는가?</figcaption>
+</figure>
+
+
+<br>
+<br>
+
+# 주제: 웹 스토리지(Web Storage)
+웹 스토리지 설명에 앞서 먼저 쿠키에 대해 알아보자!  
+
+### 쿠키(Cookie) 🍪
+- 브라우저의 자료저장소에 저장되는 키(Key)와 값(Value), 유효시간, 도메인, 정보로 이루어진 데이터
+- 값은 문자열 형태로 저장할 수 있다. 근데 객체나 배열로 저장할 수도 있다
+- 만료 기한을 정할 수 있다.
+- 용량은 약 4KB
+- 매 HTTP 요청마다 포함된다. 즉, 클라이언트와 서버간의 지속적인 데이터 교환을 위해 존재한다.
+
+<br>
+<br>
+
+### 쿠키가 필요한 이유?
+HTTP 요청의 특성 상, 서버가 요청을 받을 때, 요청에는 클라이언트의 상태에 대한 정보가 없다.  
+그러므로 요청을 보내는 자에 대한 정보를 담기 위해 쿠키가 사용되었다.  
+사용 예 - '다시 보지 않음', '오늘 하루 보지 않음' 팝업창, 비로그인 장바구니  
+
+![image](https://user-images.githubusercontent.com/93513959/172048310-cacc9410-5cba-4115-b362-6c542be3b460.png)
+
+<br>
+<br>
+
+### 쿠키의 단점?
+- 매 HTTP 요청마다 포함되어 서버에 보내기 때문에 서버에 부담이 생긴다.
+- 용량이 적다.
+- 암호화가 되어있지 않다.
+- 크로스 사이트 스크립팅(Cross Site Scripting, XSS)에 취약하다. 
+
+\* XSS: 공격자가 상대방의 브라우저에 스크립트가 실행되도록 해 사용자의 세션을 가로채거나, 웹사이트를 변조하거나, 악의적 콘텐츠를 삽입하거나, 피싱 공격을 진행하는 것.  
+
+
+<br>
+<br>
+
+------------------------------
+
+### 웹 스토리지(Web Storage) 
+- 브라우저의 자료저장소에 저장되는 키(Key)와 값(Value)로 이루어진 데이터
+- 값은 문자열 형태로 저장할 수 있다. 
+- 로컬 스토리지(Local Storage)와 세션 스토리지(Session Storage)로 이루어짐
+- 쿠키처럼 만료 기한 개념은 없다.
+- 용량은 약 5MB
+- 쿠키처럼 http header에 담겨서 서버와 지속적인 통신을 하지 않는다.
+
+<br>
+<br>
+
+### 로컬 스토리지(Local Storage)
+- 사용자가 삭제하지 않는 이상 계속 남아있다. 
+- ex) 자동로그인, 라이트/다크 모드, 글 임시저장
+
+
+<br>
+<br>
+
+### 세션 스토리지(Session Storage)
+- 브라우저 탭을 닫을 경우 삭제된다. 탭 종료시 데이터가 삭제되어도 상관없는 경우에 사용된다.
+- ex) 입력 폼 정보, 비로그인 장바구니
+
+<br>
+<br>
+
+### 웹 스토리지의 단점?
+- 브라우저마다 웹 스토리지에 대한 설정이 다르다. 때문에 예상치 못한 경우가 발생할 수 있기 때문에 에러처리가 필수적이다.
+- 브라우저간 공유가 되지 않는다.
+- 크로스 사이트 스크립팅(Cross Site Scripting, XSS)에 취약하다.
+
+<br>
+<br>
+<br>
+
+### 출처
+https://youtu.be/-4ZsGy1LOiE
+
+
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
+

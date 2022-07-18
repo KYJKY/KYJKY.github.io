@@ -1,13 +1,13 @@
 ---
 layout: post
-title: "[Day 3] lv1 움직이려는 자 22.07.10"
+title: "[Day 3] 그냥 일단 하자. "
 date: 2022-07-10 15:36:25 +09:00
-excerpt: "성장 일기 Day 3"
+excerpt: "생각보단 행동. <br>22.07.10 (월)"
 growup: true
 categories: growup
 comments: true
 ---
-## 📒 성장일기
+## 📒 오늘의 성장일기 22.07.10 (월)
 ---------------------------
 
 <figure>
@@ -18,7 +18,7 @@ comments: true
 <br>
 <br>
 
-# Day 3 움직이려는 자
+# Day 3 그냥 일단 하자.
 ---
 ## 1. 개선하고 싶은 부분
 주말이 가고 나서야 주말의 소중함을 알았다.  

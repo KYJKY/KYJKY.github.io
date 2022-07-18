@@ -1,24 +1,24 @@
 ---
 layout: post
-title: "[Day 1] lv1 움직이려는 자 22.07.05"
+title: "[Day 1] 변화를 위하여 "
 date: 2022-07-04 23:00:00 +09:00
-excerpt: "성장 일기 Day 1"
+excerpt: "22.07.05 (화)"
 growup: true
 categories: growup
 comments: true
 ---
-## 📒 성장일기
+## 📒 오늘의 성장일기 22.07.05 (화)
 ---------------------------
 
 <figure>
     <a href="/assets/img/util_images/GrowDiray.jpg"><img src="/assets/img/util_images/GrowDiray.jpg"></a>    
-    <figcaption style="text-align:center">Day 1 움직이려는 자</figcaption>
+    <figcaption style="text-align:center">첫 성장일기</figcaption>
 </figure>
 
 <br>
 <br>
 
-# Day 1 움직이려는 자
+# Day 1 변화를 위해서
 ---
 ## 1. 개선하고 싶은 부분
 나는 남들보다 자기애가 충만한 사람이다.  

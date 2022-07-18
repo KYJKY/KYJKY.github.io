@@ -1,13 +1,13 @@
 ---
 layout: post
-title: "[Day 2] lv1 움직이려는 자 22.07.06"
+title: "[Day 2] 아침시간을 잘 활용하자!"
 date: 2022-07-04 23:15:09 +09:00
-excerpt: "성장 일기 Day 2"
+excerpt: "아침은 하루의 시작이니까. <br>22.07.06 (수)"
 growup: true
 categories: growup
 comments: true
 ---
-## 📒 성장일기
+## 📒 오늘의 성장일기 22.07.06 (수)
 ---------------------------
 
 <figure>
@@ -18,7 +18,7 @@ comments: true
 <br>
 <br>
 
-# Day 2 움직이려는 자
+# Day 2 아침시간을 잘 활용하자!
 ---
 ## 1. 개선하고 싶은 부분
 아침 시간을 활용하자.  
