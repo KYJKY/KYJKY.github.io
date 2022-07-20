@@ -1,0 +1,98 @@
+---
+layout: post
+title: "[CS지식] CI, DI란?"
+date: 2022-07-20 22:42:10 +09:00
+excerpt: "온라인 주민등록증 역할을 하는 CI, DI에 대해 알아보자! <br>22.07.18"
+cs: true
+categories: cs
+comments: true
+---
+# 📌 CI(Connecting Information), DI(Duplication Information)
+---------------------------
+
+<figure>
+    <a href="/assets/img/cs/2022-07-20/id.gif"><img src="/assets/img/cs/2022-07-20/id.gif"></a>    
+    <figcaption style="text-align:center">우리의 온라인 주민등록증은 어떻게 생겼을까!?</figcaption>
+</figure>
+
+
+<br>
+<br>
+
+# 주제: CI(Connecting Information), DI(Duplication Information)
+### CI(Continuous Integration, 지속적 통합)
+a.k.a 온라인 주민번호, 주민번호의 대체수단, 본인확인기관에서 발급하는 개인식별 수단인 연계정보이다.
+
+<br>
+<br>
+
+### 왜 하필 CI인가?
+> ‘주민번호 수집 법정주의’ 신설 및 처리기준 강화 (제24조의2)  
+> ① 주민번호 처리를 원칙적으로 금지하고, 예외적인 경우에만 허용(신설)  
+> ② 주민번호 처리기준이 기존 법령(법률, 시행령, 시행규칙)에서 법률, 대통령령 등으로 강화(개정)  
+> ③ 기 보유한 주민번호는 법 시행 후 2년 이내(2016.8.6. 까지) 파기  
+> 
+> ‘정보통신서비스 제공자는 이용자의 주민등록번호를 수집ㆍ이용할 수 없다’  
+> ‘개인정보처리자는 일부 예외를 제외하고는 주민등록번호를 처리할 수 없다‘
+> 
+> 대체수단의 개발ㆍ제공ㆍ관리 업무를 안전하고 신뢰성 있게 수행할 능력이 있다고
+> 인정되는 자를 방송통신위원회에서 본인확인기관으로 지정
+> 각자가 의미하는 것은 다르지만, 통상적으로 이 둘을 하나의 'CD'로 본다.  
+
+기존 개인을 식별가능케 했던 주민등록번호를 수집, 이용이 불가능하게 법이 바뀌면서 주민등록번호의 대체수단이 필요했음.  
+주민등록번호는 오직 '본인확인기관'으로 등록된 기관에서만 관리할 수 있게 되었고 본인확인기관에서 주민등록의 대체수단인CI를 발급해줌.  
+
+<br>
+<br>
+
+### CI 생성과정
+![image](https://user-images.githubusercontent.com/93513959/173234723-07f8a7e9-7de1-405f-8996-d2068c8a0d24.png)
+
+<br>
+<br>
+
+### CI 발급과정
+![image](https://user-images.githubusercontent.com/93513959/173235434-28bcafa1-350c-41fc-ab1a-8029352d9eef.png)
+
+<br>
+<br>
+
+### 그래서 CI를 정리하자면?
+
+- 범용적으로 특정 개인 식별을 위한 고유 KEY
+- 88byte 문자열
+- 주민등록번호와 1:1 대응
+- 필요한 경우에만 제한적으로 사용하도록 권고
+
+<br>
+<br>
+
+### 그럼 DI는 뭐임?
+중복확인정보  DI(Duplication Information)  
+- 발급 기관의 특정 개인 식별을 위한 고유 KEY
+- 64byte 문자열
+- 특정기관 내 주민번호와 1:1 대응
+- 특정업권에서만 사용될 수 있도록 설계, 즉, A사이트와 B사이트 두 곳에서 인증을 받았을 때, 두 사이트의 CI는 같지만 DI는 서로 다르다. (서로 다른 인증기관을 쓰기에)
+
+
+![image](https://user-images.githubusercontent.com/93513959/173235646-d2a3c2e0-c930-4925-a529-71de76bd0877.png)
+
+
+
+
+
+
+
+
+<br>
+<br>
+<br>
+
+### 출처
+https://www.kisa.or.kr/401/form?postSeq=2441&lang_type=KO
+
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
+
