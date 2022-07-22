@@ -1,0 +1,54 @@
+---
+layout: post
+title: "[Day 8] 하기 싫어도 해야한다!"
+date: 2022-07-22 22:47:53 +09:00
+excerpt: "삶은 누구에게나 쉽지 않다 <br>22.07.22 (금)"
+growup: true
+categories: growup
+comments: true
+---
+## 📒 오늘의 성장일기 22.07.22 (금)
+---------------------------
+
+<figure>
+    <a href="/assets/img/grow/2022-07-22/just.webp"><img src="/assets/img/grow/2022-07-22/just.webp"></a>    
+    <figcaption style="text-align:center">그치만 해야돼..</figcaption>
+</figure>
+
+> 너 자신이 돼라. 다른 사람은 이미 있으니까. - 오스카 와일드 -
+
+<br>
+<br>
+
+# Day 8 하기 싫지만.. 해야 돼 !!!
+---
+## 1. 개선하고 싶은 부분
+진짜 시험 끝나면 루틴도, 개발공부도, 재활운동도 내가 하고 싶은 모든 것을 조질테니  
+지금은 하기싫어도 하자!  
+하기 싫은 것을 참고 할 수 있도록 개선해보자.  
+정말 하기 싫은 일은 능률이 안나오지만 근데 어쩔 수 없잖아.  
+정말 하기 싫어도 살아가면서 하고 싶은 일만 할 수는 없으니까..  
+오히려 즐기려 노력해보자.. 쉽지 않지만..  
+나만 그런거 아니잖아?  
+화이링!
+
+<br>
+
+## 2. 그에 대한 해결책과 필요한 노력 과정
+얼마 안남았는데?  
+안할 수는 없다..  
+정면돌파!!  
+
+<br>
+
+## 3. 본인이 약속을 지켰는지
+시험까지만 그냥 한다는 마인드로 다 재치고 하고..  
+앞으로는 정말 착실하게 하루하루 조금씩 나에 대해 투자하자!  
+
+<br>
+<br>
+<br>
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
