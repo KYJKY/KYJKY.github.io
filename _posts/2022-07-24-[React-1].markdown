@@ -1,0 +1,84 @@
+---
+layout: post
+title: "노마드코더 React강의 정리1"
+date: 2022-07-99 99:24:35 +09:00
+excerpt: "제대로 해보자 리액트 <br>22.07.23"
+cs: true
+categories: React
+comments: true
+---
+# 📌 React JS
+---------------------------
+
+<figure>
+    <a href="/assets/img/react/2022-07-26/react.png"><img src="/assets/img/react/2022-07-26/react.png"></a>    
+    <figcaption style="text-align:center">리액트 공부 시작!!</figcaption>
+</figure>
+
+<br>
+<br>
+
+# React JS
+## 왜 써요? 리액트..?
+#### React JS는 UI를 interactive하게 만들어준다.
+react는 interactive한 웹 사이트를 구현하기 위해 어떤 것이 필요한지 알고 있다.  
+때문에 우리는 react를 사용하면서 더욱 쉽게 interactive한 웹 사이트를 구현할 수 있게 된다.  
+
+<br>
+<br>
+
+## 리액트 어떻게 쓰는데요?
+script를 import해온다.  
+리액트와 리액트 돔을 가져오면 된다.
+``` javascript
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+```
+
+위 코드를 쓰고 난 뒤, 실행시켜서 브라우저 개발자 도구에 "react"를 입력하면 아래와 같이 확인할 수 있다.
+<figure>
+    <a href="/assets/img/react/2022-07-26/inputReact.jpg"><img src="/assets/img/react/2022-07-26/inputReact.jpg"></a>    
+    <figcaption style="text-align:center">react를 콘솔창에 입력한 모습</figcaption>
+</figure>
+
+<br>
+<br>
+
+## React element 생성하기
+\* 현재 배우는 생성 방법은 보편적으로 쉬운 방식이 아님.
+그러나 어려운 방식을 통해 리액트에 한 발자국 더 가까워질 수 있음.  
+
+``` javascript
+<body>
+    <div id="root"></div>
+</body>
+
+<script>
+    const root = document.getElementById('root');
+
+    // react element 생성
+    const span = React.createElement(
+        "span", 
+        { id: "sexy-span" }, 
+        "Hello I'm a span"
+    );
+
+    // react DOM을 사용하여 react element를 렌더링한다. 
+    ReactDOM.render(span, root);
+</script>
+```
+
+실제로는 위와 같은 방식으로 리액트 element를 만들지 않는다.  
+그러나 여기서 말하고자 하는 바는 script단에서 HTML를 필요할 때 Update하기 용이하다.  
+즉, 유저에게 보여질 내용을 컨트롤할 수 있다.  
+
+
+
+<br>
+<br>
+<br>
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
+
