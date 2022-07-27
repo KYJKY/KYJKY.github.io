@@ -1,0 +1,57 @@
+---
+layout: post
+title: "[Day 10] 행복"
+date: 2022-07-27 23:48:06 +09:00
+excerpt: "요즘은 참 행복한 나날의 연속이다 <br>22.07.27 (수)"
+growup: true
+categories: growup
+comments: true
+---
+## 📒 오늘의 성장일기 22.07.27 (수)
+---------------------------
+
+<figure>
+    <a href="/assets/img/grow/2022-07-27/goh.jfif"><img src="/assets/img/grow/2022-07-27/goh.jfif"></a>    
+    <figcaption style="text-align:center">빈센트 반 고흐, &lt;아를의 별이 빛나는 밤&gt; </figcaption>
+</figure>
+
+> 아무 것도 시도할 용기를 갖지 못한다면  
+> 인생은 대체 무엇이겠는가?  
+> \- 빈센트 반 고흐 - 
+
+난 반 고흐의 그림을 좋아한다.  
+계속 보고 있으면 빠져드는 느낌이야  
+
+<br>
+<br>
+
+# Day 10 하고 싶은 것을 하고 만족감을 느끼는 것만큼 행복한 건 없다.
+---
+## 1. 개선하고 싶은 부분
+밥 꼭꼭 씹어먹기. 느리게 먹기.  
+못해도 주 2회는 재활 보강운동 하기.  
+메모하는 습관 가지기 (업무든 일상이든).  
+
+
+<br>
+
+## 2. 그에 대한 해결책과 필요한 노력 과정
+항상 의식하자. 난 너무 밥을 빠르게 먹는다..  
+힘들어도 일단 시작하자. 시작하려고 하자. 하는 것 보다 시작하는게 어렵다.  
+접근성이 뛰어난 환경을 만들어보자.  
+
+
+<br>
+
+## 3. 본인이 약속을 지켰는지
+요즘은 나름 열심히 살고 있다(고 믿고 싶다).  
+80% 정도 만족한다.  
+더 열심히 살아야지!!  
+
+<br>
+<br>
+<br>
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/

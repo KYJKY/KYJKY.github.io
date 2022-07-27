@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "노마드코더 React강의 정리1"
-date: 2022-07-99 99:24:35 +09:00
-excerpt: "제대로 해보자 리액트 <br>22.07.23"
+title: "React강의 정리"
+date: 2022-07-26 19:24:35 +09:00
+excerpt: "제대로 해보자 리액트 <br>22.07.26"
 cs: true
 categories: React
 comments: true
@@ -72,7 +72,7 @@ script를 import해온다.
 그러나 여기서 말하고자 하는 바는 script단에서 HTML를 필요할 때 Update하기 용이하다.  
 즉, 유저에게 보여질 내용을 컨트롤할 수 있다.  
 
-
+### 추후 추가 예정
 
 <br>
 <br>
