@@ -1,0 +1,59 @@
+---
+layout: post
+title: "[Day 9] 딱 1달만 규칙적으로 살아보자"
+date: 2022-07-24 23:24:32 +09:00
+excerpt: "어디서 습관은 1달 정도 되야 형성된다는데.. <br>22.07.24 (일)"
+growup: true
+categories: growup
+comments: true
+---
+## 📒 오늘의 성장일기 22.07.24 (일)
+---------------------------
+
+<figure>
+    <a href="/assets/img/grow/2022-07-24/plan.gif"><img src="/assets/img/grow/2022-07-24/plan.gif"></a>    
+    <figcaption style="text-align:center">계획은 있으니 실천만 하면 돼</figcaption>
+</figure>
+
+> 나는 할 수 있다. 나는 해낸다.  
+> 나에게는 저력이 있다.  
+> 나에게는 오직 전진 뿐이다.  
+> 이런 신념을 지니는 습관이  
+> 당신의 목표를 달성시킨다.   
+> 너의 길을 걸어가라.  
+> 사람들이 무어라 떠들든 내버려 두어라.  
+> \- 단테 - 
+
+<br>
+<br>
+
+# Day 9 진짜?? 진짜로 월요일부터 시작이야
+---
+## 1. 개선하고 싶은 부분
+시험은 잘 못봤지만 시험이라는 족쇄가 풀렸다.  
+사실 시험이랑 상관없다. 좋은 습관을 들이는 것은 내 의지일 뿐..  
+하루를 다 써버리는 일정이 있지 않는 한, 루틴의 프레임 내에서 내 일을 하면 된다.  
+내 일을 하자. 하루하루를 열심히 살자!  
+
+
+<br>
+
+## 2. 그에 대한 해결책과 필요한 노력 과정
+발전된 미래의 나를 상상하자  
+그것만큼 나를 움직이게 하는 것은 없다!  
+환경을 나에게 유리하게 만들자.  
+걸림돌이 없게 항상 다음을 준비하자.  
+
+
+<br>
+
+## 3. 본인이 약속을 지켰는지
+
+
+<br>
+<br>
+<br>
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
