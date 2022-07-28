@@ -68,11 +68,122 @@ script를 import해온다.
 </script>
 ```
 
-실제로는 위와 같은 방식으로 리액트 element를 만들지 않는다.  
-그러나 여기서 말하고자 하는 바는 script단에서 HTML를 필요할 때 Update하기 용이하다.  
-즉, 유저에게 보여질 내용을 컨트롤할 수 있다.  
+실제로 개발자는 위와 같은 방식으로 리액트 element를 만들지 않는다.  
+(밑에서 더욱 쉬운 방법을 소개할 예정)
+그러나 여기서 말하고자 하는 바는 script단에서 HTML를 Update하기 용이하다.  
+즉, 유저에게 보여질 내용을 간단하게 컨트롤할 수 있다.
 
-### 추후 추가 예정
+<br>
+<br>
+
+## JSX를 사용하여 더욱 똑똑하게 React element 생성하기
+JSX는 JavaScript를 확장한 문법으로서 여러 방법으로 활용되지만 특히, React element를 생성할 때 더욱 편리하게 생성할 수 있게 도와준다.  
+먼저 JSX로 생성한 요소는 어떻게 생겼는지 살펴보자.  
+
+```javascript
+// 어트리뷰트에 따옴표를 이용해 문자열 리터럴을 정의할 수 있습니다.
+const aTag = <a href="https://www.reactjs.org"> link </a>;
+
+// 중괄호를 사용하여 어트리뷰트에 JavaScript 표현식을 삽입할 수도 있습니다.
+const imgTag = <img src={user.avatarUrl}></img>;
+
+// JSX 태그는 자식을 포함할 수 있습니다.
+const divTag = (
+  <div>
+    <h1>Hello!</h1>
+    <h2>Good to see you here.</h2>
+  </div>
+);
+```
+
+위처럼 JSX를 활용하여 element를 표현할 수 있다.  
+그럼 단지 element를 저렇게만 쓰면 React element가 되는 걸까?  
+
+**아니다. JSX만 작성한다면 무조건 Syntax Error가 발생한다.**  
+
+<br>
+<br>
+
+## Babel를 사용하여 JSX를 React가 이해할 수 있는 형태로 바꿔주기
+
+
+JSX를 다시 처음 방식의 React element로 변환해주는 작업이 필요하다.  
+우리는 **Babel**을 활용하여 이 과정을 해줄 수 있다.  
+
+```javascript
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+```
+babel을 import하면 JSX를 우리가 처음 만들었던 형태의 React element로 변환해준다.  
+아래 예시 코드를 살펴보자.  
+```javascript
+<body>
+    <div id="root"></div>
+</body>
+
+<script type="text/babel">
+    const root = document.getElementById('root');
+    let counter = 0;
+
+    const onClickEvent = () => {
+        counter = counter + 1;
+        render();
+    };
+
+    const render = () => {
+        ReactDOM.render(<Container />, root);
+    };
+
+    const Container = () => (
+        <div>
+            <h3>Total: {counter}</h3>
+            <button onClick={onClickEvent}>Click me</button>
+        </div>
+    );
+
+    render();
+
+</script>
+```
+위 코드는 버튼을 클릭할 때, counter 변수가 버튼을 카운트하면서  
+카운트 수를 실시간으로 표출해주는 예제이다.  
+
+위 코드를 브라우저에서 확인해보면 Header 내부의 마지막 요소로 script가 추가된 것을 확인할 수 있다.  
+```javascript
+<script>
+    "use strict";
+
+    var root = document.getElementById('root');
+    var counter = 0;
+
+    var onClickEvent = function onClickEvent() {
+    counter = counter + 1;
+    render();
+    };
+
+    var render = function render() {
+    ReactDOM.render( /*#__PURE__*/React.createElement(Container, null), root);
+    };
+
+    var Container = function Container() {
+    return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", null, "Total: ", counter), /*#__PURE__*/React.createElement("button", {
+        onClick: onClickEvent
+    }, "Click me"));
+    };
+
+    render();
+</script>
+```
+이처럼 JSX를 활용하여 React element를 생성하고 babel을 통해 ReactJS가 이해할 수 있는 형태로 변환되는 것을 확인할 수 있다.  
+
+<br>
+<br>
+
+## useState
+
+추후 추가
+
+
+
 
 <br>
 <br>
