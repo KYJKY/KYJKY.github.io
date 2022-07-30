@@ -1,0 +1,56 @@
+---
+layout: post
+title: "[Day 11] 자발적 스트레스"
+date: 2022-07-27 17:12:06 +09:00
+excerpt: "스트레스는 쟁취하기 위한 피할 수 없는 과정이다. <br>22.07.30 (토)"
+growup: true
+categories: growup
+comments: true
+---
+## 📒 오늘의 성장일기 22.07.30 (토)
+---------------------------
+
+<figure>
+    <a href="/assets/img/grow/2022-07-30/fighting.jpg"><img src="/assets/img/grow/2022-07-30/fighting.jpg"></a>    
+    <figcaption style="text-align:center">영화, &lt;라이온 킹&gt;</figcaption>
+</figure>
+
+자발적 스트레스 상황에 놓이기로 결심했다.  
+정확히 말하면 쟁취하기 위해 스트레스 받는 것을 개의치않으려 한다.  
+삶은 쟁취의 연속이다. 쟁취하지 않는 이상 발전할 수 없다!  
+
+<br>
+<br>
+
+# Day 11
+---
+## 1. 개선하고 싶은 부분
+1. 자기 전, 1~2시간에는 디스플레이 보기 금지
+2. 너무 완벽한 것을 추구하지 말자. 완벽함을 추구하다보면 느려지게 된다.
+3. 스트레스에 무감각해지자
+
+<br>
+
+## 2. 그에 대한 해결책과 필요한 노력 과정
+자기 전에 운동하자.  
+아니면 책을 읽자(모던 자바스크립트)  
+빠르게 하려고 의식하자.  
+스트레스를 즐기자.  
+무엇보다 중요한 것은 의식과 마음가짐.  
+
+
+<br>
+
+## 3. 본인이 약속을 지켰는지
+밥 꼭꼭 씹어먹기 30%  
+재활 보강운동 50%  
+메모하는 습관 0%  
+
+
+<br>
+<br>
+<br>
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
