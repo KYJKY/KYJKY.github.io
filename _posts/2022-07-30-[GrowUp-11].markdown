@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "[Day 11] 자발적 스트레스"
-date: 2022-07-27 17:12:06 +09:00
+date: 2022-07-30 17:12:06 +09:00
 excerpt: "스트레스는 쟁취하기 위한 피할 수 없는 과정이다. <br>22.07.30 (토)"
 growup: true
 categories: growup
