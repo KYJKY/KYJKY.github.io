@@ -1,19 +1,25 @@
 ---
 layout: post
-title: "내가 생각하는 인생에서 중요한 것"
-date: 2022-08-10 23:40:37 +09:00
-excerpt: "잊지말자 내 자신 <br>22.08.10"
+title: "요즘 느끼는 호르몬에 대한 고찰"
+date: 2022-08-15 23:40:37 +09:00
+excerpt: "인간은 이성을 지녔지만, 이성은 호르몬을 따라간다. <br>22.08.10"
 think: true
 categories: think
 comments: true
 ---
-# 📌 인생을 주인공처럼 사는 것
+# 📌 요즘 느끼는 호르몬에 대한 고찰
 ---------------------------
 
 <!-- <figure>
     <a href="/assets/img/cs/2022-08-07/server.png"><img src="/assets/img/cs/2022-08-08/server.png"></a>    
     <figcaption style="text-align:center"></figcaption>
 </figure> -->
+
+요즘 '인스타 브레인', '도파민형 인간'을 읽으면서 드는 생각을 정리해봤다.
+
+나는 지금껏 인간의 이성으로 자기자신을 통제할 수 있다는 쪽으로 생각해왔다.  
+인간이기 때문에 본능을 억누를 수 있고, 인간이기 때문에 참을 수 있다고 생각했다.  
+사실 
 
 
 
