@@ -1,0 +1,38 @@
+---
+layout: post
+title: "내가 생각하는 인생에서 중요한 것"
+date: 2022-08-10 23:40:37 +09:00
+excerpt: "잊지말자 내 자신 <br>22.08.10"
+think: true
+categories: think
+comments: true
+---
+# 📌 인생을 주인공처럼 사는 것
+---------------------------
+
+<!-- <figure>
+    <a href="/assets/img/cs/2022-08-07/server.png"><img src="/assets/img/cs/2022-08-08/server.png"></a>    
+    <figcaption style="text-align:center"></figcaption>
+</figure> -->
+
+
+
+
+
+
+<br>
+<br>
+<br>
+
+### 출처
+https://junshock5.tistory.com/91  
+https://kchanguk.tistory.com/146  
+https://m.post.naver.com/viewer/postView.naver?volumeNo=27046347&memberNo=2521903  
+https://library.gabia.com/contents/infrahosting/1222/  
+
+
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
+
