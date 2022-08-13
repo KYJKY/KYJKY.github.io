@@ -1,21 +1,22 @@
 ---
 layout: post
-title: "[Day 14] 또 다시 처음부터"
-date: 2022-08-06 23:44:01 +09:00
-excerpt: "이정도면 병이다 <br>22.08.06 (토)"
+title: "[Day 15] 운동하는 습관"
+date: 2022-08-15 23:44:01 +09:00
+excerpt: "쇠질은 나를 이롭게 한다 <br>22.08.13 (토)"
 growup: true
 categories: growup
 comments: true
 ---
-## 📒 오늘의 성장일기 22.08.06 (토)
+## 📒 오늘의 성장일기 22.08.13 (토)
 ---------------------------
 
-<figure>
+<!-- <figure>
     <a href="/assets/img/grow/2022-07-31/weekend.jpg"><img src="/assets/img/grow/2022-07-31/weekend.jpg"></a>    
     <figcaption style="text-align:center">또 분실했다</figcaption>
-</figure>
+</figure> -->
 
-내 안에 열정이 무한했으면 좋겠다. 
+최근 거의 10일은 쉬지않고 운동했다.  
+평소보다 행복감이 
 
 <br>
 <br>
@@ -23,15 +24,11 @@ comments: true
 # Day 13
 ---
 ## 1. 개선하고 싶은 부분
-1. 일어나서 내가 해야할 것과 하지 말아야 할 것을 쓰자
-2. 해야할 것을 하고 싶은 주변 환경을 만들자
 
 
 <br>
 
 ## 2. 그에 대한 해결책과 필요한 노력 과정
-해야할 것을 작은 단위로 쪼개서 하자  
-행동하자
 
 <br>
 
