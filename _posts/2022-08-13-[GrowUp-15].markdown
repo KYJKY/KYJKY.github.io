@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "[Day 15] 운동하는 습관"
-date: 2022-08-15 23:44:01 +09:00
+date: 2022-08-13 22:52:34 +09:00
 excerpt: "쇠질은 나를 이롭게 한다 <br>22.08.13 (토)"
 growup: true
 categories: growup
