@@ -1,0 +1,93 @@
+---
+layout: post
+title: "ASP.net Core 기본구조"
+date: 2022-08-15 21:55:23 +09:00
+excerpt: " <br>22.08.15"
+cs: true
+categories: dotnet
+comments: true
+---
+# 📌 ASP.net Core 기본구조
+---------------------------
+
+<figure>
+    <a href="/assets/img/dotnet/dotnetlogo.png"><img src="/assets/img/dotnet/dotnetlogo.png"></a>    
+    <figcaption style="text-align:center">기본 구조에 대해 알아보자</figcaption>
+</figure>
+
+해당 포스트는 **MicroSoft - Docs/.Net/ASP.net Core**의 기술문서 정보를 기반으로 작성하였습니다.  
+
+
+<br>
+<br>
+
+# ASP .net Core 기본구조
+## 1️⃣ Program.cs
+ASP .net Core를 기반으로 만든 프로젝트는 ``Program.cs``에 의해 흐름이 제어된다.  
+공식문서에서 기술된 ``Program.cs``의 역할은 다음과 같다.  
+> - 앱에서 요구하는 서비스가 구성됩니다.
+> - 앱의 요청 처리 파이프라인이 일련의 미들웨어 구성 요소로 정의됩니다.
+
+다음 예시코드를 보자.  
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+// 서비스를 추가하는 부분
+builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseAuthorization();
+
+app.MapGet("/hi", () => "Hello!");
+
+app.MapDefaultControllerRoute();
+app.MapRazorPages();
+
+app.Run();
+```
+### builder
+빌더는 응용 프로그램에 미들웨어를 추가해주는 객체이다.  
+빌더를 통해 ``RazorPages``와 ``ControllersWithViews`` 서비스를 추가 후 빌드했다.  
+
+위와 같은 서비스를 사용할 수 있도록 DI(종속성 주입) 프레임워크가 포함되어있다.  
+``WebApplication.CreateBuilder(args);``에서 DI컨테이너에 추가된다.  
+
+### 미들웨어
+서버에 요청이 들어올 때, 여러 미들웨어를 호출한 후, 요청을 종료한다.  
+
+
+
+<br>
+<br>
+
+## 2️⃣ 
+<br>
+<br>
+
+
+
+<br>
+<br>
+<br>
+
+### 출처
+https://docs.microsoft.com/ko-kr/aspnet/core/fundamentals/?view=aspnetcore-6.0&tabs=windows
+
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
+
