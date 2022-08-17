@@ -1,0 +1,52 @@
+---
+layout: post
+title: "[Day 16] 단기적 목표"
+date: 2022-08-13 22:52:34 +09:00
+excerpt: "1달 동안 이루고자 하는 것 <br>22.08.17 (수)"
+growup: true
+categories: growup
+comments: true
+---
+## 📒 오늘의 성장일기 22.08.17 (수)
+---------------------------
+
+<!-- <figure>
+    <a href="/assets/img/grow/2022-07-31/weekend.jpg"><img src="/assets/img/grow/2022-07-31/weekend.jpg"></a>    
+    <figcaption style="text-align:center">또 분실했다</figcaption>
+</figure> -->
+
+오랜만에 쓰는 일기..!  
+
+<br>
+<br>
+
+# Day 16
+---
+## 1. 1달 목표
+1. 8월 안에 연골연화증에 시달리지 않을 근력 기르기
+2. SQLD 취득하기
+3. 8월 안에 읽고 있던 책 한 권 마무리하기
+4. 운동 꾸준히 하기
+
+<br>
+
+## 2. 그에 대한 해결책과 필요한 노력 과정
+- 꾸준한 운동은 이제 루틴이라고 불릴만큼 당연한 것이 되었다. 스트레칭 꼭 하고 부상 조심하자.
+- SQLD는 평일에 운동 후 1시간 이상, 주말 5시간 이상 볼 것.
+- 책 한 권... 틈틈히 폰으로 읽자! 유튜브 보는 시간에 밀리의서재를 키자
+
+
+<br>
+
+## 3. 본인이 약속을 지켰는지
+ToDoList를 쓰는게 참 생각이 안난다..  
+업무하면서는 트렐로를 종종 쓰는데 일상생활에서는 퇴근하면 방전 ㅠ  
+그래도 계속 의식하려고 노력해야지..
+
+<br>
+<br>
+<br>
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
