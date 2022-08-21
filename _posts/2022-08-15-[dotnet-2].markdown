@@ -24,6 +24,7 @@ comments: true
 # ASP .net Core 기본구조
 ## 1️⃣ Program.cs
 ASP .net Core를 기반으로 만든 프로젝트는 ``Program.cs``에 의해 흐름이 제어된다.  
+(Program.cs가 포함된 프로젝트: Razor Pages, MVC, 컨트롤러가 있는 Web API, 최소 웹 API)  
 공식문서에서 기술된 ``Program.cs``의 역할은 다음과 같다.  
 > - 앱에서 요구하는 서비스가 구성됩니다.
 > - 앱의 요청 처리 파이프라인이 일련의 미들웨어 구성 요소로 정의됩니다.
@@ -67,6 +68,61 @@ app.Run();
 
 ### 미들웨어
 서버에 요청이 들어올 때, 여러 미들웨어를 호출한 후, 요청을 종료한다.  
+요청에 대한 응답을 처리하는 파이프라인 형식을 갖추고 있다. 미들웨어는 파이프라인으로 조립된다.  
+요청 파이프라인을 빌드하는 것을 **요청 대리자**라고 한다. 요청 대리자는 각 HTTP 요청을 처리한다.  
+요청 대리자는 **Run**, **Map** 및 **Use** 확장 메서드를 사용하여 구성된다.  
+
+<figure>
+    <a href="/assets/img/dotnet/2022-08-15/middleware-pipeline.svg"><img src="/assets/img/dotnet/2022-08-15/middleware-pipeline.svg"></a>    
+    <figcaption style="text-align:center">.net Core의 요청 처리 파이프라인</figcaption>
+</figure>
+
+#### Use
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.Use(async (context, next) =>
+{
+    // Do work that can write to the Response.
+    await next.Invoke();
+    // Do logging or other work that doesn't write to the Response.
+});
+
+app.Run(async context =>
+{
+    await context.Response.WriteAsync("Hello from 2nd delegate.");
+});
+
+app.Run();
+```
+위 코드에서 ``app.Use``를 사용하여 요청 대리자를 연결한다.  
+``next`` 매개변수는 다음 대리자이다.  
+``next`` 매개변수를 호출하지 않는 경우, 이를 **요청 파이프라인 단락(short-circuiting)**이라고 한다.  
+
+#### Run
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.Use(async (context, next) =>
+{
+    // Do work that can write to the Response.
+    await next.Invoke();
+    // Do logging or other work that doesn't write to the Response.
+});
+
+app.Run(async context =>
+{
+    await context.Response.WriteAsync("Hello from 2nd delegate.");
+});
+
+app.Run();
+```
+
+Run 대리자는 항상 파이프라인을 종료시킨다.  
+때문에 Use 메서드의 매개변수인 ``next``가 필요없다.  
+그러므로 Run 메서드가 사용된 이후의 Use나 또 다른 Run은 호출되지 않는다.  
 
 
 
@@ -84,8 +140,8 @@ app.Run();
 <br>
 
 ### 출처
-https://docs.microsoft.com/ko-kr/aspnet/core/fundamentals/?view=aspnetcore-6.0&tabs=windows
-
+https://docs.microsoft.com/ko-kr/aspnet/core/fundamentals/?view=aspnetcore-6.0&tabs=windows  
+https://docs.microsoft.com/ko-kr/aspnet/core/fundamentals/middleware/?view=aspnetcore-6.0
 
 [jekyll-docs]: https://jekyllrb.com/docs/home
 [jekyll-gh]:   https://github.com/jekyll/jekyll
