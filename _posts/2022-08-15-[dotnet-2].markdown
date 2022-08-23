@@ -124,6 +124,41 @@ Run 대리자는 항상 파이프라인을 종료시킨다.
 때문에 Use 메서드의 매개변수인 ``next``가 필요없다.  
 그러므로 Run 메서드가 사용된 이후의 Use나 또 다른 Run은 호출되지 않는다.  
 
+### 환경
+.net Core에서는 앱의 실행환경을 지정할 수 있다.  
+실행환경의 종류는 ``Development``, ``Staging``, ``Production``이 있다.  
+아래 예시는 ``Development`` 환경에서 실행되지 않는 경우 예외 페이지를 호출하는 코드이다.  
+```csharp
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddRazorPages();
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseAuthorization();
+
+app.MapGet("/hi", () => "Hello!");
+
+app.MapDefaultControllerRoute();
+app.MapRazorPages();
+
+app.Run();
+```
+실행환경은 환경 변수를 사용하여 구성한다.  
+ASPNETCORE_ENVIRONMENT 환경 변수가 ``Development``인 경우, 위 코드에서 개발자 예외 페이지를 사용하게 한다.  
+ASPNETCORE_ENVIRONMENT 환경 변수가 ``Development`` 이외의 경우, UseExceptionHandler 메서드를 호출한다.  
 
 
 <br>
