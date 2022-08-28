@@ -12,7 +12,7 @@ comments: true
 
 <figure>
     <a href="/assets/img/cs/2022-07-11/paint.gif"><img src="/assets/img/cs/2022-07-11/paint.gif"></a>    
-    <figcaption style="text-align:center">브라우저는 엄청난 화가일거야</figcaption>
+    <figcaption style="text-align:center">한 순간에 모든 것을 랜더링하는 브라우저</figcaption>
 </figure>
 
 
