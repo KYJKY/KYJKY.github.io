@@ -123,7 +123,8 @@ github flow의 과정은 다음과 같다.
     <figcaption style="text-align:center">Git Flow</figcaption>
 </figure>
 
-Git Flow는 `feature`, `develop`, `release`, `hotfix`, `master` 총 다섯 가지의 브랜치를 가지는 전략이다.  
+GitLab Flow는 `feature`, `master`, `production`, `pre-production` 브랜치를 가진다.
+
 각 브랜치의 역할을 알아보자.
 
 <br>
@@ -145,8 +146,12 @@ git flow의 master 브랜치와 동일한 역할로, 배포하기 위한 브랜�
 
 ##### pre-production
 
-기존 오리지널한 GitLab-Flow에서 추가된 브랜치.
-기존 master와 production에 pre-
+기존 master와 production에 pre-production을 둬서 개발 내용을 천천히 테스팅할 수 있는 브랜치.  
+즉, Production 브랜치에서 릴리즈된 코드가 항상 프로젝트의 최신 버전 상태를 유지할 필요가 없음.
+
+### GitLab-Flow 장단점
+
+Git과 Github의 중간 단계의 단순함이다. GitLab 같은 경우에는 pre-production 브랜치를 통해 배포 버전을 미리 준비할 수 있다는 것이 장점이 될 것 같다.
 
 <br>
 <br>
@@ -158,7 +163,8 @@ git flow의 master 브랜치와 동일한 역할로, 배포하기 위한 브랜�
 https://backlog.com/git-tutorial/kr/stepup/stepup1_1.html  
 https://about.gitlab.com/topics/version-control/what-is-gitlab-flow/  
 https://docs.github.com/en/get-started/quickstart/github-flow  
-https://brownbears.tistory.com/605
+https://brownbears.tistory.com/605  
+https://gyoogle.dev/blog/github/Git%20vs%20GitHub%20vs%20GitLab%20Flow.html
 
 [jekyll-docs]: https://jekyllrb.com/docs/home
 [jekyll-gh]: https://github.com/jekyll/jekyll
