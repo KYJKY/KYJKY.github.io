@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "[CS지식] Git 브랜치 전략"
-date: 2022-09-64 20:14:09 +09:00
+date: 2022-09-25 20:14:09 +09:00
 excerpt: "여러가지 Git 브랜치 전략에 대해 알아보자 <br>2022-09-25"
 cs: true
 categories: cs
