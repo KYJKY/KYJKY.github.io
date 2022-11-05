@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "[CS지식] ORM과 SP 비교"
-date: 2022-09-64 20:14:09 +09:00
+date: 2022-10-02 20:14:09 +09:00
 excerpt: "ORM과 SP, 어떤 상황에 적합할까? <br>2022-10-02"
 cs: true
 categories: cs
