@@ -112,6 +112,42 @@ github flow의 과정은 다음과 같다.
 장점: 단순하다. pull request 기능을 사용하도록 권장을 하며 수시로 배포가 발생하므로 CI/CD가 자동화 되어 있는 환경에서 사용하기 좋다.
 
 단점: pull request에서 팀원간의 충분한 리뷰와 피드백이 진행되지 않으면 배포된 자체에서 버그가 발생할 수 있다.
+
+<br>
+<br>
+
+### GitLab-Flow
+
+<figure>
+    <a href="/assets/img/cs/2022-09-25/gitflow.png"><img src="/assets/img/cs/2022-09-25/gitflow.png"></a>    
+    <figcaption style="text-align:center">Git Flow</figcaption>
+</figure>
+
+Git Flow는 `feature`, `develop`, `release`, `hotfix`, `master` 총 다섯 가지의 브랜치를 가지는 전략이다.  
+각 브랜치의 역할을 알아보자.
+
+<br>
+
+##### feature
+
+feature는 기능 단위로 생성하는 브랜치다.  
+master에서 분기되고 marge됨.
+
+##### master
+
+git flow의 develop 브랜치와 동일한 역할로, feature에서 기능 구현하고 master에 marge하고 그 기능에 대해 test하는 분기.  
+테스트를 통과하고 검증되었다면 production로 marge.  
+만약 staging 단계를 원한다면 pre-production 브랜치로 marge.
+
+##### production
+
+git flow의 master 브랜치와 동일한 역할로, 배포하기 위한 브랜치.
+
+##### pre-production
+
+기존 오리지널한 GitLab-Flow에서 추가된 브랜치.
+기존 master와 production에 pre-
+
 <br>
 <br>
 <br>
@@ -119,9 +155,10 @@ github flow의 과정은 다음과 같다.
 
 ### 출처
 
-https://backlog.com/git-tutorial/kr/stepup/stepup1_1.html
-https://about.gitlab.com/topics/version-control/what-is-gitlab-flow/
-https://docs.github.com/en/get-started/quickstart/github-flow
+https://backlog.com/git-tutorial/kr/stepup/stepup1_1.html  
+https://about.gitlab.com/topics/version-control/what-is-gitlab-flow/  
+https://docs.github.com/en/get-started/quickstart/github-flow  
+https://brownbears.tistory.com/605
 
 [jekyll-docs]: https://jekyllrb.com/docs/home
 [jekyll-gh]: https://github.com/jekyll/jekyll
