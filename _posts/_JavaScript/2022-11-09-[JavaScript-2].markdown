@@ -5,6 +5,7 @@ date: 2022-11-09 23:35:44 +09:00
 excerpt: "모던 자바스크립트 Deep Dive<br>2022-11-09"
 cs: true
 categories: JavaScript
+tags: javascript
 comments: true
 ---
 
