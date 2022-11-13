@@ -1,0 +1,191 @@
+---
+layout: post
+title: "[C#] 델리게이트 Delegate"
+date: 2022-11-13 15:27:32 +09:00
+excerpt: "뭐어? 메서드에 메서드를 파라미터로 전달할 수 있다고? <br>2022-11-13"
+csharp: true
+categories: csharp
+comments: true
+---
+
+# 📌 델리게이트(Delegate)
+
+---
+
+<!-- <figure>
+    <a href="/assets/img/cs/2022-08-07/server.png"><img src="/assets/img/cs/2022-08-08/server.png"></a>
+    <figcaption style="text-align:center"></figcaption>
+</figure> -->
+
+<br>
+<br>
+
+# 주제: 델리게이트(Delegate)
+
+### 델리게이트가 뭔데요?
+
+> 대리자는 특정 매개 변수 목록 및 반환 형식이 있는 메서드에 대한 참조를 나타내는 형식입니다. 대리자를 인스턴스화하면 모든 메서드가 있는 인스턴스를 호환되는 시그니처 및 반환 형식에 연결할 수 있습니다. 대리자 인스턴스를 통해 메서드를 호출할 수 있습니다. - Microsoft Learn -
+
+우리 말로 번역하면 '대리자'로 번역된다.
+
+지금 당장으로는 이해할 수 없는 설명이지만, 결론적으로 델리게이트의 존재 목적은 **메서드를 다른 메서드로 전달할 수 있도록 하기 위해** 만들어 졌다고 볼 수 있다.
+
+델리게이트는 **메서드의 입력 파라미터로 피호출자에게 전달**될 수 있을 뿐만 아니라, **메서드의 리턴값으로 호출자에게 전달**될 수도 있다.
+
+<br>
+<br>
+
+### 어떻게 생겼나요?
+
+아래는 델리게이트를 정의하는 방법이다.
+
+```csharp
+// 델리게이트 정의
+delegate string MyTestDG(int num);
+
+// 학생 클래스
+internal class Student
+{
+    public int Id { get; set; }
+    public string? Name { get; set; }
+
+    // 학생 이름을 n글자 불러오는 메서드
+    public string getName(int num)
+    {
+        string result = string.Empty;
+
+        return Name.Substring(0, num);
+    }
+}
+
+```
+
+class처럼 키워드 `delegate`를 사용하여 선언한다.
+위의 예시에서 return type이 `string`, input paramater가 `int` type인 것을 확인할 수 있다.
+
+델리게이트에서 리턴타입과 입력 파라미터가 무엇을 의미하는가?  
+이는 델리게이트가 참조할 메서드의 형태를 정의한 것으로 볼 수 있다.
+
+위의 예시에서 `Student` 클래스의 `getName()`은 델리게이트의 리턴타입 및 입력 파라미터와 같다.  
+때문에 `MyTestDG`는 `getName()`을 참조할 수 있다.
+
+<br>
+<br>
+
+### 메서드를 참조하는 방법을 보여주세요
+
+델리게이트 객체를 메서드를 인자로 추가하여 생성한다.
+델리게이트는 전달받은 메서드를 다른 메서드에 파라미터로서 전달해주는 '대리자'로서의 임무를 수행한다.
+
+```csharp
+class Program
+{
+    static void Main(string[] args)
+    {
+        Student boy = new Student();
+        boy.Name = "가나다라마바사";
+
+        MyTestDG m = new MyTestDG(boy.getName);
+
+        runDeligate(m);
+    }
+
+    static void runDeligate(MyTestDG method)
+    {
+        int num = 3;
+        string result = method(num);     // .Invoke()를 사용하여 델리게이트에 참조된 메서드를 실행시킨다. (생략가능)
+        Console.WriteLine(result);      // 결과: 가나다
+    }
+}
+
+// 델리게이트 선언
+delegate string MyTestDG(int num);
+
+// 학생 클래스
+internal class Student
+{
+    public int Id { get; set; }
+    public string? Name { get; set; }
+
+    // 학생 이름을 n글자 불러오는 메서드
+    public string getName(int num)
+    {
+        string result = string.Empty;
+
+        return Name.Substring(0, num);
+    }
+}
+
+```
+
+<br>
+<br>
+
+### ... 다 알겠는데 이게 어떻게 쓰이나요?
+
+```csharp
+public static bool work1()
+{
+  //...
+}
+public static bool work2()
+{
+  //...
+}
+public static bool work3()
+{
+  //...
+}
+
+public static void success1()
+{
+  //...
+}
+public static void success2()
+{
+  //...
+}
+
+public static void failure1()
+{
+  //...
+}
+
+public static void failure2()
+{
+  //...
+}
+
+public static void SuccessFailHelper(Func<bool> work, Action success, Action failure)
+{
+  if (work())
+    success();
+  else
+    failure();
+}
+
+static void Main(string[] args)
+{
+  SuccessFailHelper(work1, success1, failure1);
+  SuccessFailHelper(work1, success2, failure2);
+}
+```
+
+<br>
+<br>
+<br>
+<br>
+
+### 출처
+
+https://www.csharpstudy.com/CSharp/CSharp-delegate-concept.aspx
+
+https://huiyu.tistory.com/entry/C-%EA%B8%B0%EC%B4%88-%EC%9D%B4%EB%B2%A4%ED%8A%B8%EC%99%80-%EB%8D%B8%EB%A6%AC%EA%B2%8C%EC%9D%B4%ED%8A%B8-Event-Delegate
+
+https://learn.microsoft.com/ko-kr/dotnet/csharp/programming-guide/delegates/
+
+https://developer-talk.tistory.com/207
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]: https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/

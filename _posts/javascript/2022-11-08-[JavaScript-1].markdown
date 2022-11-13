@@ -3,8 +3,9 @@ layout: post
 title: "[모던JS] 변수"
 date: 2022-11-08 23:35:44 +09:00
 excerpt: "모던 자바스크립트 Deep Dive<br>2022-11-08"
-cs: true
-categories: JavaScript
+javascript: true
+categories: javascript
+tags: javascript
 comments: true
 ---
 
