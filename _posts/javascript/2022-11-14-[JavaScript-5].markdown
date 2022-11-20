@@ -155,7 +155,193 @@ switch (phone) {
 ##### 플스루를 활용한 예시
 
 ```javascript
+let answer = "A";
+let score = 0;
 
+switch (answer) {
+    case "A":
+    case "a":
+        score = 3;
+        break;
+    case "B":
+    case "b":
+        score = 1.5;
+        break;
+    case "C":
+    case "c":
+        score = 0;
+        break;
+    default:
+        console.log("잘못 입력했습니다.");
+}
+```
+
+※ 개인적인 생각이지만 `true`, `false`로 나뉘는 조건에 적합한 경우 `if`..`else`문을 활용하고 어떤 특정한 '값'에 대한 상황을 나누는 것에 적합한 경우 `switch`를 활용하는 것이 좋은 것 같다.
+
+<br>
+<br>
+
+### 반복문
+
+-   조건식의 평과 결과가 참인 경우 코드 블록을 실행한다.
+-   반복 주기마다 조건식을 재평가하여 코드 블록을 실행하며, 거짓이 될 때까지 반복한다.
+-   `for`, `while`, `do..while` 등이 있다.
+
+<br>
+
+#### for문
+
+-   조건식 결과가 거짓으로 평가될 때까지 코드 블록을 실행한다.
+-   반복 변수는 반복을 의미하는 **iteration**의 `i`를 쓰는 것이 보편적.
+
+##### 예시
+
+```javascript
+// 일반적인 for문
+for (let i = 0; i < 0; i++) {
+    console.log(`${i}번째 반복문 입니다.`);
+}
+
+// for문을 무한루프로 활용할 경우
+for (;;) {
+    // 실행문
+}
+
+// 중첩 for문을 활용한 구구단 출력
+for (let i = 2; i <= 9; i++) {
+    console.log(`----- ${i}단 출력 ----------------`);
+    for (let j = 1; j <= 9; j++) {
+        console.log(`${i} x ${j} = ${i * j}`);
+    }
+}
+```
+
+<br>
+
+#### while문
+
+-   주어진 조건식의 평가가 참이면 코드를 반복 실행한다.
+-   `while`문은 반복 횟수가 불명확할 때 주로 사용된다.
+-   조건식의 결과가 boolean이 아닌경우, 강제적 형변환을 통해 참/거짓을 구별한다.
+
+##### 예시
+
+```javascript
+// 일반적인 while문
+let num = 155212;
+let temp = num;
+let count = 0;
+
+while (temp > 1) {
+    temp /= 10;
+    count++;
+}
+console.log(`${num}은 ${count} 자릿수 입니다.`);
+
+// while문을 무한루프로 활용하는 경우
+while (true) {
+    // 실행문
+}
+
+// 무한루프의 탈출 방법
+count = 0;
+while (true) {
+    console.log(count++);
+
+    if (count > 50) {
+        console.log("종료");
+        break;
+    }
+}
+```
+
+<br>
+
+#### do...while문
+
+-   기존 `while`과 다른 점은 `do`...`while`은 코드 블록을 먼저 무조건 실행 후 조건식을 평가한다.
+-   해당 루프가 무조건 1번은 돌아야하는 상황에 사용한다.
+
+##### 예시
+
+```javascript
+let count = 0;
+
+do {
+    console.log(count);
+    count++;
+} while (count < 3);
+```
+
+<br>
+
+#### break문
+
+-   break 문은 레이블 문과 반복문, `switch`문의 코드블록을 탈출한다.
+-   위에서 언급한 문 외의 경우에서 `break`문을 사용할 경우, 에러가 발생한다.
+
+레이블 문: 식별자가 붙은 문
+
+##### 예시
+
+```javascript
+labelTest: {
+    console.log("Hi label");
+    break labelTest;
+    console.log("hello?"); // 중간에 break 때문에 실행되지 않음.
+}
+```
+
+레이블 문은 중첩된 for문 외부로 탈출할 때 유용하다.
+
+```javascript
+outer: for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+        if (i + j === 3) break outer;
+        console.log(`현재 [i, j] = [${i}, ${j}]`);
+    }
+}
+```
+
+위의 예시에서 원래 `break`만 있었더라면 첫 번째 for문의 루프는 계속 돌았겠지만, 레이블 문을 사용하여 루프를 돌지 않는다.
+
+<br>
+
+#### continue문
+
+-   반복문의 코드 블록 실행을 `continue` 문에서 중단하고 반복문의 증감식으로 실행 흐름을 이동시킨다. (반복문을 탈출시키는 것은 아님)
+
+##### 예시
+
+```javascript
+let string = "Hello World.";
+let search = "l";
+let count = 0;
+
+// continue를 사용하지 않을 경우
+for (let i = 0; i < string.length; i++) {
+    // l이면 count++
+    if (string[i] === search) {
+        count++;
+        // ...
+        // ...
+        // ...
+    }
+}
+console.log(count);
+
+// continue를 사용할 경우
+count = 0;
+for (let i = 0; i < string.length; i++) {
+    // l이면 카운트 증가 X
+    if (string[i] !== search) continue;
+
+    count++;
+    // ...
+    // ...
+    // ...
+}
+console.log(count);
 ```
 
 <br>
