@@ -108,18 +108,24 @@ console.log(temp1 === temp2); // false
 **깊은 복사**: 객체에 중첩된 객체까지 복사함. 객체에 중첩된 객체까지 모두 복사하여 완전한 복사본을 만든다.
 
 ```javascript
-// 얕은 복사, 깊은 복사
-var objA = { id: 1, a: { name: "david" } };
-var objB = { ...objA }; // 스프레드 문법
+// 얕은 복사
+var objA = [{ id: 1, name: "david" }];
+var objB = objA;
 
-console.log(objB === objA); // false
-console.log(objB.a === objA.a); // true
+objB.name = "jeff";
+
+console.log("objB--", objB); // name = 'jeff'
+console.log("objA--", objA); // name = 'jeff'
+
+// 깊은 복사
+var objA = { id: 1, a: { name: "david" } };
+var objB = { ...objA };
 
 objA.id = 2;
 objA["a"].name = "jeff";
 
-console.log("objB--", objB);
-console.log("objA--", objA);
+console.log("objB--", objB); // id = 1
+console.log("objA--", objA); // id = 2
 ```
 
 <br>
