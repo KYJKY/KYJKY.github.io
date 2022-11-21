@@ -100,6 +100,30 @@ console.log(temp1 === temp2); // false
 
 <br>
 
+##### 얕은 복사와 깊은 복사
+
+객체를 프로퍼티 값으로 갖는 객체의 경우,
+
+**얕은 복사**: 한 단계만 복사함. 참조 값을 복사함.
+**깊은 복사**: 객체에 중첩된 객체까지 복사함. 객체에 중첩된 객체까지 모두 복사하여 완전한 복사본을 만든다.
+
+```javascript
+// 얕은 복사, 깊은 복사
+var objA = { id: 1, a: { name: "david" } };
+var objB = { ...objA }; // 스프레드 문법
+
+console.log(objB === objA); // false
+console.log(objB.a === objA.a); // true
+
+objA.id = 2;
+objA["a"].name = "jeff";
+
+console.log("objB--", objB);
+console.log("objA--", objA);
+```
+
+<br>
+
 ##### 참조에 의한 전달
 
 객체를 가리키는 변수를 다른 변수에 할당하면 원본의 참조 값이 복사되어 전달되는 것이 **참조에 의한 전달**이다.
