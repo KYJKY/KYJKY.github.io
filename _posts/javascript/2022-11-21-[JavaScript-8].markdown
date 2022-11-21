@@ -117,7 +117,7 @@ objB.name = "jeff";
 console.log("objB--", objB); // name = 'jeff'
 console.log("objA--", objA); // name = 'jeff'
 
-// 깊은 복사
+// 깊은 복사 같지만 깊은 복사가 아님
 var objA = { id: 1, a: { name: "david" } };
 var objB = { ...objA };
 
@@ -126,6 +126,13 @@ objA["a"].name = "jeff";
 
 console.log("objB--", objB); // id = 1
 console.log("objA--", objA); // id = 2
+
+// 완벽한 깊은 복사. . 문자열로 변환하는 과정에서 객체에 대한 참조가 사라지며 새로운 객체로 깊은 복사가 가능하다.
+var objA = [{ id: 1, name: "david" }];
+var objB = JSON.parse(JSON.stringify(objA[0]));
+objB.name = "jeff";
+console.log("objB--", objB);
+console.log("objA--", objA);
 ```
 
 <br>
