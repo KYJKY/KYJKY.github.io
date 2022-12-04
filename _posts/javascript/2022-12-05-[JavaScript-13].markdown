@@ -1,0 +1,266 @@
+---
+layout: post
+title: "[모던JS] let, const 키워드와 블록 레벨 스코프"
+date: 2022-12-05 01:04:11 +09:00
+excerpt: "모던 자바스크립트 Deep Dive<br>2022-12-05"
+javascript: true
+categories: javascript
+tags: javascript
+comments: true
+---
+
+# 📌 [모던 자바스크립트 13주 뿌시기] 15. let, const 키워드와 블록 레벨 스코프
+
+---
+
+<figure>
+    <a href="/assets/img/JavaScript/2022-11-10/bookcover.png"><img src="/assets/img/JavaScript/2022-11-10/bookcover.png"></a>
+    <figcaption style="text-align:center"></figcaption>
+</figure>
+
+<br>
+<br>
+
+# 15. let, const 키워드와 블록 레벨 스코프
+
+## var 키워드로 선언한 변수의 문제점
+ES5 까지 변수는 오직 `var`를 통하여 선언이 가능하였다.  
+그러나, `var` 키워드로 변수를 선언하는 것은 아래와 같은 독특한 특징을 가진다.  
+
+### 1. 변수 중복 선언 허용
+`var` 키워드로 변수를 선언할 경우, 변수를 중복 선언하여도 에러가 발생하지 않는다.  
+
+```javascript
+var x = 1;
+var y = 2;
+
+var x = 100;
+var y;
+
+console.log(x);     // 100
+console.log(y);     // 2
+```
+위의 상황에서 `x`는 미리 선언되어 있지만, `var` 키워드로 중복 선언을 하여도 에러가 발생하지 않는다. `var` 키워드가 없는 것처럼 동작하게 된다.  
+`y` 또한 미리 선언되어 있지만, 초기화 문이 없는 경우에는 선언문이 무시된다.
+
+<br>
+
+### 2. 함수 레벨 스코프 
+`var` 키워드로 변수를 선언할 경우, 함수의 코드 블록만을 지역 스코프로 인정한다. 함수가 아닌 곳에서 `var` 키워드를 통해 변수를 선언할 경우, 모두 전역 변수로 취급된다.
+```javascript
+var x = 1;
+
+if (true) {
+    var x = 10;
+}
+
+console.log(x); // 10
+```
+위에서 `x`는 `if`의 블럭 내에서 선언되었지만, 함수 레벨 스코프기 때문에 전역 변수로 취급되어 값이 반영되었다.  
+
+```javascript
+function test(){
+    var x = 100;
+}
+
+var x = 1;
+
+test();
+
+console.log(x);
+```
+함수 내부에서 선언할 경우에는 지역 변수로 취급된다.  
+
+<br>
+
+### 3. 변수 호이스팅
+`var` 키워드로 변수를 선언할 경우, 변수 호이스팅에 의해 변수 선언문이 스코프의 선두로 끌어 올려진 것처럼 동작한다.  
+
+```javascript
+console.log(x); // undefined
+
+x = 100;
+
+console.log(x); // 100
+
+var x;
+```
+
+위 코드는 호이스팅에 의해 아래와 같은 흐름을 보인다.
+
+```javascript
+var x;  // 아래 있던 선언문이 최상단으로 올라왔다.
+
+console.log(x); // undefined
+
+x = 100;
+
+console.log(x); // 100
+```
+
+<br>
+<br>
+
+## let 키워드
+ES6 이후, `let` 키워드와 `const` 키워드가 도입되었다.
+
+### 1. 변수 중복 선언 금지
+`let`으로 선언된 변수는 같은 변수를 중복 선언할 경우 에러가 발생한다.  
+```javascript
+var x = 25;
+var x = 300;
+
+let y = 1;
+let y = 100; // Uncaught SyntaxError: Identifier 'y' has already been declared
+```
+
+<br>
+
+### 2. 블록 레벨 스코프
+`let`으로 선언된 변수는 모든 코드 블록을 지역 스코프로 인정한다.  
+```javascript
+let x = 1;
+
+if (true){
+    let x = 200;
+    let y = 5;
+}
+
+console.log(x); // 1
+console.log(y); // Uncaught ReferenceError: y is not defined
+```
+위의 예시에서 `x`는 전역 변수에 할당된 1의 값이 그대로 출력되었으나, `y`는 지역 변수로서 `if` 블록 내에서만 존재했기 때문에 출력을 시도하였지만 에러가 발생했다.
+
+<br>
+
+### 3. 변수 호이스팅
+`let`으로 선언된 변수는 변수 호이스팅이 발생하지 않는 것처럼 보인다.  
+`let`으로 선언한 변수는 **선언 단계**와 **초기화 단계**가 분리되어 진행된다.
+```javascript
+console.log(x); // Uncaught ReferenceError: x is not defined
+
+let x = 0;  
+```
+위의 예시에서 `let`으로 선언한 `x`를 변수 선언문 이전에 출력할 경우 에러가 발생한다. 초기화 단계 실행 전 변수에 접근하려 했기 때문에 발생한 에러이다.  
+> var: 런타임 이전에 암묵적으로 선언 단계와 초기화 단계가 한번에 진행됨.  
+> let: 선언 단계와 초기화 단계가 분리되어 진행됨.
+
+이처럼 초기화 단계 시작 지점까지 변수를 참조할 수 없는 구간을 **일시적 사각지대**라고 부른다.
+
+<br>
+
+`let`으로 선언된 변수는 변수 호이스팅이 발생하지 않는 것처럼 보인다.  
+그러나 이것은 틀렸다(!?)  
+
+```javascript
+let x = 1;
+
+if (true){
+    console.log(x); // Uncaught ReferenceError: Cannot access 'x' before initialization
+    let x = 5;
+}
+```
+위의 예시에서 호이스팅이 발생하지 않는다면, 전역 변수의 `x`를 출력해야 하지만 호이스팅이 발생하기 때문에 참조 에러가 발생한다.  
+
+<br>
+
+### 4. 전역 객체와 let
+`let`으로 선언된 변수는 전역 객체의 프로퍼티에 속하지 않는다.  
+`let` 전역 변수는 전역 렉시컬 환경의 선언적 환경 레코드 내에 존재하게 된다.  
+```javascript
+let x = 10;
+
+console.log(x); // 10
+console.log(window.x); // undefined
+```
+때문에 `window.x`와 같이 접근할 수 없다.
+
+<br>
+<br>
+
+## const 키워드
+보편적으로 `const`로 변수를 선언할 경우 상수를 선언하기 위해 사용한다.  
+### 1. 선언과 초기화
+`const` 키워드로 선언한 변수는 무조건 선언과 동시에 초기화해야 한다.
+```javascript
+const x = 10;
+const y;    // Uncaught SyntaxError: Missing initializer in const declaration
+y = 20;
+```
+
+<br>
+
+### 2. 재할당 금지
+`const` 키워드로 선언한 변수는 재할당이 금지된다.
+```javascript
+const x = 10;
+x = 1000;   // Uncaught SyntaxError: Identifier 'x' has already been declared
+```
+
+<br>
+
+### 3. 상수
+`const` 키워드로 선언한 변수는 원시 값이 할당된 경우 값을 변경할 수 없다.  
+이유: 재할당 금지 + 원시 값의 특징(변경 불가능한)  
+때문에 상수를 표현하는 데 사용된다.  
+
+상수: 재할당이 금지된 변수  
+
+```javascript
+let preTaxPrice = 100;
+
+let afterTaxPrice = preTaxPrice + (preTaxPrice * 0.1);
+
+console.log(afterTaxPrice); // 110
+```
+
+위의 예시는 상수를 사용하지 않는 경우의 예시이다.  
+`0.1`의 의미를 알 수 없기 때문에 가독성 측면에서 떨어진다.
+
+```javascript
+let preTaxPrice = 100;
+const TAX_RATE = 0.1;
+
+let afterTaxPrice = preTaxPrice + (preTaxPrice * TAX_RATE);
+
+console.log(afterTaxPrice); // 110
+```
+
+위의 예시는 상수를 사용하여 기존 `0.1`에 의미를 더해주었다.  
+나중에 세율이 달라질 경우, `TAX_RATE` 값만 변경해주면 되기 때문에 유지보수 측면에서도 유리하다.  
+
+<br>
+
+### 4. const 키워드와 객체
+`const` 키워드로 선언한 변수는 객체를 할당한 경우 값을 변경할 수 있다.  
+
+```javascript
+const person = {
+    name: 'kim'
+};
+
+person.name = 'lee';
+
+console.log(person);    // {name: "lee"}
+```
+
+<br>
+<br>
+
+## 그래서 어떤 것을 사용해야 하는가?
+`const`: 변수 선언에 기본적으로 사용한다 (의도치 않은 재할당 방지). 읽기전용으로 선언할 경우에도 사용한다.
+`let`: 재할당이 필요한 경우 한정하여 사용한다. 변수의 스코프를 최대한 좁게 만든다.
+`var`: ES6를 사용할 경우 사용하지 않는다.
+
+<br>
+<br>
+<br>
+<br>
+
+### 출처
+
+위키북스, 『모던 자바스크립트 Deep Dive』, 이웅모
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]: https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
