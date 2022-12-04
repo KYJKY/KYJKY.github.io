@@ -105,8 +105,8 @@ SSL은 보안적 측면 외에도 한 가지 이점이 존재하는데, 바로 *
 
 ### 출처
 http://terms.tta.or.kr/dictionary/dictionaryView.do?subject=%ED%86%B5%EC%8B%A0+%EA%B7%9C%EC%95%BD  
-https://velog.io/@wkdtjrrms0/HTTP%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9D%BC%EA%B9%8C%EC%9A%94
-https://inpa.tistory.com/entry/WEB-%F0%9F%93%9A-HTTP-Overhead-%EB%9E%80    
+https://velog.io/@wkdtjrrms0/HTTP%EB%8A%94-%EB%AC%B4%EC%97%87%EC%9D%BC%EA%B9%8C%EC%9A%94  
+https://inpa.tistory.com/entry/WEB-%F0%9F%93%9A-HTTP-Overhead-%EB%9E%80  
 https://blog.itcode.dev/posts/2021/08/18/about-ssl  
 https://developers.google.com/search/blog/2014/08/https-as-ranking-signal  
 https://brunch.co.kr/@sangjinkang/47  
