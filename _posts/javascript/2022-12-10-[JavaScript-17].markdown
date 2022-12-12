@@ -1,0 +1,435 @@
+---
+layout: post
+title: "[모던JS] 프로토타입"
+date: 2022-12-09 18:29:30 +09:00
+excerpt: "모던 자바스크립트 Deep Dive<br>2022-12-10"
+javascript: true
+categories: javascript
+tags: javascript
+comments: true
+---
+
+# 📌 [모던 자바스크립트 13주 뿌시기] 19. 프로토타입
+
+---
+
+<figure>
+    <a href="/assets/img/JavaScript/2022-11-10/bookcover.png"><img src="/assets/img/JavaScript/2022-11-10/bookcover.png"></a>
+    <figcaption style="text-align:center"></figcaption>
+</figure>
+
+<br>
+<br>
+
+# 19. 프로토타입
+일반적인 클래스 기반의 객체지향 프로그래밍 언어는 `public`, `private`, `protected`와 같은 키워드를 가지지만 JavaScript는 이러한 키워드가 없기 때문에 객체지향 언어가 아니라고 오해받지만 JavaScript는 기존 클래스 기반 객체지향 프로그래밍 언어보다 효율적인 **프로토타입 기반의 객체지향 프로그래밍 언어**이다.
+
+<br>
+
+## 객체지향 프로그래밍
+프로그램을 명령어 또는 함수의 목록으로 보는 전통적인 명령형 프로그래밍의 절차지향적 관점에서 벗어나 여러 개의 독립적 단위, 즉 객체의 집합으로 프로그램을 표현하려는 프로그래밍 패러다임이다.  
+
+추상화: 프로그램에 필요한 속성만 간추려 내어 표현하는 것  
+객체: 속성을 통해 여러 개의 값을 하나의 단위로 구성한 복합적인 자료구조.  
+객체지향 프로그래밍 > 독립적인 객체의집합으로 프로그램을 표현하려는 프로그래밍 패러다임  
+
+<br>
+
+**객체지향 프로그래밍에서 객체?**  
+상태를 나타내는 데이터와 상태를 조작할 수 있는 동작을 하나의 논리적인 단위로 묶어서 생각한다.  
+그러므로 객체는 상태 데이터와 동작을 하나의 논리적인 단위로 묶은 복합적인 자료구조이다.  
+> 객체의 상태 데이터 == 프로퍼티  
+> 객체의 동작 == 메서드  
+
+<br>
+<br>
+
+## 상속과 프로토타입
+**상속이란?**  
+어떤 객체의 프로퍼티 또는 메서드를 다른 객체가 상속받아 그대로 사용할 수 있는 것.  
+자바스크립트는 **프로토타입을 기반으로 상속을 구현**하여 불필요한 중복 제거.  
+
+<br>
+
+### 프로토타입의 필요성
+
+```javascript
+function Circle(radius){
+    this.radius = radius;
+    this.getArea = function () {
+        return Math.PI * this.radius ** 2;
+    };
+}
+
+const circle1 = new Circle(1);  // 반지름1
+const circle2 = new Circle(4);  // 반지름4
+
+console.log(circle1.getArea === circle2.getArea);   // false
+
+```
+위에서 2개의 `Circle` 인스턴스를 생성했다.  
+`Circle` 생성자 함수가 생성하는 모든 인스턴스는 동일한 내용의 메서드를 가진다.  
+
+여기서 문제되는 점은 동일한 내용의 메서드를 **각각의 인스턴스가 가진다**는 것.  
+때문에 불필요한 메모리를 낭비하게 된다.  
+
+해결법: 불필요한 중복을 제거하기 위해 프로토타입 기반의 상속을 구현한다.
+
+<br>
+
+### 프로토타입 사용
+```javascript
+function Circle(radius){
+    this.radius = radius;
+}
+
+// Circle 생성자 함수로 생성된 인스턴스는 해당 메서드를 공유한다.
+Circle.prototype.getArea = function () {
+    return Math.PI * this.radius ** 2;
+};
+
+const circle1 = new Circle(1);  // 반지름1
+const circle2 = new Circle(4);  // 반지름4
+
+console.log(circle1.getArea === circle2.getArea);   // false
+```
+
+`getArea` 메서드를 공유할 수 있도록 프로토타입에 추가하였다.  
+프로토타입은 `Circle` 생성자 함수의 `prototype` 프로퍼티에 바인딩되어 있다.  
+이로서 `getArea` 메서드는 유일하게 하나만 생성되어 `Circle`의 인스턴스는 모두 동일한 `getArea` 메서드를 공유하여 사용하게 되었다.  
+
+<br>
+<br>
+
+## 프로토타입 객체
+객체지향 프로그래밍의 근간을 이루는 객체 간 상속을 구현하기 위해 사용됨.  
+
+> 프로토타입 객체 > 객체의 상위 객체 역할 > 다른 객체에 공유 프로퍼티를 제공(메서드 포함)  
+> 자식 객체 > 프로토타입(상위)에게 프로퍼티를 받음 > 본인 것처럼 활용 가능  
+
+<br>
+
+모든 객체는 `[[Prototype]]`이라는 내부 슬롯을 가짐.  
+이는 객체 생성 방식에 따라 달라진다.  
+1. 객체 리터럴에 의해 생성된 경우 객체의 프로토타입: `Object.prototype`
+2. 생성자 함수에 의해 생성된 경우 객체의 프로토타입: 생성자 함수의 `prototype` 프로퍼티에 바인딩되어 있는 객체
+
+모든 객체 > 무조건 하나의 프로토타입을 가짐  
+모든 프로토타입 > 생성자 함수와 연결  
+= *객체, 프로토타입, 생성자 함수 > 서로 연결되어 있으므로 서로에게 접근 가능하다.*  
+
+<br>
+
+### \__proto__ 접근자 프로퍼티
+`__proto__`를 사용하여 내부 슬롯에 간접 접근하는 방법
+```javascript
+const person = { name: 'Lee' };
+
+person
+```
+<figure>
+    <a href="/assets/img/JavaScript/2022-12-11/prototype1.png"><img src="/assets/img/JavaScript/2022-12-11/prototype1.png"></a>
+    <figcaption style="text-align:center">객체의 프로퍼티, 빨간부분이 Object.prototype</figcaption>
+</figure>
+
+**원칙적인 룰**
+- 내부 슬롯은 프로퍼티가 아니다
+- 내부 슬롯과 내부 메서드에 **직접적인 접근**이 불가능하다.
+
+그러나, `__proto__` 접근자 프로퍼티를 통해 간접적으로 내부 슬롯의 값에 접근할 수 있다.  
+
+<br>
+
+**그래서 \__proto__가 무엇?**  
+- `__proto__`는 접근자 프로퍼티이다.
+- 자체적으로 값(`[[Value]]` 프로퍼티 어트리뷰트)를 가지지 않고 다른 데이터 프로퍼티의 값을 읽거나 저장할 때 사용하는 접근자 함수이다.
+- 접근자 프로퍼티므로 `[[Get]]`, `[[Set]]` 프로퍼티 어트리뷰트로 구성된다.
+- `__proto__` 접근자 프로퍼티는 상속을 통해 사용된다.(Object.prototype의 프로퍼티, 최상위 객체)
+- `__proto__`를 사용하여 프로토타입에 접근하는 이유: 상호 참조에 의해 프로토타입 체인이 생성되는 것을 방지하기 위해(단방향 링크드 리스트로 구현되야함)
+- `__proto__` 접근자 프로퍼티를 코드 내에서 직접 사용하는 것은 권장X. (모든 객체가 사용불가)
+
+<br>
+
+### 함수 객체의 prototype 프로퍼티
+함수 객체는 `prototype` 프로퍼티를 소유하지만,  
+일반 객체는 `prototype` 프로퍼티를 소유하지 않는다.  
+
+함수 객체의 `prototype` 프로퍼티는 **생성자 함수가 생성할 인스턴스의 프로토타입을 가리킴**  
+생성자 함수로 호출할 수 없는 화살표 함수 > prototype 프로퍼티 생성/소유X  
+생성자 함수로 호출할 수 없는 ES6 메서드 축약 표현으로 정의한 메서드 > prototype 프로퍼티 생성/소유X  
+
+<br>
+
+### 프로토타입의 constructor 프로퍼티와 생성자 함수
+모든 프로토타입 > constructor 프로퍼티를 가짐.  
+constructor 프로퍼티 > prototype 프로퍼티로 **자신을 참조하고 있는 생성자 함수를 가리킴**  
+
+<br>
+<br>
+
+## 리터럴 표기법의 생성자 함수는?? p.272
+
+리터럴 표기법으로 생성한 객체 > 생성자 함수를 호출한게 아님 > 당연히 생성자 함수에 의해 생성된 객체가 아님.  
+그러나 리터럴 표기법으로 생성한 객체도 프로토타입이 존재함.  
+
+리터럴 표기법에 의해 생성된 객체 > 프로토타입이 존재하지만 `constructor` 프로퍼티가 가리키는 생성자 함수가 반드시 객체를 생성한 생성자 함수라고 단정지을 수 없다.  
+
+리터럴 표기법에 의해 생성된 객체를 `constructor` 프로퍼티로 출력하면 생성자 함수가 찍힘. (ECMAScript에서 그렇게 되도록 정의함)  
+ex) 빈 객체 > `Object`, 함수 객체 > `Fuction` 등등
+
+<br>
+
+> Q. 그럼 리터럴로 생성한 경우 `Object`나 `Function`으로 생성되는거 아니냐?  
+> A. 아님. 이 생성자 함수는 진짜 해당 생성자 함수로 생성한 것과 세부 내용이 다름.  
+> 그러므로 `Object`나 `Function`로 생성된 것처럼 보여도 세부적으론 다르다.
+
+**프로토타입과 생성자 함수는 단독으로 존재할 수 없고 언제나 쌍으로 존재함.**  
+때문에 위와 같은 방식으로라도 생성자 함수를 가지는 것.  
+
+사실 리터럴 표기법으로 생성한 객체나 생성자 함수로 생성한 객체나 본질적으로는 큰 차이가 없다.  
+즉, 객체라는 본질적으로 동일한 특성을 가진다.  
+따라서 리터럴 표기법으로 객체를 생성해도 그 생성자 함수가 `Object`나 `Function`라고 인식해도 큰 문제는 없다.
+
+<br>
+<br>
+
+## 프로토타입의 생성시점
+프로토타입의 생성시점은? > 생성자 함수가 생성되는 시점에 생성된다.  
+이유: 프로토타입과 생성자 함수는 단독으로 존재할 수 없고 쌍으로 존재하기 때문.  
+
+생성자 함수는 ..
+1. 사용자 정의 생성자 함수
+2. 자바스크립트 기본 제공 빌트인 생성자 함수  
+
+로 구분할 수 있다.  
+
+<br>
+
+### 사용자 정의 생성자 함수의 프로토타입 생성 시점
+생성자 함수로서 호출할 수 있는 함수 > 함수 정의가 평가되어 함수 객체를 생성하는 시점에 프로토타입이 같이 생성됨.  
+생성자 함수로서 호출할 수 없는 함수 > 프로토타입이 생성되지 않음. (ex. 화살표 함수)
+
+> Q. 함수 정의가 평가되어 함수 객체를 생성하는 시점이 언제인가?  
+> A. 함수 선언문이 호이스팅에 의해 런타임 이전에 먼저 평가될 때 > 함수 객체를 생성 > 프로토타입 같이 생성  
+
+<br>
+
+### 빌트인 생성자 함수의 프로토타입 생성 시점
+빌트인 생성자 함수 생성시점 > 전역 객체가 생성되는 시점 > 프로토타입 생성  
+
+전역객체: 코드가 실행되기 이전 자바스크립트 엔진에 의해 생성되는 특수 객체  
+(ex. 브라우저: `window`, Node.js: `global`)  
+
+
+<br>
+<br>
+
+## 객체 생성 방식과 프로토타입의 결정
+객체 생성 방식..
+- 객체 리터럴
+- Object 생성자 함수
+- 생성자 함수
+- Object.create 메서드
+- 클래스(ES6)
+
+공통점: 객체생성은 모두 추상 연산 `OrdinaryObjectCreate`에 의해 생성된다.  
+추상 연산 > 자신이 생성할 객체의 프로토타입을 인수로 전달받음 > 자신이 생성할 객체에 추가할 프로퍼티 목록을 옵션으로 전달 가능  
+
+즉, 프로토타입은 추상 연산 `OrdinaryObjectCreate`에 전달되는 인수에 의해 결정됨.  
+인수는 어떻게 결정되는가? > 객체가 생성되는 시점에 객체 생성 방식에 의해 결정된다.  
+
+<br>
+
+### 1. 객체 리터럴 방식
+```javascript
+const objLtr = { x: 1 };
+```
+객체 리터럴 방식으로 생성된 객체의 프로토타입은 `Object.prototype`이다.  
+`objLtr`은 `Object.prototype`를 상속받아서 `construct`, `hasOwnProperty`를 소유하지는 않지만 사용 가능하다.  
+
+<br>
+
+### 2. Object 생성자 함수 방식
+```javascript
+const objObj = new Object();
+objObj.x = 1;
+```
+Object 생성자 함수 방식으로 생성된 객체의 프로토타입도 `Object.prototype`이다.  
+동일하게 `Object.prototype`를 상속받아서 `construct`, `hasOwnProperty`를 소유하지는 않지만 사용 가능하다.  
+
+> Q. 1과 2의 차이점은?  
+> A. 프로퍼티를 추가하는 방식에 차이가 있다.  
+> 객체 리터럴 방식 > {} 내부에 프로퍼티 추가함.  
+> Object 생성자 함수 방식 > 빈 객체를 생성하고 프로퍼티를 추가함.  
+
+<br>
+
+### 3. 생성자 함수 방식
+```javascript
+function Person(name) {
+    this.name = name;
+}
+
+const me = new Person('Kim');
+
+const objObj = new Object();
+objObj.x = 1;
+
+me;
+
+objObj;
+```
+생성자 함수 방식으로 생성된 객체의 프로토타입은 **생성자 함수의 prototype 프로퍼티에 바인딩된 객체**이다.    
+
+<figure>
+    <a href="/assets/img/JavaScript/2022-12-11/me.png"><img src="/assets/img/JavaScript/2022-12-11/me.png"></a>
+    <figcaption style="text-align:center">me</figcaption>
+</figure>
+
+<figure>
+    <a href="/assets/img/JavaScript/2022-12-11/obj.png"><img src="/assets/img/JavaScript/2022-12-11/obj.png"></a>
+    <figcaption style="text-align:center">objObj</figcaption>
+</figure>
+
+`objObj`는 2번(Object 생성자 함수) 방법으로 생성한 객체고 `me`는 생성자 함수 방식으로 생성한 객체이다.  
+`objObj`는 다양한 빌트인 메서드를 가지지만, `me`는 `constructor`만 존재한다.  
+
+<br>
+<br>
+
+## 프로토타입 체인
+**프로토타입 체인이란?**  
+자바스크립트가 객체의 프로퍼티에 접근하려고 할 때, 해당 객체에 접근하려는 프로퍼티가 없는 경우, `[[Prototype]]` 내부 슬롯의 참조를 따라 자신의 부모 역할을 하는 프로토타입의 프로퍼티를 순차적으로 검색하는 것.  
+
+프로토타입 체인은 자바스크립트가 **상속을 구현하는 메커니즘**이다.  
+
+```javascript
+function Person(name) {
+    this.name = name;
+}
+
+Person.prototype.sayHello = function () {
+    console.log('내 이름은 ', this.name);
+};
+
+const me = new Person('김연중');
+
+console.log(me.hasOwnProperty('name'));
+
+me.sayHello();
+me.hasOwnProperty('name');
+```
+
+<figure>
+    <a href="/assets/img/JavaScript/2022-12-11/chain.png"><img src="/assets/img/JavaScript/2022-12-11/chain.png"></a>
+    <figcaption style="text-align:center">프로토타입 체인</figcaption>
+</figure>
+
+
+프로토타입의 최상위 객체는 **Object.prototype**이다.  
+모든 객체는 최상위에 `Object.prototype`가 있고 이것이 체인의 종점이 된다.  
+`Object.prototype`의 프로토타입은 `null`이기 때문이다.  
+
+<br>
+
+> Q. 만약 프로퍼티에 접근하려 할 때 그 프로퍼티가 `Object.prototype`에도 없으면 어떻게 되는가?  
+> A. `undefined`를 반환한다. 참고로 이는 에러 발생X  
+
+**※ 정리 ※**  
+프로토타입 체인은 **상속**과 **프로퍼티 검색**을 위한 메커니즘이다.  
+
+<br>
+<br>
+
+## 오버라이딩과 프로퍼티 섀도잉
+프로토타입 프로퍼티: 프로토타입이 소유한 프로퍼티(메서드 포함)  
+인스턴스 프로퍼티: 인스턴스가 소유한 프로퍼티  
+
+만약에 프로토타입 프로퍼티가 있는데 같은 이름의 프로퍼티를 인스턴스에 추가하면 어떻게 될까?  
+1. 프로토타입 프로퍼티에 덮어 씌워진다.
+2. 인스턴스 프로퍼티로 추가한다.
+
+정답은 2. 인스턴스의 프로퍼티로 추가하게 된다.  
+
+```javascript
+function Person(name) {
+    this.name = name;
+}
+
+Person.prototype.sayHello = function () {
+    console.log('내 이름은 ', this.name);
+};
+
+const me = new Person('Kim');
+me.sayHello();  // 원래 sayHello
+
+me.sayHello = function () {
+    console.log('나는야 ', this.name);
+}
+
+me.sayHello();  // 인스턴스에 추가된 sayHello
+
+```
+
+<figure>
+    <a href="/assets/img/JavaScript/2022-12-11/sayBye.png"><img src="/assets/img/JavaScript/2022-12-11/sayBye.png"></a>
+    <figcaption style="text-align:center">sayHello가 하나 더 생겼다.</figcaption>
+</figure>
+
+
+**오버라이딩**  
+상위 클래스가 가지고 있는 메서드를 하위에서 재정의 하는 것.
+인스턴스 메서드 `sayHello()`는 프로포타입 메서드 `sayHello()`를 오버라이딩했다.
+
+**프로퍼티 섀도잉**  
+두 번째 `sayHello()`에서 기존 프로토타입 `sayHello()`이 아닌 인스턴스에 추가된 `sayHello()` 메서드가 실행됐는데, 이와 같이 상속 관계에 의해 프로퍼티가 가려지는 현상을 **프로퍼티 섀도잉**이라고 한다.
+
+위 상태에서 삭제를 하더라도 섀도잉 때문에 인스턴스 메서드 `sayHello()`가 삭제된다.  
+
+그럼 삭제하고 난 뒤 또 삭제하면 프로토타입 메서드인 `sayHello()`가 삭제될까? 이는 불가능하다. 하위 객체를 통해 프로토타입에 `get` 액세스는 허용되지만 조작하는 `set` 액세스는 허용되지 않는다.  
+
+<br>
+<br>
+
+## 프로토타입의 교체
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+### 출처
+
+위키북스, 『모던 자바스크립트 Deep Dive』, 이웅모
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]: https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
