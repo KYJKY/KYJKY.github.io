@@ -601,15 +601,15 @@ console.log(person.hasOwnProperty('toString')); // false
 
 **Object.keys 메서드**  
 Object.keys는 객체 자신의 열거 가능한 **프로퍼티 키를 배열**로 반환한다.  
-문법: `Object.keys(객체);`
+문법: `Object.keys(객체);`  
 
 **Object.value 메서드 (ES8)**  
-Object.values는 객체 자신의 열거 가능한 **프로퍼티 값을 배열**로 반환한다.
-문법: `Object.value(객체);`
+Object.values는 객체 자신의 열거 가능한 **프로퍼티 값을 배열**로 반환한다.  
+문법: `Object.value(객체);`  
 
 **Object.entries 메서드 (ES8)**  
-Object.entries 객체 자신의 열거 가능한 **프로퍼티 키와 값의 쌍의 배열**로 반환한다.
-문법: `Object.entries(객체);`
+Object.entries 객체 자신의 열거 가능한 **프로퍼티 키와 값의 쌍의 배열**로 반환한다.  
+문법: `Object.entries(객체);`  
 
 
 
