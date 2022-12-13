@@ -587,7 +587,7 @@ console.log(person.hasOwnProperty('toString')); // false
 즉, 프로퍼티의 개수만큼 순회한다.  
 문법: `for (변수선언문 in 객체) {...}`  
 
-※ 주의: `for ... in` 문은 상속받은 프로토타입의 프로퍼티까지 열거한다. 그러나 `toString` 같은 `Object.prototype`의 프로퍼티는 열거되지 않는데, 이는 `[[Enumerable]]`의 값이 `false`기 때문에 열거할 수 없도록 정의된 것.  
+※ 주의: `for ... in` 문은 **상속받은 프로토타입의 프로퍼티까지 열거**한다. 그러나 `toString` 같은 `Object.prototype`의 프로퍼티는 열거되지 않는데, 이는 `[[Enumerable]]`의 값이 `false`기 때문에 열거할 수 없도록 정의된 것.  
 
 **정리**  
 `for ... in` 문은 객체의 프로토타입 체인 상에 존재하는 모든 프로토타입의 프로퍼티 중에서 프로퍼티 어트리뷰트 `[[Enumerable]]`의 값이 `true`인 프로퍼티를 순회하며 열거한다.  
@@ -595,6 +595,23 @@ console.log(person.hasOwnProperty('toString')); // false
 <br>
 
 ### Object.keys/values/entries 메서드
+`for ... in` 문은 상속받은 프로토타입의 프로퍼티까지 열거하기 때문에 객체 자신의 고유 프로퍼티만 열거하기 위해서는 `for ... in`을 사용할 경우 `Object.prototype.hasOwnProperty` 메서드로 자신의 프로퍼티인지 확인하는 절차가 필요하다.  
+
+그러므로 객체 자신의 고유 프로퍼티만 열거하기 위해서는 `Object.keys/values/entries` 메서드를 사용하는 것을 권장함.  
+
+**Object.keys 메서드**  
+Object.keys는 객체 자신의 열거 가능한 **프로퍼티 키를 배열**로 반환한다.  
+문법: `Object.keys(객체);`
+
+**Object.value 메서드 (ES8)**  
+Object.values는 객체 자신의 열거 가능한 **프로퍼티 값을 배열**로 반환한다.
+문법: `Object.value(객체);`
+
+**Object.entries 메서드 (ES8)**  
+Object.entries 객체 자신의 열거 가능한 **프로퍼티 키와 값의 쌍의 배열**로 반환한다.
+문법: `Object.entries(객체);`
+
+
 
 
 
