@@ -392,12 +392,209 @@ me.sayHello();  // 인스턴스에 추가된 sayHello
 <br>
 
 ## 프로토타입의 교체
+프로토타입은 임의의 다른 객체로 변경 가능 > 동적으로 변경 가능하다.  
+1. 생성자 함수  
+2. 인스턴스  
+를 사용하여 상속관계를 동적으로 변경 가능하다.  
 
+<br>
 
+### 1. 생성자 함수에 의한 프로토타입의 교체
+```javascript
+const Person = (function () {
+    function Person(name) {
+        this.name = name;
+    }
 
+    // prototype 프로퍼티를 통해 프로토타입을 교체
+    // 생성할 객체의 프로토타입을 객체 리터럴로 교체한 것.
+    Person.prototype = {
+        sayHello() {
+            console.log(`안녕 내 이름은 ${this.name}`);
+        }
+    };
 
+    return Person;
+}());
 
+const me = new Person('Lee');
+```
+객체 리터럴로 교체했기 때문에 해당 프로토타입은 `constructor` 프로퍼티가 존재하지 않는다.  
+이는 생성자 함수간의 연결이 파괴되는 것.  
 
+연결을 되살리려면? 아래 코드 추가  
+```javascript
+Person.prototype = {
+    constructor: Person,
+    sayHello() {
+        console.log(`안녕 내 이름은 ${this.name}`);
+    }
+};
+```
+
+<br>
+
+### 2. 인스턴스에 의한 프로토타입 교체
+```javascript
+function Person(name) {
+    this.name = name;
+}
+
+const me = new Person('Kim');
+
+// 교체할 객체
+const parent = {
+    constructor: Person,
+    sayHello() {
+        console.log('안녕 나는 ', this.name);
+    }
+};
+
+// 생성자 함수의 prototype 프로퍼티와 프로토타입 간의 연결을 설정
+Person.prototype = parent;
+
+// 교체하기!
+Object.setPrototypeOf(me, parent);
+
+me.sayHello();  // 안녕 나는  Kim
+```
+1과 마찬가지로 교체한 객체에는 `constructor` 프로퍼티가 존재하지 않는다.  
+이는 생성자 함수간의 연결이 파괴되는 것.  
+
+연결을 되살리려면? 아래 코드로 수정  
+```javascript
+// 교체할 객체
+const parent = {
+    constructor: Person,
+    sayHello() {
+        console.log('안녕 나는 ', this.name);
+    }
+};
+
+// 생성자 함수의 prototype 프로퍼티와 프로토타입 간의 연결을 설정
+Person.prototype = parent;
+```
+
+**방법 1과 2의 차이점**  
+생성자 함수에 의한 프로토타입 교체는 Person 생성자 함수의 prototype 프로퍼티가 교체된 프로토타입을 가리키지만, 인스턴스에 의한 프로토타입 교체는 가리키지 않는다.
+
+**만약 연결 설정을 안할경우?**  
+<figure>
+    <a href="/assets/img/JavaScript/2022-12-11/connectX.png"><img src="/assets/img/JavaScript/2022-12-11/connectX.png"></a>
+    <figcaption style="text-align:center">연결 설정 X</figcaption>
+</figure>
+
+<figure>
+    <a href="/assets/img/JavaScript/2022-12-11/connectO.png"><img src="/assets/img/JavaScript/2022-12-11/connectO.png"></a>
+    <figcaption style="text-align:center">연결 설정 O</figcaption>
+</figure>
+
+결론적으로 프로토타입 교체를 통해 객체 간 상속 관계를 동적으로 변경하는 것은 어려움.  
+때문에 프로토타입은 직접 교체하지 않는 것이 좋다.  
+만약에 상속 관계를 인위적으로 설정할 경우 **직접 상속**을 사용하는 것이 좋다.  
+
+<br>
+<br>
+
+## inestanceof 연산자
+문법: `객체 instanceof 생성자 함수`  
+설명: inestanceof 연산자는 이항 연산자로서 좌변에는 객체를 가리키는 식별자, 우변에는 생성자 함수를 피연산자로 받는다.  
+결과: 우변의 생성자 함수의 prototype에 바인딩된 객체가 좌변의 객체의 프로토타입 체인 상에 존재하면 `true`, 그렇지 않으면 `false`  
+
+※ 주의: inestanceof 연산자는 프로토타입의 `constructor` 프로퍼티가 가리키는 생성자 함수를 찾는 것이 아닌 **생성자 함수의 prototype에 바인딩된 객체가 프로토타입 체인 상에 존재하는지 확인 하는 것.**
+
+<br>
+<br>
+
+## 직접 상속
+
+1. Object.create에 의한 직접상속  
+2. 객체 리터럴 내부에서 \__proto__에 의한 직접상속  
+
+### 1. Object.create에 의한 직접상속
+- `Object.create` 메서드는 명시적으로 프로토타입을 지정함.  
+- 다른 객체 생성 방식과 마찬가지로 추상 연산 `OrdinaryObjectCreate` 호출
+- `Object.create`의 첫 번째 매개변수는 생성할 객체의 프로토타입으로 지정할 객체를 전달
+- `Object.create`의 두 번째 매개변수는 생성할 객체의 프로퍼티 키와 프로퍼티 디스크립터 객체로 이뤄진 객체를 전달
+
+<br>
+
+**Object.create 메서드의 장점**  
+- new 연산자가 없이도 객체 생성 가능
+- 프로토타입을 지정하면서 객체 생성 가능
+- 객체 리터럴에 의해 생성된 객체도 상속받을 수 있음
+
+<br>
+
+### 2. 객체 리터럴 내부에서 \__proto__에 의한 직접상속
+1번 방법은 여러 장점이 존재하지만 두 번째 인자로 프로퍼티를 정의하는 것은 번거로움.  
+ES6에서는 객체 리터럴 내부에서 `__proto__` 접근자 프로퍼티를 사용하여 직접 상속을 구현할 수 있다.
+
+<br>
+<br>
+
+## 정적 프로퍼티/메서드
+**정적 프로퍼티/메서드란?**  
+생성자 함수로 인스턴스를 생성하지 않아도 참조/호출할 수 있는 프로퍼티/메서드.  
+정적 프로퍼티/메서드는 생성자 함수가 생성한 인스턴스로 참조/호출이 불가능하다.  
+
+정적 프로퍼티/메서드는 인스턴스의 프로토타입 체인에 속한 객체의 프로퍼티/메서드가 아니기 때문에 인스턴스로 접근할 수 없다.  
+
+<br>
+<br>
+
+## 프로퍼티 존재 확인
+
+1. in 연산자  
+2. Object.Prototype.hasOwnProperty 메서드  
+
+### 1. in 연산자
+객체 내에 특정 프로퍼티가 존재하는지 확인할 수 있는 연산자.  
+문법: `key in object`  
+
+※ 주의: 확인 대상 객체의 프로퍼티뿐만 아닌, **상속받은 모든 프로토타입의 프로퍼티를 확인**하는 것에 유의할 것.  
+
+<br>
+
+### 2. Object.Prototype.hasOwnProperty 메서드
+1과 유사하지만 차이점은 해당 메서드는 상속받은 프로토타입의 프로퍼티인 경우 `false`를  반환한다.
+
+```javascript
+const person = {
+    name: 'Lee',
+    address: 'Seoul'
+};
+
+console.log('name' in person);  // true
+console.log('address' in person);   // true
+console.log('phone' in person); // false
+
+console.log('----------------------------------');
+console.log(person.hasOwnProperty('name'));     // true
+console.log(person.hasOwnProperty('phone'));    // false
+
+console.log('----------------------------------');
+console.log('toString' in person); // true
+console.log(person.hasOwnProperty('toString')); // false
+```
+
+<br>
+<br>
+
+## 프로퍼티 열거
+### for ... in 문
+객체의 모든 프로퍼티를 순회하며 열거한다.  
+즉, 프로퍼티의 개수만큼 순회한다.  
+문법: `for (변수선언문 in 객체) {...}`  
+
+※ 주의: `for ... in` 문은 상속받은 프로토타입의 프로퍼티까지 열거한다. 그러나 `toString` 같은 `Object.prototype`의 프로퍼티는 열거되지 않는데, 이는 `[[Enumerable]]`의 값이 `false`기 때문에 열거할 수 없도록 정의된 것.  
+
+**정리**  
+`for ... in` 문은 객체의 프로토타입 체인 상에 존재하는 모든 프로토타입의 프로퍼티 중에서 프로퍼티 어트리뷰트 `[[Enumerable]]`의 값이 `true`인 프로퍼티를 순회하며 열거한다.  
+
+<br>
+
+### Object.keys/values/entries 메서드
 
 
 
