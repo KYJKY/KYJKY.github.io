@@ -1,0 +1,302 @@
+---
+layout: post
+title: "[모던JS] 클래스"
+date: 2022-12-28 19:22:09 +09:00
+excerpt: "모던 자바스크립트 Deep Dive<br>2022-12-22"
+javascript: true
+categories: javascript
+tags: javascript
+comments: true
+---
+
+# 📌 [모던 자바스크립트 13주 뿌시기] 25. 클래스
+
+---
+
+<figure>
+    <a href="/assets/img/JavaScript/2022-11-10/bookcover.png"><img src="/assets/img/JavaScript/2022-11-10/bookcover.png"></a>
+    <figcaption style="text-align:center"></figcaption>
+</figure>
+
+<br>
+<br>
+
+# 25. 클래스
+## JavaScript가 프로토타입이 존재하지만 클래스를 도입한 이유
+1. 자바스크립트의 프로토타입 방식은 일반적인 객체지향 프로그래밍 언어의 클래스를 사용하지 않고 상속을 구현했다. 
+2. 그러나, 클래스 기반 언어에 익숙한 프로그래머들은 프로토타입 방식에 대해 하나의 벽으로 인식하게 되었다.
+3. ES6에서 클래스를 도입하면서 클래스 방식에 익숙한 프로그래머에게 자바스크립트에서 클래스 기반 객체지향 프로그래밍 메커니즘을 제시했다.
+
+> **그래서, 클래스는 프로토타입과 무슨 관계인가?**  
+> 클래스 = 함수, 기존 프로토타입 기반 패턴을 클래스 기반 패턴처럼 사용할 수 있도록 하는 문법적 설탕이라 볼 수 있다.  
+> 그러나, 프로토타입과 클래스가 동일하게 동작하는 것은 아니다.  
+
+<br>
+
+### 클래스와 생성자함수의 차이
+
+|클래스|프로토타입|
+|---|---|---|
+|new 연산자 없이 호출하면 에러가 발생|new 연산자 없이 호출하면 일반 함수로서 호출|
+|상속을 지원하는 `extends`, `super` 키워드를 제공|키워드 제공 X|
+|호이스팅이 발생하지 않는 것처럼 동작|함수 선언문 > 함수 호이스팅,  함수 표현식 > 변수 호이스팅 발생|
+|암묵적 strict mode로 지정되어 실행, 해제 불가능| 암묵적으로 지정되지 않음|
+|constructor, 프로토타입 메서드, 정적 메서드는 [\[Enumerable]]의 값이 false| |
+
+<br>
+
+대체적으로 클래스는 생성자 함수 기반의 객체 생성 방식보다 견고하고 명료하다.  
+ex) `extends`, `super` 키워드 > 클래스 방식의 상속 관계 구현을 더욱 간결/명료하게 함.  
+
+그러므로 클래스를 새로운 객체 생성 메커니즘으로 보는 것이 합당하다.  
+
+<br>
+<br>
+
+## 클래스 정의
+
+**클래스 정의 방법**  
+
+```javascript
+// 클래스 선언문
+class Person {}
+
+// 익명 클래스 표현식
+const Person = class {};
+
+// 기명 클래스 표현식
+const Person = class MyClass {};
+```
+
+<br>
+
+**일급 객체로서 클래스의 특징**  
+- 무명의 리터럴로 생성할 수 있다. 즉, 런타임에 생성이 가능하다.
+- 변수나 자료구조(객체, 배열 등)에 저장할 수 있다.
+- 함수의 매개변수에게 전달할 수 있다.
+- 함수의 반환값으로 사용할 수 있다.
+
+<br>
+
+**클래스와 생성자 함수의 정의 방식**
+```javascript
+// 생성자 함수 ---------------------------------------
+var Person = (function() {
+    // 생성자 함수
+    function Person(name){
+        this.name = name;
+    }
+
+    // 프로토타입 메서드
+    Person.prototype.sayHi = function () {
+        console.log('name: ', this.name);
+    };
+
+    // 정적 메서드
+    Person.sayHello = function () {
+        console.log('Hi~');
+    };
+
+    // 생성자 함수 반환
+    return Person;
+}());
+
+// 클래스 ---------------------------------------
+class Person {
+    // 생성자
+    constructor(name){
+        this.name = name;
+    }
+    
+    // 프로토타입 메서드
+    sayHi() {
+        console.log('name: ', this.name);
+    }
+
+    // 정적 메서드
+    static sayHello() {
+        console.log('Hi~');
+    }
+}
+```
+
+<br>
+<br>
+
+## 클래스 호이스팅
+클래스는 함수로 평가된다.  
+함수 > 런타임 이전에 먼저 평가되어 함수 객체를 생성한다.  
+함수로 평가되는 클래스 > 런타임 이전에 먼저 평가되어 **생성자 함수로서 호출할 수 있는 함수 객체** `constructor`를 생성한다.  
+생성자 함수로서 호출할 수 있는 함수 > 함수 정의가 평가되어 함수 객체를 생성하는 시점에 프로토타입 생성한다.
+
+<br>
+
+**클래스는 클래스 정의 이전에 참조할 수 없다**  
+```javascript
+console.log(Person);
+// ReferenceError: Cannot access 'Person' before initialization
+
+// 클래스 선언문
+class Person {}
+```
+
+<br>
+
+**클래스 선언문은 호이스팅이 발생하는가?**  
+```javascript
+const Person = '';
+
+{
+    // 호이스팅이 발생했기 때문에 ''이 아닌 ReferenceError 에러가 출력된다.
+    console.log(Person);
+    // ReferenceError: Cannot access 'Person' before initialization
+
+    // 클래스 선언문
+    class Person {}
+}
+```
+호이스팅이 발생하지 않았더라면 ''이 출력되었을 것이다.  
+클래스는 `let`, `const` 키워드로 선언한 변수처럼 호이스팅된다.  
+
+<br>
+<br>
+
+## 인스턴스 생성
+**클래스의 인스턴스 생성 방법**  
+```javascript
+class Person {}
+
+// 인스턴스 생성
+const me = new Person();
+console.log(me); // Person {}
+```
+클래스는 인스턴스를 생성하는 것이 유일한 존재 이유이므로  
+**반드시 `new` 연산자와 함께 호출해야 한다.**  
+
+<br>
+
+**클래스 표현식으로 정의된 클래스의 인스턴스 생성 방법**  
+```javascript
+const Person = class MyClass {};
+const me = new Person();
+
+// MyClass는 클래스 몸체 내부에서만 유효한 식별자.
+console.log(MyClass); // ReferenceError: MyClass is not defined
+const you = new MyClass(); // ReferenceError: MyClass is not defined
+```
+기명 클래스 표현식의 클래스 이름(MyClass)를 사용하여 인스턴스를 생성할 경우 에러가 발생한다.  
+
+<br>
+<br>
+
+## 메서드
+클래스 몸체에 선언할 수 있는 메서드 수: 0개 이상  
+
+클래스 몸체에 정의할 수 있는 메서드 세 가지  
+- constructor(생성자)
+- 프로토타입 메서드
+- 정적 메서드
+
+<br>
+
+### constructor
+인스턴스를 생성하고 초기화하기 위한 특수 메서드.  
+이름을 변경할 수 없다.  
+
+```javascript
+class Person {
+    // 생성자
+    constructor(name) {
+        // 인스턴스 생성 및 초기화
+        this.name = name;
+    }
+}
+
+console.log(Person);
+```
+
+클래스는 평가되어 함수 객체가 된다.
+<figure>
+    <a href="/assets/img/JavaScript/2022-12-28/person.png"><img src="/assets/img/JavaScript/2022-12-28/person.png"></a>
+    <figcaption style="text-align:left"></figcaption>
+</figure>
+
+- 클래스도 함수 객체 고유의 프로퍼티를 모두 갖고 있다.
+- 프로토타입과 연결되어 있으며 자신의 스코프 체인을 구성한다.
+- `prototype` 프로퍼티가 가리키는 `constructor` 프로퍼티는 클래스 자신을 가리키고 있으므로 클래스가 인스턴스를 생성하는 생성자 함수임을 알 수 있다.
+
+<br>
+
+인스턴스의 내부를 조회해본다.  
+```javascript
+class Person {
+    // 생성자
+    constructor(name) {
+        // 인스턴스 생성 및 초기화
+        this.name = name;
+    }
+}
+
+// 인스턴스 생성
+const me = new Person('Kim');
+console.log(me);
+```
+<figure>
+    <a href="/assets/img/JavaScript/2022-12-28/person2.png"><img src="/assets/img/JavaScript/2022-12-28/person2.png"></a>
+    <figcaption style="text-align:left"></figcaption>
+</figure>
+
+`name` 프로퍼티가 추가된 것을 볼 수 있다.  
+생성자 함수와 마찬가지로 `constructor` 내부에서 `this`에 추가한 프로퍼티는 인스턴스 프로퍼티가 된다.  
+
+`constructor` 메서드는 단순한 메서드가 아니다.  
+`constructor` 메서드는 해석되는 것이 아닌 클래스가 평가되어 생성한 함수 객체 코드의 일부가 된다.  
+
+**constructor의 특징**
+- `constructor`는 클래스 내에 최대 한 개만 존재할 수 있다.
+- `constructor`는 생략할 수 있다.
+- `constructor`를 생략하면 빈 `constructor`가 암묵적으로 정의된다.
+- `constructor`를 생략한 클래스는 빈 `constructor`에 의해 빈 객체를 생성한다.
+- 프로퍼티가 추가되어 초기화된 인스턴스를 생성하기 위해서 `constructor` 내부의 `this`에 인스턴스 프로퍼티를 추가한다. 만약 초기값을 전달하기 위해서는 `constructor`에 매개변수를 선언한다.
+- `constructor`는 별도의 반환문을 갖지 않아야 한다.
+
+<br>
+
+### 프로토타입 메서드
+클래스 몸체에서 정의한 메서드는 기본적으로 프로토타입 메서드가 된다.
+
+```javascript
+class Person {
+    // 생성자
+    constructor(name) {
+        // 인스턴스 생성 및 초기화
+        this.name = name;
+    }
+
+    // 프로토타입 메서드
+    sayHi() {
+        console.log('Hi my name is ', this.name);
+    }
+}
+
+const me = new Person('Kim');
+me.sayHi();
+```
+
+
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+### 출처
+
+위키북스, 『모던 자바스크립트 Deep Dive』, 이웅모
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]: https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
