@@ -629,7 +629,7 @@ const cellphone = '010-1234-5678';
  
 
 // 특수 문자 포함 여부 검사
-const target = 'abc#123';
+target = 'abc#123';
 (/[^A-Za-z0-9]/gi).test(target);  // true
 ```
 
