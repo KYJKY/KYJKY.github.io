@@ -551,7 +551,7 @@ target.match(regExp);
 
 <br>
 
-**NOT 검색**
+**NOT 검색**  
 [] 내의 ^은 not의 의미를 가진다.  
 ```javascript
 const target = 'AA BB 12 Aa Bb';
@@ -563,7 +563,7 @@ target.match(regExp); // [ 'AA BB ', ' Aa Bb' ]
 
 <br>
 
-**시작 위치로 검색**
+**시작 위치로 검색**  
 [] 밖의 ^(캐럿)은 문자열의 시작을 의미한다.  
 
 ```javascript
@@ -575,6 +575,18 @@ regExp.test(target); // true
 ```
 
 <br>
+
+**마지막 위치로 검색**  
+\$는 문자열의 마지막을 의미한다.  
+
+```javascript
+const target = 'https://poiemaweb.com';
+
+const regExp = /com$/;
+
+regExp.test(target); // true
+```
+
 
 
 
