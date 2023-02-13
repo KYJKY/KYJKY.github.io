@@ -193,7 +193,7 @@ HTML 요소의 어트리뷰트에 이벤트 핸들러 어트리뷰트를 추가�
 이벤트 객체는 다음과 같은 상속 구조를 가진다.  
 
 <figure>
-    <a href="/assets/img/JavaScript/2023-02-13/eventobject.png"><img src="/assets/img/JavaScript/2023-02-13/eventobject.png"></a>
+    <a href="/assets/img/JavaScript/2023-02-12/eventobject.png"><img src="/assets/img/JavaScript/2023-02-12/eventobject.png"></a>
     <figcaption style="text-align:center"></figcaption>
 </figure>
 
@@ -208,17 +208,18 @@ HTML 요소의 어트리뷰트에 이벤트 핸들러 어트리뷰트를 추가�
 `Event.prototype`의 이벤트 관련 프로퍼티는 모든 이벤트 객체가 상속받는 공통 프로퍼티다.  
 
 **이벤트 객체의 공통 프로퍼티**  
+
 |공통 프로퍼티|설명|타입|
 |------|---|---|
-|`type`|이벤트 타입|`string`|
-|`target`|이벤트를 발생시킨 DOM 요소|DOM 요소 노드|
-|`currntTarget`|이벤트 핸들러가 바인딩된 DOM 요소|DOM 요소 노드|
-|`eventPhase`|이벤트 전파 단계|`number`|
-|`bubbles`|이벤트 버블링으로 전파하는지 여부|`boolean`|
-|`cancelable`|`preventDefault` 메서드로 이벤트 기본 동작을 취소할 수 있는지 여부|`boolean`|
-|`defaultPrevented`|`preventDefault` 메서드로 이벤트를 취소했는지 여부|`boolean`|
-|`isTrusted`|사용자의 행위에 의해 발생한 이벤트인지 여부|`boolean`|
-|`timeStamp`|이벤트가 발생한 시각(1970/01/01/00:00:0부터 경과한 밀리초)|`number`|
+|type|이벤트 타입|string|  
+|target|이벤트를 발생시킨 DOM 요소|DOM 요소 노드|  
+|currntTarget|이벤트 핸들러가 바인딩된 DOM 요소|DOM 요소 노드|  
+|eventPhase|이벤트 전파 단계|number|  
+|bubbles|이벤트 버블링으로 전파하는지 여부|boolean|  
+|cancelable|preventDefault 메서드로 이벤트 기본 동작을 취소할 수 있는지 여부|boolean|  
+|defaultPrevented|preventDefault 메서드로 이벤트를 취소했는지 여부|boolean|  
+|isTrusted|사용자의 행위에 의해 발생한 이벤트인지 여부|boolean|  
+|timeStamp|이벤트가 발생한 시각(1970/01/01/00:00:0부터 경과한 밀리초)|number|  
 
 <br>
 
