@@ -1,0 +1,370 @@
+---
+layout: post
+title: "[모던JS] 45. 프로미스"
+date: 2023-02-19 16:18:05 +09:00
+excerpt: "모던 자바스크립트 Deep Dive<br>2023-02-19"
+javascript: true
+categories: javascript
+tags: javascript
+comments: true
+---
+
+# 📌 [모던 자바스크립트 13주 뿌시기] 45. 프로미스
+
+---
+
+<figure>
+    <a href="/assets/img/JavaScript/2022-11-10/bookcover.png"><img src="/assets/img/JavaScript/2022-11-10/bookcover.png"></a>
+    <figcaption style="text-align:center"></figcaption>
+</figure>
+
+<br>
+<br>
+
+# 45. 프로미스
+ES6 이전: 비동기 처리를 위해 콜백 함수를 사용함 > 콜백 지옥으로 인한 가독성, 에러 처리, 여러 개의 비동기 처리 등 여러 한계가 있었다.  
+
+ES6 이후: 프로미스(Promise)를 도입하여 ES6 이전의 콜백 패턴 단점을 보완함.
+
+## 비동기 처리를 위한 콜백 패턴의 단점
+### 콜백 헬
+콜백 헬: 콜백 함수 호출이 중첩되어 복잡도가 높아지는 현상.  
+
+비동기 함수를 호출하면 함수 내부의 비동기로 동작하는 코드가 완료되지 않았다 해도 기다리지 않고 즉시 종료됨 > 비동기 함수 내부의 비동기로 동작하는 코드는 비동기 함수가 종료된 이후에 종료됨. > 처리 결과를 외부로 반환하거나 상위 스코프 변수에 할당하면 예상대로 동작하지 않음.  
+
+즉, 비동기 함수는..  
+1. 비동기 처리 결과를 외부에 반환 불가
+2. 상위 스코프의 변수에 할당 불가
+3. 1, 2의 이유로 비동기 함수 처리 결과를 비동기 함수 내부에서 수행해야 함.
+4. 3번의 이유로 처리 성공/실패 시, 각각의 콜백 함수를 전달해줘야 하는데 여기서 콜백 헬 현상이 발생함.
+
+<br>
+
+### 에러 처리의 한계
+```javascript
+try {
+  setTimeout(() => { throw new Error('Error!'); }, 1000);
+} catch (e) {
+  // 에러 캐치 불가능
+  console.error('error: ', e);
+}
+```
+
+**예상되는 동작**  
+1. 1초 뒤에 콜백 함수 동작
+2. 콜백 함수에서 error throw함
+3. `catch` 코드 블록에서 캐치함
+
+**실제 동작**
+1. `setTimeout` 함수의 실행 컨텍스트가 생성되어 콜 스택에 푸시
+2. 콜백 함수가 호출되기 전에 종료되어 콜 스택에서 제거
+3. 타이머 만료, 콜백 함수가 태스크 큐로 푸시
+4. 콜 스택이 비어졌을 때 이벤트 루프에 의해 콜 스택으로 푸시되어 실행
+5. 콜백 함수가 실행될 때 이미 콜 스택에서 제거되었으므로 콜백 함수를 호출한 것이 `setTimeout`이 아니게 되버림
+6. 에러는 호출자 방향으로 전파되지만, 콜백 함수를 호출한 것은 `setTimeout`이 아니므로 `catch` 블록에서 캐치 불가능
+
+<br>
+
+## 프로미스의 생성
+```javascript
+// 프로미스 생성
+const promise = new Promise ((resolve, reject) => {
+  // Promise 함수의 콜백 함수 내부에서 비동기 처리를 수행한다.
+  if(true){
+    resolve('성공');
+  } else{
+    reject('실패');
+  }
+});
+```
+
+- 프로미스는 상태 정보를 갖는다. (`pending`, `fulfilled`, `rejected`)
+- 생성된 프로미스의 기본 상태값은 `pending`이다.
+- 비동기 처리가 성공할 경우: `resolve` 함수를 호출하여 프로미스를 `fulfilled` 상태로 변경한다.
+- 비동기 처리가 실패할 경우: `reject` 함수를 호출하여 프로미스를 `rejected` 상태로 변경한다.
+- `fulfilled` 또는 `rejected` 상태를 `settled` 상태라고 한다. (비동기 처리가 수행된 상태를 뜻함)
+- `settled` 상태가 되면 다른 상태로 변화할 수 없다.
+
+※ 프로미스는 비동기 처리 상태와 처리 결과를 관리하는 객체.  
+
+<br>
+
+## 프로미스의 후속 처리 메서드
+프로미스는 후속 처리를 위해 `then`, `catch`, `finally` 등의 후속 메서드를 제공한다.  
+프로미스의 비동기 처리 상태가 변화하면 후속 처리 메서드에 인수로 전달한 콜백 함수가 선택적으로 호출된다.  
+
+### Promise.prototype.then
+해당 메서드는 두 개의 콜백 함수를 인수로 전달받는다.  
+- 첫 번째 콜백 함수: 프로미스가 `fulfilled` 상태가 되면 호출됨. 콜백 함수는 비동기 처리 결과를 인수로 받음.
+- 두 번째 콜백 함수: 프로미스가 `rejected` 상태가 되면 호출됨. 콜백 함수는 프로미스의 에러를 인수로 받음.
+
+요약: 첫 번째 콜백 함수 = 성공 시 호출, 두 번째 콜백 함수 = 실패 시 호출  
+
+`then`은 언제나 프로미스를 반환함.  
+1. 프로미스를 반환 > 그대로 반환
+2. 프로미스 아닌 것 반환 > 값을 암묵적으로 `resolve`/`reject` 하여 프로미스를 생성해 반환
+
+<br>
+
+### Promise.prototype.catch
+해당 메서드는 한 개의 콜백 함수를 인수로 전달받는다.  
+- 콜백 함수는 프로미스가 `rejected` 상태인 경우만 호출됨.  
+
+`catch` 메서드는 `then`과 동일하게 동작하므로 언제나 프로미스를 반환한다.  
+
+<br>
+
+### Promise.prototype.finally
+해당 메서드는 한 개의 콜백 함수를 인수로 전달받는다.  
+- 콜백 함수는 프로미스의 성공/실패와 상관없이 무조건 한 번 호출됨.
+
+`finally` 메서드는 프로미스의 상태와 상관없이 공통적인 처리가 필요할 때 유용하다.  
+
+`finally` 메서드는 `then`/`catch`처럼 언제나 프로미스를 반환한다.  
+
+<br>
+
+## 프로미스의 에러 처리
+```html
+<!DOCTYPE html>
+<html>
+
+<body>
+    <script>
+        const promiseGet = url => {
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', url);
+                xhr.send();
+
+                xhr.onload = () => {
+                    if (xhr.status === 200) {
+                        resolve(JSON.parse(xhr.response));
+                    } else {
+                        reject(new Error(xhr.status));
+                    }
+                };
+            });
+        };
+
+        const wrongUrl = 'http://jsonplaceholder.typicode.com/asdfqwer1234/124124';
+        const realUrl = 'http://jsonplaceholder.typicode.com/posts/1';
+
+        // 1. promiseGet 프로미스를 반환하므로 then, catch, finally를 사용할 수 있다.
+        promiseGet(wrongUrl).then(
+            res => console.log(res),
+            err => console.error(err) // 비동기 처리에서 발생한 에러는 두 번째 콜백 함수로 처리 가능
+        );
+
+        // 2. catch를 통해 두 번째 콜백 함수에서 처리하던 것을 따로 뺼 수 있음
+        promiseGet(wrongUrl)
+        .then(res => console.log(res))
+        .catch(err => console.error(err));
+
+        // 3. 2번의 예시는 내부적으로 다음과 같이 처리된다.
+        promiseGet(wrongUrl)
+        .then(res => console.log(res))
+        .tehn(undefined, err => console.error(err));
+
+        // 4. then 메서드 두 번째 콜백 함수는 첫 번째 콜백 함수에서 발생한 에러를 캐치하지 못하고 코드가 복잡해진다.
+        promiseGet(realUrl).then(
+          res => console.xxx(res),  // 에러 발생
+          err => console.error(err) // 여기서 캐치 못함
+        );
+
+        // 5. catch가 최고. promiseGet 내부의 에러도, 4번의 에러도 catch 가능하다. 그리고 가독성이 좋다. 이거 많이 쓰도록 하자
+        promiseGet(realUrl)
+          .then(res => console.xxx(res))
+          .catch(err => console.error(err));
+
+    </script>
+</body>
+
+</html>
+```
+
+<br>
+
+## 프로미스 체이닝
+프로미스 체이닝: `then`, `catch`, `finally` 후속 처리 메서드를 연속적으로 호출하는 것.  
+
+이게 가능한 이유 > `then`, `catch`, `finally` 얘네가 프로미스를 반환하기 때문.  
+
+- 프로미스는 프로미스 체이닝을 통해 처리 결과를 전달받아서 후속 처리 하므로 콜백 헬은 발생하지 않음.
+- 프로미스는 콜백 패턴을 사용하므로 콜백 함수를 사용하는 것은 아님
+- 콜백 패턴 > 가독성 안좋음. ES8에서 `async/await`를 사용하여 후속 처리 메서드 없이 동기 처리처럼 프로미스 처리 결과를 반환하도록 구현 가능
+
+<br>
+
+## 프로미스 정적 메서드
+### 1. Promise.resolve/Promise.reject
+`Promise.resolve`와 `Promise.reject` 메서드는 이미 존재하는 값을 래핑하여 프로미스를 생성하기 위해 사용함.  
+`Promise.resolve` 메서드는 인수로 전달받은 값을 `resolve`하는 프로미스를 생성한다.  
+`Promise.reject` 메서드는 인수로 전달받은 값을 `reject`하는 프로미스를 생성한다.  
+
+<br>
+
+### 2. Promise.all
+여러 개의 비동기 처리를 모두 병렬 처리할 때 사용한다.  
+
+```javascript
+const requestData1 = () =>
+    new Promise(resolve => setTimeout(() => resolve(1), 3000));
+const requestData2 = () =>
+    new Promise(resolve => setTimeout(() => resolve(2), 2000));
+const requestData3 = () =>
+    new Promise(resolve => setTimeout(() => resolve(3), 1000));
+
+// 세 개의 비동기 처리를 병렬로 처리한다.
+Promise.all([requestData1(), requestData2(), requestData3()])
+    .then(console.log)  // [ 1, 2, 3 ] 표출, 약 3초 걸림
+    .catch(console.error);
+```
+위의 예시는 `Promise.all`을 사용하여 처리 시간이 다른 세 프로미스를 병렬적으로 처리한다.  
+때문에 배열 내 모든 프로미스가 `fulfilled` 상태가 되면 종료하게 된다.  
+
+- `Promise.all` 메서드는 인수로 전달받은 배열의 프로미스가 하나라도 `rejected` 상태가 되면 나머지 프로미스와 상관없이 즉시 종료한다.
+- `Promise.all` 메서드는 인수로 전달받은 이터러블 요소가 프로미스가 아닌 경우, `Promise.resolve` 메서드를 통해 프로미스로 래핑한다.  
+
+<br>
+
+### 3. Promise.race
+`Promise.race` 메서드는 `Promise.all`와 다르게 가장 먼저 `fulfilled` 상태가 된 프로미스의 처리 결과를 `resolve`하는 새로운 프로미스를 반환한다.  
+```javascript
+Promise.race([
+  new Promise((_, reject) => setTimeout(() => reject(new Error('Error 1')), 3000)),  
+  new Promise((_, reject) => setTimeout(() => reject(new Error('Error 2')), 2000)),
+  new Promise((_, reject) => setTimeout(() => reject(new Error('Error 3')), 1000))  
+])
+  .then(console.log)
+  .catch(console.log); // Error: Error 3
+```
+
+<br>
+
+### 4. Promise.allSettled
+`Promise.allSettled` 메서드는 전달받은 프로미스가 모두 `settled` 상태(비동기 처리가 수행된 상태)가 되면 처리 결과를 배열로 반환한다.  
+
+```javascript
+Promise.allSettled([
+  new Promise(resolve => setTimeout(() => resolve(1), 2000)),
+  new Promise((_, reject) => setTimeout(() => reject(new Error('Error !')), 1000))
+]).then(console.log);
+```
+프로미스 처리 결과를 나타내는 객체
+- 프로미스가 `fulfilled` 상태 > `status`(비동기 처리 상태), `value`(처리 결과) 프로퍼티를 가짐
+- 프로퍼티가 `rejected` 상태 > `status`(비동기 처리 상태), `reason`(에러) 프로퍼티를 가짐
+
+<br>
+<br>
+
+## 마이크로태스크 큐
+태스크 큐와 별도의 큐로, 태스크 큐보다 우선순위가 높다.  
+
+프로미스의 후속 처리 메서드의 콜백 함수는 마이크로 태스크 큐에 저장된다.  
+때문에 태스크 큐에 대기되는 함수들 보다 먼저 실행된다.  
+
+<br>
+<br>
+
+## fetch
+`fetch`: `XMLHttpRequest` 객체처럼 HTTP 요청 전송 기능을 제공하는 Web API.  
+
+- `fetch`는 `XMLHttpRequest`와 다르게 프로미스를 지원한다. > 콜백 패턴의 단점에서 자유롭다.  
+- `fetch` 함수는 HTTP 응답을 나타내는 `Response` 객체를 래핑한 `Promise` 객체를 반환한다.  
+- `fetch` 함수가 반환하는 프로미스는 기본적으로 `404 Not Found`나 `500 Interval Server Error`와 같은 HTTP 에러가 발생해도 에러를 `reject` 하지 않는다.
+- `fetch` 함수가 반환하는 프로미스는 HTTP 에러가 발생할 경우 불리언 타입의 ok 상태를 `false`로 설정한 `Response` 객체를 `resolve`한다. 그러므로 반환된 프로미스가 `resolve`한 불리언 타입의 ok 상태를 확인하여 명시적으로 에러를 처리해야 한다.  
+- `axios`는 모든 HTTP 에러를 `reject`하는 프로미스를 반환한다.
+
+
+`fetch` 함수의 사용 방법  
+첫 번째 인수: HTTP 요청을 전송할 URL.  
+두 번째 인수: HTTP 요청 메서드, HTTP 요청 헤더, 페이로드 등
+
+```javascript
+const request = {
+  get(url){
+    return fetch(url);
+  },
+  post(url, payload) {
+    return fetch(url, {
+      method: 'POST',
+      headers: { 'content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  },
+  patch(url, payload) {
+    return fetch(url, {
+      method: 'PATCH',
+      headers: { 'content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  },
+  delete(url) {
+    return fetch(url, { method: 'DELETE' });
+  }
+};
+
+// 1. GET
+request.get('https://jsonplaceholder.typicode.com/todos/1')
+  .then(response => {
+    if (!response.ok) throw new Error(response.statusText);
+    return response.json();
+  })
+  .then(todos => console.log(todos))
+  .catch(err => console.error(err));
+
+// 2. POST
+request.POST('https://jsonplaceholder.typicode.com/todos', {
+  userId: 1,
+  title: 'JavaScript',
+  completed: false
+}).then(response => {
+    if (!response.ok) throw new Error(response.statusText);
+    return response.json();
+  })
+  .then(todos => console.log(todos))
+  .catch(err => console.error(err));
+
+// 3. PATCH
+request.patch('https://jsonplaceholder.typicode.com/todos/1', {
+  completed: true
+}).then(response => {
+    if (!response.ok) throw new Error(response.statusText);
+    return response.json();
+  })
+  .then(todos => console.log(todos))
+  .catch(err => console.error(err));
+
+// 4. DELETE
+request.patch('https://jsonplaceholder.typicode.com/todos/1',)
+  .then(response => {
+    if (!response.ok) throw new Error(response.statusText);
+    return response.json();
+  })
+  .then(todos => console.log(todos))
+  .catch(err => console.error(err));
+```
+
+
+
+
+
+
+
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+### 출처
+
+위키북스, 『모던 자바스크립트 Deep Dive』, 이웅모  
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]: https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
