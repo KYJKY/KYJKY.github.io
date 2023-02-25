@@ -1,0 +1,383 @@
+---
+layout: post
+title: "[모던JS] 47. 에러 처리 & 48. 모듈"
+date: 2023-02-25 23:52:03 +09:00
+excerpt: "모던 자바스크립트 Deep Dive<br>2023-02-25"
+javascript: true
+categories: javascript
+tags: javascript
+comments: true
+---
+
+# 📌 [모던 자바스크립트 13주 뿌시기] 47. 에러 처리 & 48. 모듈
+
+---
+
+<figure>
+    <a href="/assets/img/JavaScript/2022-11-10/bookcover.png"><img src="/assets/img/JavaScript/2022-11-10/bookcover.png"></a>
+    <figcaption style="text-align:center"></figcaption>
+</figure>
+
+<br>
+<br>
+
+# 47. 에러 처리 & 48. 모듈
+## 에러 처리의 필요성
+에러는 언제나 발생할 수 있고 그에 대한 처리가 필요하다.  
+언제나 에러나 예외 상황이 발생할 수 있다는 전제하에 코드를 작성하는 것이 바람직하다.  
+
+<br>
+
+## try...catch...finally
+**에러 처리를 구현하는 두 방법**  
+1. 예외적인 상황이 발생할 경우 반환하는 값을 조건문이나 단축 평가, 옵셔널 체이닝 연산자를 통해 처리하는 방법
+2. 에러 처리 코드를 미리 등록하여 해당 에러가 에러 처리 코드로 점프하도록 처리하는 방법
+
+`try...catch...finally`는 2번에 해당하는 방법이다.  
+
+```javascript
+try {
+  // 실행할 코드
+} catch(err) {
+  // try 코드 블록에서 에러가 발생할 경우 실행되는 코드
+  // err: try에서 발생한 에러 객체가 전달됨
+} finally {
+  // 에러 발생과 상관없이 반드시 한 번 실행되는 코드
+}
+```
+
+<br>
+
+## Error 객체
+**Error 생성자 함수**  
+`Error` 생성자 함수는 에러에 대한 정보를 설명한 메시지를 인수로 전달할 수 있다.  
+
+```javascript
+const error = new Error('invalid');
+```
+
+<br>
+
+**에러 객체의 프로퍼티 종류**  
+`message`: Error 생성자 함수에 인수로 전달한 에러 메시지.  
+`stack`: 에러를 발생시킨 콜스택의 호출 정보를 나타내는 문자열. 디버깅 목적으로 사용됨.  
+
+<br>
+
+**에러 객체의 종류**  
+
+|생성자 함수|인스턴스|
+|---------|-------|
+|Error|일반적 에러 객체|
+|SyntaxError|자바스크립트 문법에 맞지 않는 문을 해석할 때 발생하는 에러 객체|
+|referenceError|참조할 수 없는 식별자를 참조했을 때 발생하는 에러 객체|
+|TypeError|피연산자 또는 인수의 데이터 타입이 유효하지 않을 때 발생하는 에러 객체|
+|RangeError|숫자값의 허용 범위를 벗어났을 때 발생하는 에러 객체|
+|URIError|endodeURI 또는 decodeURI 함수에 부적절한 인수를 전달했을 때 발생하는 에러 객체|
+|EvalError|eval 함수에서 발생하는 에러 객체|
+
+<br>
+
+## throw 문
+※ 에러 객체 생성 != 에러 발생  
+에러를 발생시키는 방법: `try` 코드 블록에서 `throw`문으로 에러 객체를 던진다.  
+
+`throw`문 표현식의 값은 어떤 값이라도 상관없지만 일반적으로 에러 객체를 지정한다.  
+
+**throw 문의 실행 흐름**  
+에러 throw > catch에서 에러 변수 생성 > 던져진 에러 객체가 할당 > catch 코드 블록 실행  
+
+```javascript
+try {
+  throw new Error('something wrong');
+} catch (error) {
+  console.log(error);
+}
+```
+
+<br>
+
+## 사용 예시
+Q. 외부에서 전달받은 콜백 함수를 n번만큼 반복 호출하는 repeat 함수 구현하기  
+
+```javascript
+const repeat = (n, f) => {
+    if (typeof f !== 'function') throw new TypeError('f must be a function');
+
+    for (var i = 0; i < n; i++) {
+        f(i); // i를 전달하면서 f 호출
+    }
+};
+
+try {
+    repeat(2, 1); // 두 번째 인수가 throw가 아니므로 에러 발생
+} catch (err) {
+    console.log(err); // TypeError: f must be a function
+}
+```
+
+<br>
+
+## 에러의 전파 
+에러는 호출자 방향으로 전파된다.  
+=  
+에러는 콜 스택의 아래 방향으로 전파된다.  
+=  
+에러는 실행 중인 실행 컨텍스트가 푸시되기 직전에 푸시된 실행 컨텍스트 방향으로 전파된다.  
+
+```javascript
+const foo = () => {
+  throw Error('foo에서 발생한 에러');
+};
+
+const bar = () => {
+  foo();
+};
+
+const baz = () => {
+  bar();
+};
+
+try {
+  baz(); // 호출자, 콜스택 아래 방향, baz 실행 컨텍스트
+} catch (err) {
+  console.error(err);
+}
+```
+`foo` 함수에서 발생한 에러는 `throw`되어 호출자에게 전파되고 전역에서 캐치된다.  
+`throw`된 에러에 대해 적절히 처리한다면 프로그램을 원할하게 돌아가도록 처리할 수 있다.  
+
+※ 주의: `비동기 함수`나 `프로미스 후속 처리 메서드의 콜백 함수`는 호출자가 없다.  
+호출자가 없다 = 직접 호출되지 않는다.  
+```javascript
+function promiseFunc() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('Promise resolved successfully');
+    }, 1000);
+  });
+}
+
+promiseFunc()
+  .then(result => { // 프로미스 후속 처리 메서드 내에 콜백 함수
+    console.log(result.toUpperCase()); // 의도적으로 에러를 발생시킴
+    throw new Error('Error in then callback function'); 
+  })
+  .catch(error => {
+    console.log('Error caught:', error); // then 메서드 내의 에러가 catch 되지 않음
+  });
+```
+프로미스 후속 처리 메서드의 콜백 함수는 직접 호출되지 않고, 프로미스 객체의 상태가 변경될 때(`fulfilled`) 내부적으로 자동 호출된다.  
+
+<br>
+<br>
+<br>
+<br>
+
+# 모듈
+## 모듈의 일반적 의미
+모듈: 애플리케이션을 구성하는 개별적 요소로서 재사용 가능한 코드 조각을 말함.  
+
+**모듈의 특징**  
+- 모듈은 기능을 기준으로 파일 단위로 분리한다.
+- 평소에는 애플리케이션과 분리되어 있다가 필요에 따라 다른 모듈에 의해 재사용됨
+- 모듈이 성립하려면 모듈 자신만의 파일 스코프(모듈 스코프)를 가질 수 있어야 한다.
+- 모듈 사용자: 공개된 모듈의 자산을 사용하는 모듈
+- 모듈은 공개가 필요한 자산에 명시적으로 선택적 공개가 가능하고 이를 export라고 한다.
+- 모듈 사용자는 모듈이 공개한 자산 중 전체/일부를 선택하여 자신의 스코프 내로 부를 수 있으며 이를 import라 한다.
+
+<br>
+
+## 자바스크립트와 모듈 
+1. 자바스크립트 목적: 웹 페이지에서 단순하게 보조 기능을 처리하기 위해 > 프로그래밍 언어로서 부족한 부분이 많음.  
+2. 부족한 부분: 모듈 시스템 미지원. 초기에는 파일 스코프와 `import`, `export` 미지원했음.  
+3. 모든 자바스크립트 파일은 하나의 전역을 공유했고 분리된 파일이라 할지라도 전역 변수가 중복되거나 하는 문제가 있을 수 있었다. > 모듈 구현 불가능
+4. 자바스크립트를 범용적으로 활용하려는 움직임 > 모듈 문제를 해결했어야 했음 > CommonJS, AMD
+5. 자바스크립트 모듈 시스템은 크게 두 진영으로 나뉘었고 모듈을 사용하기 위해서는 위 둘을 사용했음.
+6. Node.js 측은 CommonJS를 선택했고 현재에도 거의 유사하게 CommonJS 사양을 따르고 있음.(ECMAScript 표준X)
+
+<br>
+
+## ES6 모듈(ESM)
+ES6에서 클라이언트 사이드 자바스크립트에서도 동작하는 모듈 기능을 추가하게 되었다.  
+
+**사용법**  
+```javascript
+<script type="module" src="app.mjs"></script>
+```
+
+※ 참고: 일반적인 JS파일이 아닌 ESM을 명확히 하기 위해 ESM의 파일 확장자는 `mjs`를 사용할 것을 권장
+
+<br>
+
+### 모듈 스코프
+일반: 독자적인 모듈 스코프를 가지지 않는다.  
+ESM: 독자적인 모듈 스코프를 가짐.  
+
+**일반적인 Javascript 예시**  
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <!-- 예시1 -->
+    <script src="foo.js"></script>
+    <script src="bar.js"></script>
+
+    <!-- 예시2 -->
+    <script>
+    var x = 'foo';
+    console.log(window.x); // foo
+    var x = 'bar';
+    console.log(window.x); // bar
+    </script>
+</body>
+</html>
+```
+
+**foo.js**  
+```javascript
+var x = 'foo';
+
+console.log(window.x); // foo
+```
+
+**bar.js**  
+```javascript
+var x = 'bar';
+
+console.log(window.x); // bar
+```
+위에서 예시 1, 2가 차이가 없다.  
+하나의 전역을 공유하기 때문에 하나의 자바스크립트 파일 내에 있는 것처럼 동작한다.  
+
+**ESM 예시**  
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <script type="module" src="foo.js"></script>
+    <script type="module" src="bar.js"></script>
+</body>
+</html>
+```
+
+**foo.mjs**  
+```javascript
+var x = 'foo1';
+var y = 'foo2';
+
+console.log(x); // foo1
+console.log(window.x); // undefined
+```
+
+**bar.mjs**  
+```javascript
+var x = 'bar';
+
+console.log(x); // bar
+console.log(y); // ReferenceError
+console.log(window.x); // undefined
+```
+
+ESM은 파일 자체의 독자적인 모듈 스코프를 제공하기 때문에 위 예시의 변수들은 전역 변수가 아니고 `window` 객체의 프로퍼티 또한 아니다.  
+또한 각자의 모듈 스코프가 존재하기 때문에, `foo.mjs`의 `y`를 `bar.mjs`에서 참조할 수 없다.  
+
+<br>
+
+### export 키워드
+`export`: 모듈 내부에서 선언한 식별자를 외부에 공개하여 다른 모듈들이 재사용할 수 있게 하는 키워드. 선언문 앞에 사용한다.  
+
+**library.mjs**  
+```javascript
+// library.mjs 파일
+
+// 변수의 공개
+export const pi = Math.PI;
+
+// 함수의 공개
+export function square(x){
+  return x * x;
+}
+
+// 클래스의 공개
+export class Person {
+  constructor(name){
+    this.name = name;
+  }
+}
+
+// 객체로 export. 객체에 담긴 모두 내보낼 수 있다.
+export { pi, square, Person};
+```
+
+<br>
+
+### import 키워드
+`import`: 다른 모듈에서 공개한 식별자를 자신의 모듈 스코프 내부로 로드할 수 있게 하는 키워드. `export`한 식별자 이름을 `import`한다.  
+
+**app.mjs**  
+```javascript
+// app.mjs 파일
+
+import { pi, square, Person } from './library.mjs';
+
+console.log(pi); // 3.141592...
+console.log(square(10)); // 100
+console.log(new Person("Kim")); // Person { name: "Kim" }
+```
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+    <script type="module" src="app.mjs"></script>
+</body>
+</html>
+```
+애플리케이션 진입점: `app.mjs` > `script` 태그로 존재  
+그럼 `library.mjs`는 `script`로 로드하지 않는가? > `app.mjs`에서 `import`로 로드되기 때문에 로드하지 않아도 됨.  
+
+모듈이 `export`한 모든 식별자 이름을 `import` 하기 위해서는 `import * as 식별자명`를 사용한다. 해당 식별자명의 객체에 `export`한 모든 식별자 이름이 프로퍼티로 할당된다.
+```javascript
+import * as lib from './lib.mjs';
+
+// lib라는 식별자에 모든 export 식별자 이름이 프로퍼티로 들어갔으므로 아래처럼 출력 가능
+console.log(lib.pi);
+```
+
+이름을 변경하여 `import` 하기 가능
+```javascript
+import { pi as PI, square as sq, Person as P } from './library.mjs';
+
+console.log(PI); // 3.141592...
+console.log(sq); // 100
+console.log(new P('Kim')); // Person { name: "Kim" }
+```
+
+모듈에서 하나의 값만 `export` 하는 경우 > `defalut` 키워드 사용 가능
+```javascript
+export default x => x * x;
+```
+
+`default` 키워드 사용 > `var`, `let`, `const`는 사용 불가능.  
+`default` 키워드와 함께 `export`한 모듈은 `{}` 없이 임의의 이름으로 `import` 가능
+```javascript
+// export 하는 파일
+export default foo;
+
+// import 하는 파일
+import 내가원하는식별자명 from './lib.mjs';
+```
+
+<br>
+<br>
+<br>
+<br>
+
+### 출처
+
+위키북스, 『모던 자바스크립트 Deep Dive』, 이웅모  
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]: https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
