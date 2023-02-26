@@ -1,0 +1,98 @@
+---
+layout: post
+title: "[CS지식] JAM Stack이란?"
+date: 2023-02-19 19:23 +09:00
+excerpt: "JAM Stack에 대해 알아보자 <br>2023-02-19"
+cs: true
+categories: cs
+comments: true
+---
+
+# 📌 JAM Stack이란?
+
+---
+
+<!-- <figure>
+    <a href="/assets/img/cs/2022-08-07/server.png"><img src="/assets/img/cs/2022-08-08/server.png"></a>
+    <figcaption style="text-align:center"></figcaption>
+</figure> -->
+
+<br>
+<br>
+
+# 주제: JAM Stack
+## JAM Stack이 무엇인가요?
+JAM Stack에서 JAM은 `JavaScript`, `APIs`, `Markup`을 의미하며, 하나의 **웹 개발 방법론**이다.  
+> Jamstack은 웹 경험 계층을 데이터 및 비즈니스 로직에서 분리하여 유연성, 확장성, 성능 및 유지 관리를 개선하는 아키텍처 접근 방식입니다.
+
+
+<br>
+
+## 기존 웹 개발 방법론과의 차이점
+1. 클라이언트 사이드 렌더링: 기존의 전통적인 웹 개발 방법론은 서버 사이드 렌더링(`Server Side Rendering`, SSR)을 사용하여 동적인 웹 페이지를 생성했다. 그러나 JAM Stack은 정적 파일을 사용하고, 클라이언트 측에서 필요한 데이터만 API를 통해 동적으로 가져와 렌더링한다. 즉, 기존의 SSR 방식에서는 서버에서 모든 페이지를 생성하였으나, JAM Stack에서는 클라이언트 측에서 생성하는 클라이언트 사이드 렌더링(`Client Side Rendering`, CSR) 방식을 사용한다.
+2. 데이터 로드 방식의 차이: 기존의 전통적인 웹 개발 방법론에서는 서버 측에서 데이터를 가져오는 방식을 채택한다. JAM Stack에서는 API를 사용하여 백엔드 시스템에서 데이터를 가져오는데, 이는 백엔드 시스템이 분리되어있고 비즈니스 로직이 분리할 수 있기 때문에 확장성이 높은 방법이다.
+3. 구성 요소의 차이: 기존의 전통적인 웹 개발 방법론에서는 서버 측 및 클라이언트 측에 필요한 모든 구성 요소가 요구되었지만, JAM Stack에서는 대부분의 기능이 클라이언트 측에서 처리된다. 미리 구성된 정적 파일, API 및 JavaScript를 사용하여 전체 시스템을 구축한다.
+4. 높아진 보안성: 기존의 전통적인 웹 개발 방법론에서는 서버 측에서 모든 동작을 처리하였으므로 악성 코드 삽입 등의 보안 위협이 있었으나, JAM Stack에서는 미리 구성된 정적 파일을 사용하고 클라이언트 측에서 필요한 데이터만 API를 통해 가져오므로, 보안성이 높아진다.
+5. 로딩 성능: 기존의 전통적인 웹 개발 방법론에서는 SSR 방식으로 동작하였으므로, 로딩 시간이 느렸으나, JAM Stack에서는 CDN을 사용하여 정적 파일을 캐싱하므로, 로딩 속도가 더욱 빨라진다.
+
+<br>
+
+## JAM Stack의 구성요소 
+**JavaScript**  
+JAM Stack에서 자바스크립트는 프론트엔드 렌더링을 담당한다.  
+자바스크립트를 통해 다양한 인터랙션 및 동적인 기능을 제공하고 코드의 재사용성과 유지보수성이 용이해진다.  
+또한 API에서 가져온 데이터를 가공하고 렌더링하는 역할을 한다.  
+
+**APIs**  
+JAM Stack에서 API를 통해 필요한 정보를 클라이언트 측에서 요청하고 백엔드에서 데이터를 반환한다.  
+즉, 기존에 서버와의 불필요한 데이터 전송을 줄이고 필요한 정보만 요청한다는 특징이 있다.  
+백엔드에서는 JAM Stack에서 사용되는 비즈니스 API를 구현하기만 하면 되기 때문에 확장성과 유연성이 좋다.  
+이러한 방식은 로딩 속도나 보안 측면에서도 유리하다.  
+
+**Markup**  
+JAM Stack에서 Markup은 HTML, CSS 및 JavaScript 파일과 같은 정적인 파일을 뜻한다.  
+정적인 파일은 미리 구성되어 CDN에 저장되고, 해당 파일들은 콘텐츠 및 페이지 레이아웃 등을 정의한다.  
+CDN에 저장되다보니, 물리적으로 빠른 로딩 속도를 제공할 수 있다.  
+관리적인 측면에서도 이점이 있는데 콘텐츠를 추가/수정할 때도 Markup 파일만 수정하면 되기 때문에 개발 속도가 빠르다.  
+
+이 뿐만 아니라 JAM Stack에 몇가지 필요한 부분이 있는데...
+
+<br>
+
+## JAM Stack에 필요한 정적 사이트 생성기
+JAM Stack에서는 미리 렌더링된 HTML 파일을 생성하여 CDN에 저장할 수 있다. 이를 통해 검색 엔진이 HTML 파일을 쉽게 인식할 수 있으며, 검색 엔진 최적화(SEO)를 높일 수 있다. 이러한 기능은 **정적 사이트 생성기(Static Site Generator)**를 사용하여 구현할 수 있다.  
+
+예) `Gatsby`, `Next.js`, `Hugo`, `Jekyll`.. 
+
+<br>
+
+## 서버리스 아키텍처
+서버리스 아키텍처: 서버를 직접 관리하지 않고 클라우드 서비스 제공 업체가 서버를 관리하는 방식.  
+JAM Stack에서 정적 파일들을 CDN에 저장하여 여러 이점을 보게 되는데, 여기서 CDN이 서버리스 아키텍처이다.  
+사실 CDN도 서버이고 무언가 정적 파일들을 저장하려면 물리적인 저장공간이 필요하다.  
+
+깃허브 이슈나 레퍼지토리 `readme.md`을 작성할 때, 작성 에디터에 이미지를 끌어오면 로딩 후 이미지가 등록되는 것도 잘 생각해보면 깃허브에서 해당 이미지를 깃허브의 CDN에 추가하는 과정이다.  
+깃허브 블로그 또한 서버리스 아키텍처를 제공하는데 이게 바로 레퍼지토리에서 설정할 수 있는 `GitHub Pages`이다.  
+
+즉, 깃허브 블로그를 예로 들면 현재 나의 블로그는 `Markdown` 형식으로 글을 작성하고 깃허브 레퍼지토리에 푸쉬한다. 깃허브 레퍼지토리에서 `Jekyll`이란 정적 사이트 생성기를 사용하여 내가 작성했던 마크다운 형식의 글을 `GitHub Pages`에 업로드한다.  
+
+## JAM Stack 웹 개발을 위한 기술 스택
+https://jamstack.org/generators/  
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+### 출처
+https://pks2974.medium.com/jam-stack-%EA%B0%9C%EB%85%90-%EC%A0%95%EB%A6%AC%ED%95%98%EA%B8%B0-17dd5c34edf7  
+https://jamstack.org/generators/  
+https://velog.io/@perfumellim/JAMstack%EC%9D%B4%EB%9E%80  
+https://jbee.io/web/jam-stack/  
+
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]: https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
