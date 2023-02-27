@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[모던JS] 45. 프로미스"
+title: "[모던JS] 46. 제너레이터와 async/await"
 date: 2023-02-22 23:03:46 +09:00
 excerpt: "모던 자바스크립트 Deep Dive<br>2023-02-22"
 javascript: true
