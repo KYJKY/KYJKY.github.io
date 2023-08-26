@@ -6,26 +6,16 @@ date: 2022-04-12
 comments: true
 ---
 
-#### <center>Hello👋!</center>
-
-## 누구세요🙄?
-
-이름: 김연중
-<br>
-생년월일: 1997-06-12
-<br>
-직업: .net기반 백엔드 개발자
-<br>
-사는곳: 분당으로 이사 옴!
-
-<br>
-<br>
-
 ## 자기소개🎈
 
-저는 현재 .net 기반 웹 개발을 하고 있는 1년 차 개발자 입니다!  
-여러 기술에 관심이 많고 흥미를 느낍니다.  
-많은 사람들과 소통하고 싶어요!
+저는 현재 .net 기반 웹 개발을 하고 있는 2년 차 개발자 입니다!  
+닷넷 웹 개발에 대한 여러 기술에 관심이 많고 흥미를 느낍니다.  
+
+- C#, JavaScript
+- ASP.net Core (Razor, MVC, API ...)
+- MSSQL, 
+- Entity Framework, Dapper
+- React, Vue
 
 <br>
 <br>

@@ -3,11 +3,14 @@
 - title: 개발일기
   url: /diary/
 
-- title: 사색
+- title: 나의 생각
   url: /think/
 
 - title: C#
   url: /csharp/
+
+- title: ASP.net
+  url: /aspdotnet/
 
 - title: SQL
   url: /sql/

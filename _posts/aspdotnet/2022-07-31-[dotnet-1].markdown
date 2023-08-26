@@ -3,8 +3,8 @@ layout: post
 title: "ASP.net Core 프로젝트의 유형"
 date: 2022-07-30 18:35:55 +09:00
 excerpt: "MVC? Razor? Blazor? 뭐이리 많아? <br>22.07.30"
-cs: true
-categories: dotnet
+aspdotnet: true
+categories: aspdotnet
 comments: true
 ---
 # 📌 ASP.net Core 프로젝트의 유형

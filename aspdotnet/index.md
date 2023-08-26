@@ -1,6 +1,6 @@
 ---
-layout: think
-title: 나의 생각
+layout: aspdotnet
+title: ASP.net
 excerpt: ""
 comments: true
 ---
