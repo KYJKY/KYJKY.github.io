@@ -1,0 +1,49 @@
+---
+layout: post
+title: "[Redis] Redis 개념"
+date: 2023-01-08 17:57:42 +0900
+excerpt: "Redis의 개념적인 부분을 살펴보는 글 입니다."
+database: true
+categories: database
+comments: true
+---
+
+# 📌 Redis의 개념에 대해 알아보자!!
+
+---
+
+<figure>
+    <a href="/assets/img/database/2023-09-04/redis_logo.png"><img src="/assets/img/database/2023-09-04/redis_logo.png"></a>
+    <figcaption style="text-align:center"></figcaption>
+</figure>
+
+<br>
+<br>
+
+# 주제: Redis란?
+
+> The open source, in-memory data store used by millions of developers as a database, cache, streaming engine, and message broker.  
+> 수백만 명의 개발자가 데이터베이스, 캐시, 스트리밍 엔진 및 메시지 브로커로 사용하는 오픈 소스 인 메모리 데이터 저장소입니다. - 레디스 홈페이지 번역
+
+Redis 공식 홈페이지를 살펴보면 여러 가지 키워드를 찾을 수 있다.
+- In-memory data structures
+- Clustering
+- Caching & session storage
+
+이러한 모든 것들이 Redis가 어떤 역할을 수행하는지에 대한 힌트라고 볼 수 있겠다.  
+
+Redis의 공식 문서에 의하면 
+
+<br>
+<br>
+<br>
+<br>
+
+
+### 출처
+https://youtu.be/GkLdufOVXjI?si=rEHzW36ar4Ka8zPk  
+
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]: https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/

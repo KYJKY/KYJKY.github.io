@@ -3,8 +3,8 @@ layout: post
 title: "[MSSQL] 날짜📅 근사값 구하기"
 date: 2022-04-16 05:32:40 +0530
 excerpt: "입력된 날짜와 가장 근접한 날짜를 구하는 프로시저를 만들어보자 🎨"
-sql: true
-categories: sql
+database: true
+categories: database, MSSQL
 comments: true
 ---
 

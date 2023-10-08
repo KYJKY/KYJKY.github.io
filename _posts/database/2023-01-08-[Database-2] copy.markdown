@@ -3,8 +3,8 @@ layout: post
 title: "[DB] DB Replication"
 date: 2023-01-08 17:57:42 +0900
 excerpt: "DB Replication의 개념에 대해 알아보자!!"
-sql: true
-categories: sql
+database: true
+categories: database
 comments: true
 ---
 
