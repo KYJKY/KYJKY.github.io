@@ -9,6 +9,7 @@ background:         'assets/img/bg-galaxy.jpg'
 tiled_bg:           false   # Set this true if you want to tile your background image, otherwise it will be covered
 locale:             ko
 url:                https://kyjky.github.io/
+timezone: Asia/Seoul
 
 # Jekyll
 permalink:          /:title/
