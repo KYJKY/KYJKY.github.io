@@ -1,7 +1,7 @@
 # Site
-title:              김연중 개발 블로그 🚀
+title:              김연중 - Kim Yeon Jung
 bio:                'C# / .net Developer'
-description:        "개발과 나의 생각들"
+description:        "나의 해피해피 디버깅 일상 😜"
 reading_time:       true
 words_per_minute:   200
 logo:               'assets/img/profile.png'
@@ -10,7 +10,6 @@ tiled_bg:           false   # Set this true if you want to tile your background 
 locale:             ko
 url:                https://kyjky.github.io/
 timezone: Asia/Seoul
-repository: 'KYJKY/BlogComment'
 
 # Jekyll
 permalink:          /:title/
@@ -28,12 +27,7 @@ sass:
   style:            compressed
 
 # Comments
-comments:
-  provider:         'utterances'
-  utterances:
-    theme:          'github-dark-orange'
-    issue_term:     'pathname'
-#disqus_shortname:   kyjky-gitbut-io-1
+disqus_shortname:   kyjky-gitbut-io-1
 
 # Social
 # if you don't have any of social below, comment the line.
