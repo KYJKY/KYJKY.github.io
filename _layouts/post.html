@@ -37,9 +37,13 @@ layout: compress
                         </a>
                 </div>
                 {{ content }}
-                <div class="entry-meta">
+                <div class="entry-meta" style="margin-bottom: 20px;">
                     {% include meta.html %}
                 </div>
+
+                <script src="https://utteranc.es/client.js" repo="KYJKY/KYJKY.github.io" issue-term="pathname"
+                    theme="github-light" crossorigin="anonymous" async>
+                    </script>
             </div>
         </div>
         {% if page.comments and site.disqus_shortname %}<section id="disqus_thread" class="animated fadeInUp"></section>
