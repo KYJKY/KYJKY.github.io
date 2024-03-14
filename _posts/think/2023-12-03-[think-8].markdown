@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[주간 글쓰기] 주제: 행복"
+title: "[주간 글쓰기] 행복"
 date: 2023-12-03 16:27:00 +09:00
 excerpt: "행복이란 무엇인가? <br/>23.12.03"
 think: true

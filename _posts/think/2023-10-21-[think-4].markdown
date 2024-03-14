@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "[주간 글쓰기] 주제: 집"
+title: "[주간 글쓰기] 집"
 date: 2023-10-21 16:38:00 +09:00
 excerpt: "글을 열심히 써보려구요.. <br/>23.10.21"
 think: true

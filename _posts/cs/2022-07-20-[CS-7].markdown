@@ -7,7 +7,7 @@ cs: true
 categories: cs
 comments: true
 ---
-# 📌 CI(Connecting Information), DI(Duplication Information)
+<h1 id="-ciconnecting-information-diduplication-information" style="text-align: left;">📌 CI(Connecting Information), DI(Duplication Information)</h1>
 ---------------------------
 
 <figure>
@@ -19,8 +19,7 @@ comments: true
 <br>
 <br>
 
-# 주제: CI(Connecting Information), DI(Duplication Information)
-### CI(Continuous Integration, 지속적 통합)
+### CI(Connecting Information), DI(Duplication Information)란 무엇인가?
 a.k.a 온라인 주민번호, 주민번호의 대체수단, 본인확인기관에서 발급하는 개인식별 수단인 연계정보이다.
 
 <br>
