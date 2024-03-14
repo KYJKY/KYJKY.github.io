@@ -1,30 +1,48 @@
 ---
 layout: page
-title: 안녕하세요 김연중입니다😃!
+title: Hello World
 tags: [about]
 date: 2022-04-12
 comments: true
 ---
 
-## 자기소개🎈
+## ABOUT ME
+MicroSoft MVP가 되고 싶은 2년차 .NET 서버 개발자 김연중 입니다.  
+.NET의 범용성과 .NET 기술 간의 응집성 등에 매료되어 .NET 생태계에 관심이 많고 흥미를 느낍니다.  
 
-저는 현재 .net 기반 웹 개발을 하고 있는 2년 차 개발자 입니다!  
-닷넷 웹 개발에 대한 여러 기술에 관심이 많고 흥미를 느낍니다.  
+<br/>
 
-- C#, JavaScript
-- ASP.net Core (Razor, MVC, API ...)
-- MSSQL, 
-- Entity Framework, Dapper
-- React, Vue
+## SKILLS
+### Back-end
+- ASP.NET Framework, ASP.NET Core, Spring Boot
+- Entity Framework Core, Dapper, ADO.NET
+- Nlog
+- SQLServer, SQLite, MySQL, Redis
+
+### Front-end
+- HTML5, CSS3, JavaScript(ES6)
+- Vue.js
+
+### DevOps
+- Azure(Azure App Service) 
+- Naver Cloud Platform
+- IIS
+
+### Tools
+- Visual Studio 2022, Visual Studio Code, Eclipse, SSMS
+- Postman, Redis Desktop Manager
+- Git, Github, Notion
 
 <br>
 <br>
 
-## 무엇을 이루고 싶나요🤔?
+## CONTACT
+**E-Mail:** illulizer@gmail.com  
+**Github:** [https://github.com/KYJKY](https://github.com/KYJKY)  
 
-1. 경제적 자유 💰
-2. 유능한 프로그래머 되기 🔥
-3. 주위 사람들과 행복을 나누는 사람 되기 🎈
+<br/>
+
+<a class="social-btn" href="mailto:illulizer@gmail.com" target="_blank" rel="noopener noreferrer"><i class="fa fa-fw fa-envelope-square"></i></a><a class="social-btn" href="http://github.com/KYJKY" target="_blank" rel="noopener noreferrer"><i class="fa fa-fw fa-github"></i></a>
 
 <br>
 <br>
